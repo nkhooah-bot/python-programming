@@ -1,715 +1,801 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lecture 1 – What is a Program?</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --teal: #1a6b72;
-    --teal-dark: #124f54;
-    --teal-light: #e8f4f5;
-    --gold: #c8a84b;
-    --cream: #fdf6ec;
-    --paper: #fffdf9;
-    --ink: #1e1e1e;
-    --muted: #6b6b6b;
-    --border: #d4c9b0;
-    --code-bg: #f5f2ec;
-    --accent: #e85d2a;
-    --page-width: 820px;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Programming Course Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-sidebar: #111827;
+      --bg-card: #1f2937;
+      --bg-card-hover: #374151;
+      --border-color: #374151;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-glow: rgba(59, 130, 246, 0.15);
+      --success-color: #10b981;
+      --sidebar-width: 350px;
+      --header-height: 70px;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  body {
-    background: #c8bfaf;
-    background-image: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0,0,0,0.015) 10px,
-      rgba(0,0,0,0.015) 20px
-    );
-    font-family: 'Lato', sans-serif;
-    color: var(--ink);
-    min-height: 100vh;
-    padding: 30px 20px 60px;
-  }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  /* ── Toolbar ───────────────────────────────────── */
-  #toolbar {
-    max-width: var(--page-width);
-    margin: 0 auto 18px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
+    /* --- Sidebar Styles --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 100;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-  #toolbar button {
-    background: var(--teal);
-    color: #fff;
-    border: none;
-    padding: 9px 20px;
-    border-radius: 4px;
-    font-family: 'Lato', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .05em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: background .2s;
-  }
-  #toolbar button:hover { background: var(--teal-dark); }
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-  /* ── Document shell ───────────────────────────── */
-  #document {
-    max-width: var(--page-width);
-    margin: 0 auto;
-    background: var(--paper);
-    box-shadow: 0 4px 40px rgba(0,0,0,.25), 0 1px 4px rgba(0,0,0,.15);
-    border-radius: 2px;
-  }
+    .sidebar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 6px;
+      background: linear-gradient(to right, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-  /* ── Cover ────────────────────────────────────── */
-  #cover {
-    background: var(--teal);
-    padding: 64px 64px 56px;
-    position: relative;
-    overflow: hidden;
-  }
-  #cover::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 18px,
-      rgba(255,255,255,.03) 18px,
-      rgba(255,255,255,.03) 36px
-    );
-  }
-  #cover .badge {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--teal-dark);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 2px;
-    margin-bottom: 24px;
-    position: relative;
-  }
-  #cover h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.2;
-    position: relative;
-    margin-bottom: 12px;
-  }
-  #cover .subtitle {
-    color: rgba(255,255,255,.65);
-    font-size: 15px;
-    letter-spacing: .04em;
-    position: relative;
-    margin-bottom: 40px;
-  }
-  #cover .meta {
-    display: flex;
-    gap: 32px;
-    position: relative;
-  }
-  #cover .meta-item { color: rgba(255,255,255,.7); font-size: 13px; }
-  #cover .meta-item strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+    .sidebar-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
 
-  /* ── Body content ─────────────────────────────── */
-  #body { padding: 48px 64px 64px; }
+    .search-container {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-  /* ── Table of Contents ───────────────────────── */
-  #toc {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--teal);
-    padding: 28px 32px;
-    margin-bottom: 48px;
-    border-radius: 2px;
-  }
-  #toc h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    color: var(--teal-dark);
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-  }
-  #toc ol { list-style: none; counter-reset: toc-counter; }
-  #toc > ol > li { counter-increment: toc-counter; margin-bottom: 6px; }
-  #toc a {
-    color: var(--teal);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 4px 6px;
-    border-radius: 3px;
-    transition: background .15s;
-  }
-  #toc a::before {
-    content: counter(toc-counter) ".";
-    color: var(--gold);
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    min-width: 18px;
-  }
-  #toc a:hover { background: rgba(26,107,114,.08); }
-  #toc .toc-sub { list-style: none; padding-left: 26px; margin-top: 4px; }
-  #toc .toc-sub li { margin-bottom: 3px; }
-  #toc .toc-sub a {
-    font-weight: 400;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  #toc .toc-sub a::before { display: none; }
-  #toc .toc-sub a::marker { display: none; }
+    .search-input {
+      width: 100%;
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s;
+    }
 
-  /* ── Section ──────────────────────────────────── */
-  .section {
-    margin-bottom: 52px;
-    scroll-margin-top: 20px;
-  }
+    .search-input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--teal-light);
-  }
-  .section-num {
-    background: var(--teal);
-    color: #fff;
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    color: var(--teal-dark);
-    font-weight: 600;
-  }
+    .toc-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px;
+    }
 
-  p { font-size: 14.5px; line-height: 1.75; color: #2c2c2c; margin-bottom: 14px; }
+    .toc-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .toc-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .toc-scroll::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
 
-  /* ── Key concepts ─────────────────────────────── */
-  .concept-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-  }
-  .concept-card h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    color: var(--teal-dark);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .concept-card h4::before {
-    content: '◆';
-    color: var(--gold);
-    font-size: 10px;
-  }
-  .concept-card ul {
-    padding-left: 18px;
-    margin: 0;
-  }
-  .concept-card li {
-    font-size: 13.5px;
-    line-height: 1.65;
-    color: #333;
-    margin-bottom: 4px;
-  }
+    .module-group {
+      margin-bottom: 20px;
+    }
 
-  /* ── Code blocks ──────────────────────────────── */
-  .code-block {
-    background: #1e2a2b;
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 20px 0;
-    box-shadow: 0 2px 12px rgba(0,0,0,.15);
-  }
-  .code-header {
-    background: #0f1a1b;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .code-header span {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    letter-spacing: .05em;
-  }
-  .code-dots { display: flex; gap: 5px; }
-  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-r { background: #e85d2a; }
-  .dot-y { background: #c8a84b; }
-  .dot-g { background: #3d9970; }
+    .module-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-color);
+      font-weight: 700;
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
 
-  pre {
-    padding: 20px 24px;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 13px;
-    line-height: 1.7;
-    overflow-x: auto;
-    color: #d4cfbe;
-  }
-  .kw { color: #e85d2a; } /* keywords */
-  .fn { color: #88cfdb; } /* functions */
-  .st { color: #a8c97a; } /* strings */
-  .nm { color: #c8a84b; } /* numbers */
-  .cm { color: #6b7e7f; font-style: italic; }
-  .var { color: #d4cfbe; }
-  .op { color: #e08060; }
+    .toc-item {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      font-family: inherit;
+    }
 
-  /* ── Callout / Explanation ────────────────────── */
-  .callout {
-    background: var(--teal-light);
-    border-left: 3px solid var(--teal);
-    padding: 14px 18px;
-    margin: 16px 0;
-    border-radius: 0 4px 4px 0;
-    font-size: 13.5px;
-    line-height: 1.65;
-    color: var(--teal-dark);
-  }
-  .callout strong { color: var(--teal-dark); }
+    .toc-item:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+    }
 
-  /* ── Two-column examples ──────────────────────── */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
-  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+    .toc-item.active {
+      background-color: var(--accent-glow);
+      color: var(--accent-color);
+      font-weight: 600;
+    }
 
-  .data-card {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .data-card-head {
-    background: var(--teal);
-    color: #fff;
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .07em;
-    text-transform: uppercase;
-  }
-  .data-card-body {
-    padding: 12px 14px;
-    font-size: 13px;
-    background: var(--cream);
-  }
-  .data-card-body li { margin-bottom: 4px; list-style-position: inside; color: #333; }
+    .toc-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background-color: var(--bg-main);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+    
+    .toc-item.active .toc-num {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
 
-  /* ── Key Takeaways ────────────────────────────── */
-  .takeaway-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 16px;
-  }
-  @media (max-width: 680px) { .takeaway-grid { grid-template-columns: 1fr; } }
+    .toc-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
 
-  .takeaway-item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 12px 14px;
-  }
-  .takeaway-icon {
-    background: var(--gold);
-    color: var(--teal-dark);
-    font-size: 12px;
-    font-weight: 700;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .takeaway-item p { font-size: 13px; line-height: 1.55; margin-bottom: 0; }
+    /* --- Main Workspace Styles --- */
+    .workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
 
-  /* ── Divider ──────────────────────────────────── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 40px 0;
-  }
+    /* Mobile Header Navigation Trigger */
+    .mobile-nav-bar {
+      height: var(--header-height);
+      background-color: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      display: none;
+      align-items: center;
+      padding: 0 20px;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
 
-  /* ── Sub-headings ─────────────────────────────── */
-  h3.sub {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    color: var(--teal-dark);
-    margin: 24px 0 10px;
-    padding-left: 12px;
-    border-left: 3px solid var(--gold);
-  }
+    .mobile-toggle-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
 
-  /* ── Footer ───────────────────────────────────── */
-  #footer {
-    background: var(--teal-dark);
-    color: rgba(255,255,255,.5);
-    text-align: center;
-    font-size: 12px;
-    padding: 18px 64px;
-    letter-spacing: .04em;
-    display: flex;
-    justify-content: space-between;
-  }
-  #footer span { color: var(--gold); }
+    .mobile-toggle-btn svg {
+      transition: transform 0.2s;
+    }
 
-  /* ── Highlight chips ──────────────────────────── */
-  .chip {
-    display: inline-block;
-    background: var(--teal-light);
-    color: var(--teal-dark);
-    border: 1px solid rgba(26,107,114,.25);
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 2px 8px;
-    margin: 2px 3px 2px 0;
-    font-family: 'Source Code Pro', monospace;
-  }
+    .progress-container {
+      height: 3px;
+      background-color: var(--border-color);
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
 
-  /* ── Print ────────────────────────────────────── */
-  @media print {
-    body { background: white; padding: 0; }
-    #toolbar { display: none; }
-    #document { box-shadow: none; max-width: 100%; }
-    .section { page-break-inside: avoid; }
-    .code-block { page-break-inside: avoid; }
-  }
-</style>
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent-color), var(--success-color));
+      transition: width 0.4s ease;
+    }
+
+    /* --- Content View Panel --- */
+    .content-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .content-panel.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .panel-header {
+      padding: 24px 32px;
+      background-color: rgba(17, 24, 39, 0.4);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .meta-badge span::after {
+      content: "•";
+      margin-left: 6px;
+      color: var(--text-muted);
+    }
+
+    .meta-badge span:last-child::after {
+      content: "";
+    }
+
+    .panel-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .panel-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      line-line-height: 1.5;
+    }
+
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background-color: rgba(17, 24, 39, 0.2);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background-color: var(--bg-card-hover);
+      border-color: var(--text-muted);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    /* --- Sandbox Viewer Container --- */
+    .sandbox-container {
+      flex: 1;
+      position: relative;
+      background-color: #000;
+    }
+
+    .content-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #ffffff;
+    }
+
+    .iframe-loader {
+      position: absolute;
+      inset: 0;
+      background-color: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      transition: opacity 0.2s ease;
+      z-index: 5;
+    }
+
+    .iframe-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- Welcome Screen Dashboard Block --- */
+    .welcome-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      z-index: 2;
+      background-color: var(--bg-main);
+    }
+
+    .welcome-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .welcome-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Responsive Breakpoints Handling */
+    @media (max-width: 1024px) {
+      :root { --sidebar-width: 300px; }
+      .panel-header { padding: 20px 24px; }
+      .action-bar { padding: 12px 24px; }
+    }
+
+    @media (max-width: 820px) {
+      body { flex-direction: column; }
+      .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height));
+        transform: translateX(-100%);
+      }
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      .mobile-nav-bar { display: flex; }
+      .panel-header { padding: 16px 20px; }
+      .panel-title { font-size: 1.4rem; }
+      .action-bar { padding: 10px 20px; }
+      .btn span { display: none; }
+      .btn svg { margin: 0; }
+    }
+  </style>
 </head>
 <body>
 
-<div id="toolbar">
-  <button onclick="window.print()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    Export / Print as PDF
-  </button>
-</div>
-
-<div id="document">
-
-  <!-- COVER -->
-  <div id="cover">
-    <div class="badge">Learn Python Programming · Beginner to Master</div>
-    <h1>What is a Program?</h1>
-    <p class="subtitle">Section 3: Python Data Types &nbsp;·&nbsp; Lecture 14</p>
-    <div class="meta">
-      <div class="meta-item"><strong>Course</strong>Python Programming</div>
-      <div class="meta-item"><strong>Section</strong>3 – Python Data Types</div>
-      <div class="meta-item"><strong>Lecture</strong>14</div>
+  <!-- Sidebar Components Stack -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1 class="sidebar-title">Python Core Architecture</h1>
+      <p class="sidebar-subtitle">Interactive Student Training Hub</p>
     </div>
-  </div>
-
-  <!-- BODY -->
-  <div id="body">
-
-    <!-- TOC -->
-    <nav id="toc">
-      <h2>Table of Contents</h2>
-      <ol>
-        <li><a href="#summary">Lecture Summary</a></li>
-        <li>
-          <a href="#concepts">Key Concepts &amp; Explanations</a>
-          <ul class="toc-sub">
-            <li><a href="#what-is-program">What is a Program?</a></li>
-            <li><a href="#example1">Example 1 – Area of a Rectangle</a></li>
-            <li><a href="#example2">Example 2 – Calculate Bill Amount</a></li>
-            <li><a href="#data-ops">Data and Operations</a></li>
-            <li><a href="#variables">Variables</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#code">Example Code &amp; Use Cases</a>
-          <ul class="toc-sub">
-            <li><a href="#code1">Code – Rectangle Area</a></li>
-            <li><a href="#code2">Code – Bill Calculator</a></li>
-          </ul>
-        </li>
-        <li><a href="#takeaways">Key Takeaways</a></li>
-      </ol>
-    </nav>
-
-    <!-- SECTION 1: SUMMARY -->
-    <section class="section" id="summary">
-      <div class="section-header">
-        <div class="section-num">1</div>
-        <h2 class="section-title">Lecture Summary</h2>
-      </div>
-      <p>
-        This lecture introduces the fundamental concept of a <strong>computer program</strong> — explaining that a program is a step-by-step procedure or set of instructions designed to perform a specific task. Two simple examples are used to illustrate the concept: calculating the <em>area of a rectangle</em> and computing the <em>total bill amount</em> for purchased items.
-      </p>
-      <p>
-        The core insight is that every program consists of two key elements: <strong>data</strong> (the inputs, such as numbers or quantities) and <strong>operations</strong> (the instructions that process that data to achieve a result). Future lectures will build on this foundation by exploring how to store data in variables and how to perform various operations on it.
-      </p>
-    </section>
-
-    <hr class="divider">
-
-    <!-- SECTION 2: CONCEPTS -->
-    <section class="section" id="concepts">
-      <div class="section-header">
-        <div class="section-num">2</div>
-        <h2 class="section-title">Key Concepts &amp; Explanations</h2>
+    
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search syllabus topics..." oninput="filterToc(this.value)">
+    </div>
+    
+    <div class="toc-scroll">
+      
+      <!-- Part 1 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 1 — Python Foundations</h2>
+        <button class="toc-item" id="toc-0" onclick="openTopic(0)"><span class="toc-num">01</span><span class="toc-text">Introduction to Python</span></button>
+        <button class="toc-item" id="toc-1" onclick="openTopic(1)"><span class="toc-num">02</span><span class="toc-text">Python Installation and Setup</span></button>
+        <button class="toc-item" id="toc-2" onclick="openTopic(2)"><span class="toc-num">03</span><span class="toc-text">What are Variables?</span></button>
+        <button class="toc-item" id="toc-3" onclick="openTopic(3)"><span class="toc-num">04</span><span class="toc-text">Python Datatypes</span></button>
+        <button class="toc-item" id="toc-4" onclick="openTopic(4)"><span class="toc-num">05</span><span class="toc-text">Literals & Constants</span></button>
+        <button class="toc-item" id="toc-5" onclick="openTopic(5)"><span class="toc-num">06</span><span class="toc-text">Base & Type Conversion Methods</span></button>
+        <button class="toc-item" id="toc-6" onclick="openTopic(6)"><span class="toc-num">07</span><span class="toc-text">Operators and Expressions</span></button>
+        <button class="toc-item" id="toc-7" onclick="openTopic(7)"><span class="toc-num">08</span><span class="toc-text">Challenges using Expressions</span></button>
+        <button class="toc-item" id="toc-8" onclick="openTopic(8)"><span class="toc-num">09</span><span class="toc-text">Arithmetic Assignment Operators</span></button>
+        <button class="toc-item" id="toc-9" onclick="openTopic(9)"><span class="toc-num">10</span><span class="toc-text">Conditional Statements</span></button>
       </div>
 
-      <!-- 2.1 What is a Program -->
-      <div id="what-is-program">
-        <h3 class="sub">What is a Program?</h3>
-        <div class="concept-card">
-          <h4>Definition</h4>
-          <ul>
-            <li>A program is a <strong>step-by-step procedure</strong> for performing a task or solving a problem.</li>
-            <li>It translates human-understandable steps into a language the computer understands.</li>
-            <li>Programs consist of instructions that guide the computer to perform computations.</li>
-          </ul>
+      <!-- Part 2 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 2 — Control Flow & Strings</h2>
+        <button class="toc-item" id="toc-10" onclick="openTopic(10)"><span class="toc-num">11</span><span class="toc-text">Challenges on Conditional Statements</span></button>
+        <button class="toc-item" id="toc-11" onclick="openTopic(11)"><span class="toc-num">12</span><span class="toc-text">Loop Statements — While Loop</span></button>
+        <button class="toc-item" id="toc-12" onclick="openTopic(12)"><span class="toc-num">13</span><span class="toc-text">Challenges on While Loop</span></button>
+        <button class="toc-item" id="toc-13" onclick="openTopic(13)"><span class="toc-num">14</span><span class="toc-text">For Loop</span></button>
+        <button class="toc-item" id="toc-14" onclick="openTopic(14)"><span class="toc-num">15</span><span class="toc-text">Challenges on For Loop</span></button>
+        <button class="toc-item" id="toc-15" onclick="openTopic(15)"><span class="toc-num">16</span><span class="toc-text">String Datatype</span></button>
+        <button class="toc-item" id="toc-16" onclick="openTopic(16)"><span class="toc-num">17</span><span class="toc-text">Challenges on String</span></button>
+      </div>
+
+      <!-- Part 3 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 3 — Advanced Data Structures</h2>
+        <button class="toc-item" id="toc-17" onclick="openTopic(17)"><span class="toc-num">18</span><span class="toc-text">List</span></button>
+        <button class="toc-item" id="toc-18" onclick="openTopic(18)"><span class="toc-num">19</span><span class="toc-text">Challenges on List</span></button>
+        <button class="toc-item" id="toc-19" onclick="openTopic(19)"><span class="toc-num">20</span><span class="toc-text">Tuple</span></button>
+        <button class="toc-item" id="toc-20" onclick="openTopic(20)"><span class="toc-num">21</span><span class="toc-text">Set</span></button>
+        <button class="toc-item" id="toc-21" onclick="openTopic(21)"><span class="toc-num">22</span><span class="toc-text">Dictionary</span></button>
+        <button class="toc-item" id="toc-22" onclick="openTopic(22)"><span class="toc-num">23</span><span class="toc-text">Challenges on Advanced Datatypes</span></button>
+        <button class="toc-item" id="toc-23" onclick="openTopic(23)"><span class="toc-num">24</span><span class="toc-text">Comprehensions</span></button>
+      </div>
+
+      <!-- Part 4 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 4 — Functions</h2>
+        <button class="toc-item" id="toc-24" onclick="openTopic(24)"><span class="toc-num">25</span><span class="toc-text">Functions — Basics</span></button>
+        <button class="toc-item" id="toc-25" onclick="openTopic(25)"><span class="toc-num">26</span><span class="toc-text">Challenges on Functions</span></button>
+        <button class="toc-item" id="toc-26" onclick="openTopic(26)"><span class="toc-num">27</span><span class="toc-text">Advanced Functions (Lambda, Map, Filter)</span></button>
+        <button class="toc-item" id="toc-27" onclick="openTopic(27)"><span class="toc-num">28</span><span class="toc-text">Recursive Functions</span></button>
+        <button class="toc-item" id="toc-28" onclick="openTopic(28)"><span class="toc-num">29</span><span class="toc-text">Challenges on Advanced Functions</span></button>
+        <button class="toc-item" id="toc-29" onclick="openTopic(29)"><span class="toc-num">30</span><span class="toc-text">Decorators</span></button>
+        <button class="toc-item" id="toc-30" onclick="openTopic(30)"><span class="toc-num">31</span><span class="toc-text">Generators and Iterators</span></button>
+      </div>
+
+      <!-- Part 5 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 5 — Object-Oriented Programming</h2>
+        <button class="toc-item" id="toc-31" onclick="openTopic(31)"><span class="toc-num">32</span><span class="toc-text">Classes and Objects</span></button>
+        <button class="toc-item" id="toc-32" onclick="openTopic(32)"><span class="toc-num">33</span><span class="toc-text">Constructors and Destructors</span></button>
+        <button class="toc-item" id="toc-33" onclick="openTopic(33)"><span class="toc-num">34</span><span class="toc-text">Inheritance</span></button>
+        <button class="toc-item" id="toc-34" onclick="openTopic(34)"><span class="toc-num">35</span><span class="toc-text">Polymorphism and Overriding</span></button>
+        <button class="toc-item" id="toc-35" onclick="openTopic(35)"><span class="toc-num">36</span><span class="toc-text">Encapsulation and Abstraction</span></button>
+        <button class="toc-item" id="toc-36" onclick="openTopic(36)"><span class="toc-num">37</span><span class="toc-text">Magic / Dunder Methods</span></button>
+        <button class="toc-item" id="toc-37" onclick="openTopic(37)"><span class="toc-num">38</span><span class="toc-text">Challenges on OOP</span></button>
+      </div>
+
+      <!-- Part 6 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 6 — Exception Handling</h2>
+        <button class="toc-item" id="toc-38" onclick="openTopic(38)"><span class="toc-num">39</span><span class="toc-text">Exception Handling — try, except, finally</span></button>
+        <button class="toc-item" id="toc-39" onclick="openTopic(39)"><span class="toc-num">40</span><span class="toc-text">User-Defined Exceptions</span></button>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Main Content View Area -->
+  <main class="workspace" id="mainContentArea">
+    
+    <!-- Mobile Response Header -->
+    <div class="mobile-nav-bar">
+      <button class="mobile-toggle-btn" onclick="toggleMobileSidebar()">
+        <span id="toggleButtonArrow">📋</span> <span id="toggleButtonText">View Course Contents</span>
+      </button>
+      <div style="font-weight:700; font-size:0.9rem; color:var(--text-muted);">Python Space</div>
+    </div>
+
+    <!-- Syllabus Completion Progress Indicator Tracker -->
+    <div class="progress-container">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Default Initial Welcome Banner Card Dashboard -->
+    <div class="welcome-card" id="welcomeCard">
+      <div class="welcome-icon">🐍</div>
+      <h2 class="welcome-title">Welcome to Python Core Operations</h2>
+      <p class="welcome-subtitle">Select any operational module or lab assignment challenge entry from the sidebar index list layout view to initialization your code exploration engine space environments.</p>
+      <button class="btn btn-primary" onclick="openTopic(0)">Start Learning Module 1</button>
+    </div>
+
+    <!-- Main Module Display Canvas Layout Panels wrapper -->
+    <div class="content-panel" id="contentPanel">
+      
+      <header class="panel-header">
+        <div class="meta-badge">
+          <span id="panelNum">00</span>
+          <span id="panelModule">Module Target Area</span>
         </div>
-      </div>
+        <h1 class="panel-title" id="panelTitle">No Topic Loaded</h1>
+        <p class="panel-desc" id="panelDesc">Please make an index structural tracking selection profile to process frame components blocks.</p>
+      </header>
 
-      <!-- 2.2 Example 1 -->
-      <div id="example1">
-        <h3 class="sub">Example 1 – Area of a Rectangle</h3>
-        <div class="two-col">
-          <div class="data-card">
-            <div class="data-card-head">📥 Data (Input)</div>
-            <div class="data-card-body">
-              <ul>
-                <li>Length value</li>
-                <li>Breadth value</li>
-              </ul>
-            </div>
-          </div>
-          <div class="data-card">
-            <div class="data-card-head">⚙️ Operation &amp; Result</div>
-            <div class="data-card-body">
-              <ul>
-                <li>Multiply length × breadth</li>
-                <li>Print computed area</li>
-              </ul>
-            </div>
-          </div>
+      <div class="action-bar">
+        <div class="nav-btn-group">
+          <button class="btn" id="prevBtn" onclick="navigateTopic(-1)" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Previous</span>
+          </button>
+          <button class="btn" id="nextBtn" onclick="navigateTopic(1)" disabled>
+            <span>Next</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
         </div>
-      </div>
-
-      <!-- 2.3 Example 2 -->
-      <div id="example2">
-        <h3 class="sub">Example 2 – Calculating Bill Amount</h3>
-        <div class="two-col">
-          <div class="data-card">
-            <div class="data-card-head">📥 Data (Input)</div>
-            <div class="data-card-body">
-              <ul>
-                <li>List of item prices</li>
-                <li>List of quantities purchased</li>
-              </ul>
-            </div>
-          </div>
-          <div class="data-card">
-            <div class="data-card-head">⚙️ Operations &amp; Result</div>
-            <div class="data-card-body">
-              <ul>
-                <li>For each item: price × quantity</li>
-                <li>Sum all products</li>
-                <li>Print total bill amount</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2.4 Data and Operations -->
-      <div id="data-ops">
-        <h3 class="sub">Data and Operations</h3>
-        <p>Every program, no matter how complex, can be broken down into two fundamental components:</p>
-        <div class="two-col">
-          <div class="concept-card">
-            <h4>1. Data</h4>
-            <ul>
-              <li>Inputs or information needed for computation</li>
-              <li>Examples: numbers, lists, text strings</li>
-              <li>The <em>raw material</em> a program works with</li>
-            </ul>
-          </div>
-          <div class="concept-card">
-            <h4>2. Operations (Instructions)</h4>
-            <ul>
-              <li>Actions and computations performed on data</li>
-              <li>Examples: add, multiply, loop, compare</li>
-              <li>Transform data into the desired output</li>
-            </ul>
-          </div>
+        
+        <div class="nav-btn-group">
+          <button class="btn" onclick="copyLink()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Link</span>
+          </button>
+          <a class="btn btn-primary" id="viewMaterialBtn" target="_blank" href="#">
+            <span>Open Raw Raw</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
         </div>
       </div>
 
-      <!-- 2.5 Variables -->
-      <div id="variables">
-        <h3 class="sub">Variables</h3>
-        <div class="callout">
-          <strong>Variables</strong> are named containers that store data values inside a program. They give meaningful names to data (e.g., <span class="chip">length</span>, <span class="chip">prices</span>) and allow a program to hold and manipulate that data throughout its execution.
+      <!-- Live Preview Canvas Sandbox Section Container block workspace -->
+      <div class="sandbox-container">
+        <div class="iframe-loader hidden" id="iframeLoader">
+          <div class="spinner"></div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Fetching documentation nodes components...</div>
         </div>
+        <iframe class="content-frame" id="contentFrame" onload="onFrameLoad()" src="about:blank"></iframe>
       </div>
 
-    </section>
+    </div>
+  </main>
 
-    <hr class="divider">
+  <!-- Setup Module Mapping Scripts Execution System Array Profiles definitions -->
+  <script>
+    const GITHUB_BASE = 'https://nkhooah-bot.github.io/python-programming/';
 
-    <!-- SECTION 3: CODE -->
-    <section class="section" id="code">
-      <div class="section-header">
-        <div class="section-num">3</div>
-        <h2 class="section-title">Example Code &amp; Use Cases</h2>
-      </div>
+    const topics = [
+      // Part 1 — Python Foundations
+      { num: '01', module: 'Part 1 — Python Foundations', title: 'Introduction to Python', file: 'lecture_intro_python.html', desc: 'An introductory overview of Python features, architecture, and writing your very first Python execution block.' },
+      { num: '02', module: 'Part 1 — Python Foundations', title: 'Python Installation and Setup', file: 'lecture_install_setup.html', desc: 'Setting up the Python environment, configuring system variables, and launching integrated development environments.' },
+      { num: '03', module: 'Part 1 — Python Foundations', title: 'What are Variables?', file: 'lecture_variables.html', desc: 'Understanding memory pointers, naming rules, dynamic binding, and data storage references in Python.' },
+      { num: '04', module: 'Part 1 — Python Foundations', title: 'Python Datatypes', file: 'lecture_datatypes.html', desc: 'Deep dive into fundamental literal data classes including integers, floats, complex types, and standard classifications.' },
+      { num: '05', module: 'Part 1 — Python Foundations', title: 'Literals & Constants', file: 'lecture_literals_constants.html', desc: 'Exploring fixed scalar literal values, constant naming conventions, and immutable configurations.' },
+      { num: '06', module: 'Part 1 — Python Foundations', title: 'Base & Type Conversion Methods', file: 'lecture_type_conversion.html', desc: 'Mastering implicit and explicit type casting alongside base formatting parameters like binary, octal, and hexadecimal.' },
+      { num: '07', module: 'Part 1 — Python Foundations', title: 'Operators and Expressions', file: 'lecture_operators.html', desc: 'Evaluating relational, identity, arithmetic, and logical syntax structures inside computation blocks.' },
+      { num: '08', module: 'Part 1 — Python Foundations', title: 'Challenges using Expressions', file: 'challenge_expressions.html', desc: 'Hands-on programming assignments designed to practice operator precedence and compound algorithmic configurations.' },
+      { num: '09', module: 'Part 1 — Python Foundations', title: 'Arithmetic Assignment Operators', file: 'lecture_assignment_operators.html', desc: 'Working with short-circuit updates, augmented evaluations, and modifying values in-place efficiently.' },
+      { num: '10', module: 'Part 1 — Python Foundations', title: 'Conditional Statements', file: 'lecture_conditionals.html', desc: 'Building logic trees using clear structural flows with standard if, elif, and nested conditional structures.' },
 
-      <!-- Code 1 -->
-      <div id="code1">
-        <h3 class="sub">Code Example 1 – Calculate Area of a Rectangle</h3>
-        <div class="code-block">
-          <div class="code-header">
-            <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-            <span>rectangle_area.py</span>
-          </div>
-          <pre><span class="cm"># Assign values to variables</span>
-<span class="var">length</span> <span class="op">=</span> <span class="nm">15</span>
-<span class="var">breadth</span> <span class="op">=</span> <span class="nm">5</span>
+      // Part 2 — Control Flow & Strings
+      { num: '11', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on Conditional Statements', file: 'challenge_conditionals.html', desc: 'Coding lab problems constructing truth matrices, input validation guards, and branching evaluations.' },
+      { num: '12', module: 'Part 2 — Control Flow & Strings', title: 'Loop Statements — While Loop', file: 'lecture_while_loops.html', desc: 'Implementing definite and indefinite iteration sequences anchored by expression truth assessments.' },
+      { num: '13', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on While Loop', file: 'challenge_while_loops.html', desc: 'Solving structural iteration algorithms, running trackers, and programmatic control breaks.' },
+      { num: '14', module: 'Part 2 — Control Flow & Strings', title: 'For Loop', file: 'lecture_for_loops.html', desc: 'Traversing explicit sequence indices, data structures, generator boundaries, and range iterations.' },
+      { num: '15', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on For Loop', file: 'challenge_for_loops.html', desc: 'Iterative design challenges including nested matrices extraction, factorial computations, and pattern layouts.' },
+      { num: '16', module: 'Part 2 — Control Flow & Strings', title: 'String Datatype', file: 'lecture_strings.html', desc: 'Deep dive into character arrays, unicode representations, immutability behaviors, and slicing structures.' },
+      { num: '17', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on String', file: 'challenge_strings.html', desc: 'Algorithmic string parser challenges covering validation checks, token sorting, and formatting routines.' },
 
-<span class="cm"># Perform the operation</span>
-<span class="var">area</span> <span class="op">=</span> <span class="var">length</span> <span class="op">*</span> <span class="var">breadth</span>
+      // Part 3 — Advanced Data Structures
+      { num: '18', module: 'Part 3 — Advanced Data Structures', title: 'List', file: 'lecture_lists.html', desc: 'Utilizing ordered linear vectors, mutable sequences, reference slicing syntax, and storage tracking methods.' },
+      { num: '19', module: 'Part 3 — Advanced Data Structures', title: 'Challenges on List', file: 'challenge_lists.html', desc: 'Matrix array operations, search optimizations, indexing modifications, and custom filter configurations.' },
+      { num: '20', module: 'Part 3 — Advanced Data Structures', title: 'Tuple', file: 'lecture_tuples.html', desc: 'Understanding structural packing, positional layout items, sequence immutability optimizations, and data integrity safeguards.' },
+      { num: '21', module: 'Part 3 — Advanced Data Structures', title: 'Set', file: 'lecture_sets.html', desc: 'Utilizing unique data groupings, hashing keys, mathematical interactions, intersection matches, and differences.' },
+      { num: '22', module: 'Part 3 — Advanced Data Structures', title: 'Dictionary', file: 'lecture_dictionaries.html', desc: 'Building map tables, key-value mappings, complex lookup tables, handling updates, and nested models.' },
+      { num: '23', module: 'Part 3 — Advanced Data Structures', title: 'Challenges on Advanced Datatypes', file: 'challenge_advanced_datatypes.html', desc: 'Complex compound structures mapping data combinations, unique filter applications, and parsing trees.' },
+      { num: '24', module: 'Part 3 — Advanced Data Structures', title: 'Comprehensions', file: 'lecture_comprehensions.html', desc: 'Writing declarative inline transformations for array layouts, associative arrays, and filter pipelines.' },
 
-<span class="cm"># Display the result</span>
-<span class="fn">print</span>(<span class="st">'Area is'</span>, <span class="var">area</span>)</pre>
-        </div>
-        <div class="callout">
-          <strong>Explanation:</strong> Numeric values are assigned to <span class="chip">length</span> and <span class="chip">breadth</span>. Their product is computed and stored in <span class="chip">area</span>, which is then printed. Output: <strong>Area is 75</strong>
-        </div>
-      </div>
+      // Part 4 — Functions
+      { num: '25', module: 'Part 4 — Functions', title: 'Functions — Basics', file: 'lecture_functions_basics.html', desc: 'Structuring operational parameters, dynamic scopes, reference values, tracking stacks, and return scopes.' },
+      { num: '26', module: 'Part 4 — Functions', title: 'Challenges on Functions', file: 'challenge_functions.html', desc: 'Designing reusable software layers, validation blocks, pipeline components, and isolated operations.' },
+      { num: '27', module: 'Part 4 — Functions', title: 'Advanced Functions (Lambda, Map, Filter)', file: 'lecture_advanced_functions.html', desc: 'Leveraging functional methods, processing pipelines, structural operations, and transient configurations.' },
+      { num: '28', module: 'Part 4 — Functions', title: 'Recursive Functions', file: 'lecture_recursion.html', desc: 'Building logical stack definitions, termination pathways, handling operational depth, and structure trees.' },
+      { num: '29', module: 'Part 4 — Functions', title: 'Challenges on Advanced Functions', file: 'challenge_advanced_functions.html', desc: 'Constructing recursive math systems, analytical data processing trees, and data pipeline flows.' },
+      { num: '30', module: 'Part 4 — Functions', title: 'Decorators', file: 'lecture_decorators.html', desc: 'Writing runtime meta-wrappers, function modifications, tracing execution times, and interface bindings.' },
+      { num: '31', module: 'Part 4 — Functions', title: 'Generators and Iterators', file: 'lecture_generators.html', desc: 'Building iterative item streaming pipelines, lazy evaluation sequences, memory spaces, and custom yield rules.' },
 
-      <!-- Code 2 -->
-      <div id="code2">
-        <h3 class="sub">Code Example 2 – Calculate Total Bill Amount</h3>
-        <div class="code-block">
-          <div class="code-header">
-            <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
-            <span>bill_calculator.py</span>
-          </div>
-          <pre><span class="cm"># Data: lists of prices and quantities</span>
-<span class="var">prices</span>   <span class="op">=</span> [<span class="nm">10</span>, <span class="nm">7</span>, <span class="nm">5</span>, <span class="nm">8</span>, <span class="nm">6</span>]
-<span class="var">quantity</span> <span class="op">=</span> [<span class="nm">1</span>,  <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">1</span>, <span class="nm">1</span>]
+      // Part 5 — Object-Oriented Programming
+      { num: '32', module: 'Part 5 — Object-Oriented Programming', title: 'Classes and Objects', file: 'lecture_classes_objects.html', desc: 'Modeling application data models, defining custom types, initialization spaces, and instance scopes.' },
+      { num: '33', module: 'Part 5 — Object-Oriented Programming', title: 'Constructors and Destructors', file: 'lecture_constructors.html', desc: 'Tracking entity operational life cycles, state loading rules, resource cleanups, and memory releases.' },
+      { num: '34', module: 'Part 5 — Object-Oriented Programming', title: 'Inheritance', file: 'lecture_inheritance.html', desc: 'Extending behavior tracking layers, hierarchical classifications, parent classes, and overriding methods.' },
+      { num: '35', module: 'Part 5 — Object-Oriented Programming', title: 'Polymorphism and Overriding', file: 'lecture_polymorphism.html', desc: 'Implementing multi-type shared calls, overriding methods, and creating abstract runtime integrations.' },
+      { num: '36', module: 'Part 5 — Object-Oriented Programming', title: 'Encapsulation and Abstraction', file: 'lecture_encapsulation.html', desc: 'Protecting structural properties, private scopes, setting interface gates, and hiding logic blocks.' },
+      { num: '37', module: 'Part 5 — Object-Oriented Programming', title: 'Magic / Dunder Methods', file: 'lecture_dunder_methods.html', desc: 'Overloading internal engine processes, managing comparisons, rendering strings, and custom actions.' },
+      { num: '38', module: 'Part 5 — Object-Oriented Programming', title: 'Challenges on OOP', file: 'challenge_oop.html', desc: 'Building enterprise tracking modules, abstract system relationships, and processing engine patterns.' },
 
-<span class="cm"># Running total starts at zero</span>
-<span class="var">total</span> <span class="op">=</span> <span class="nm">0</span>
+      // Part 6 — Exception Handling
+      { num: '39', module: 'Part 6 — Exception Handling', title: 'Exception Handling — try, except, finally', file: 'lecture_exception_handling.html', desc: 'Isolating process faults, catching runtime errors, error messaging, and system execution recovery.' },
+      { num: '40', module: 'Part 6 — Exception Handling', title: 'User-Defined Exceptions', file: 'lecture_custom_exceptions.html', desc: 'Extending base failure handlers, configuring specific application crashes, validation logic, and diagnostic metrics.' }
+    ];
 
-<span class="cm"># Loop through each item and accumulate cost</span>
-<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(<span class="var">prices</span>)):
-    <span class="var">total</span> <span class="op">=</span> <span class="var">total</span> <span class="op">+</span> <span class="var">prices</span>[<span class="var">i</span>] <span class="op">*</span> <span class="var">quantity</span>[<span class="var">i</span>]
+    let currentIndex = -1;
 
-<span class="cm"># Print the final bill</span>
-<span class="fn">print</span>(<span class="st">'Bill Amount'</span>, <span class="var">total</span>)</pre>
-        </div>
-        <div class="callout">
-          <strong>Explanation:</strong> Two lists store prices and quantities. A <span class="chip">for</span> loop iterates through them, multiplying each pair and adding the result to <span class="chip">total</span>. The breakdown: 10×1 + 7×2 + 5×3 + 8×1 + 6×1 = <strong>10 + 14 + 15 + 8 + 6 = 53</strong>. Output: <strong>Bill Amount 53</strong>
-        </div>
-      </div>
-
-    </section>
-
-    <hr class="divider">
-
-    <!-- SECTION 4: TAKEAWAYS -->
-    <section class="section" id="takeaways">
-      <div class="section-header">
-        <div class="section-num">4</div>
-        <h2 class="section-title">Key Takeaways</h2>
-      </div>
-      <div class="takeaway-grid">
-        <div class="takeaway-item">
-          <div class="takeaway-icon">1</div>
-          <p>A program is a <strong>set of instructions</strong> that a computer executes to perform a task.</p>
-        </div>
-        <div class="takeaway-item">
-          <div class="takeaway-icon">2</div>
-          <p>Every program has two essential parts: <strong>data</strong> (the input) and <strong>operations</strong> (instructions to process data).</p>
-        </div>
-        <div class="takeaway-item">
-          <div class="takeaway-icon">3</div>
-          <p><strong>Variables</strong> are named containers used to store and manipulate data values inside a program.</p>
-        </div>
-        <div class="takeaway-item">
-          <div class="takeaway-icon">4</div>
-          <p>Understanding how to <strong>handle and manipulate data</strong> is the fundamental building block of programming.</p>
-        </div>
-        <div class="takeaway-item">
-          <div class="takeaway-icon">5</div>
-          <p>Simple examples like <strong>area calculation</strong> and <strong>bill totalling</strong> perfectly illustrate the data + operations model.</p>
-        </div>
-        <div class="takeaway-item">
-          <div class="takeaway-icon">6</div>
-          <p><strong>Future lectures</strong> will focus on managing data types and performing a wider range of operations to solve problems.</p>
-        </div>
-      </div>
-    </section>
-
-  </div><!-- /body -->
-
-  <!-- FOOTER -->
-  <div id="footer">
-    <span>Learn Python Programming – Beginner to Master</span>
-    <span>Section 3 · <span>Lecture 14</span></span>
-  </div>
-
-</div><!-- /document -->
-
-<script>
-  // Smooth scroll for TOC links
-  document.querySelectorAll('#toc a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const topicParam = params.get('topic');
+      
+      if (topicParam !== null) {
+        const topicIdx = parseInt(topicParam, 10);
+        if (!isNaN(topicIdx) && topicIdx >= 0 && topicIdx < topics.length) {
+          openTopic(topicIdx);
+          return;
+        }
+      }
+      updateProgressBar();
     });
-  });
-</script>
+
+    function openTopic(index) {
+      if (index < 0 || index >= topics.length) return;
+      currentIndex = index;
+      
+      document.querySelectorAll('.toc-item').forEach(btn => btn.classList.remove('active'));
+      
+      const activeBtn = document.getElementById(`toc-${index}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar.classList.contains('mobile-open')) {
+        toggleMobileSidebar();
+      }
+      
+      document.getElementById('welcomeCard').style.display = 'none';
+      
+      const panel = document.getElementById('contentPanel');
+      panel.classList.add('visible');
+      
+      document.getElementById('panelNum').textContent = topics[index].num;
+      document.getElementById('panelModule').textContent = topics[index].module;
+      document.getElementById('panelTitle').textContent = topics[index].title;
+      document.getElementById('panelDesc').textContent = topics[index].desc;
+      
+      document.getElementById('prevBtn').disabled = (index === 0);
+      document.getElementById('nextBtn').disabled = (index === topics.length - 1);
+      
+      const targetUrl = GITHUB_BASE + topics[index].file;
+      document.getElementById('viewMaterialBtn').href = targetUrl;
+      
+      const iframe = document.getElementById('contentFrame');
+      document.getElementById('iframeLoader').classList.remove('hidden');
+      iframe.src = targetUrl;
+      
+      updateProgressBar();
+      
+      if (window.innerWidth < 820) {
+        document.getElementById('mainContentArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function onFrameLoad() {
+      setTimeout(() => {
+        document.getElementById('iframeLoader').classList.add('hidden');
+      }, 200);
+    }
+
+    function navigateTopic(dir) {
+      const next = currentIndex + dir;
+      if (next >= 0 && next < topics.length) openTopic(next);
+    }
+
+    function copyLink() {
+      if (currentIndex < 0) return;
+      const url = GITHUB_BASE + topics[currentIndex].file;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = event.currentTarget;
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+        setTimeout(() => { btn.innerHTML = orig; }, 1800);
+      });
+    }
+
+    function filterToc(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.toc-item').forEach((btn, i) => {
+        const text = topics[i].title.toLowerCase();
+        btn.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+      });
+      
+      document.querySelectorAll('.module-group').forEach(group => {
+        const anyVisible = [...group.querySelectorAll('.toc-item')].some(b => b.style.display !== 'none');
+        group.style.display = anyVisible ? 'block' : 'none';
+      });
+    }
+
+    function updateProgressBar() {
+      const fill = document.getElementById('progressFill');
+      if (!fill) return;
+      if (currentIndex < 0) {
+        fill.style.width = '0%';
+      } else {
+        const pct = ((currentIndex + 1) / topics.length) * 100;
+        fill.style.width = `${pct}%`;
+      }
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const arrow = document.getElementById('toggleButtonArrow');
+      const txt = document.getElementById('toggleButtonText');
+      
+      sidebar.classList.toggle('mobile-open');
+      
+      if (sidebar.classList.contains('mobile-open')) {
+        arrow.style.transform = 'rotate(180deg)';
+        txt.textContent = '❌ Close Course Contents';
+      } else {
+        arrow.style.transform = 'rotate(0deg)';
+        txt.textContent = '📋 View Course Contents';
+      }
+    }
+  </script>
 </body>
 </html>
-
