@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Python Programming — Course Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:       #1a6b72;
+  --teal-dark:  #0e4449;
+  --teal-mid:   #256b72;
+  --teal-light: #d6edef;
+  --teal-xlight:#eef7f8;
+  --gold:       #c8a84b;
+  --gold-light: #f5ead0;
+  --cream:      #faf6ef;
+  --paper:      #fffdf9;
+  --ink:        #181818;
+  --muted:      #6b6b6b;
+  --border:     #ddd6c5;
+  --white:      #ffffff;
+  --shadow-sm:  0 1px 4px rgba(0,0,0,.08);
+  --shadow-md:  0 4px 24px rgba(0,0,0,.12);
+  --shadow-lg:  0 12px 48px rgba(0,0,0,.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ───────────────────────────────────────────────── */
+.hero {
+  background: var(--teal-dark);
+  position: relative;
+  overflow: hidden;
+  padding: 60px 24px;
+}
+@media (min-width: 768px) {
+  .hero { padding: 72px 40px 64px; }
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 110% 40%, rgba(200,168,75,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at -10% 80%, rgba(26,107,114,.5) 0%, transparent 60%),
+    repeating-linear-gradient(-45deg, transparent, transparent 22px, rgba(255,255,255,.018) 22px, rgba(255,255,255,.018) 44px);
+}
+.hero-inner { max-width: 1400px; margin: 0 auto; position: relative; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(200,168,75,.18);
+  border: 1px solid rgba(200,168,75,.4);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow svg { flex-shrink: 0; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4.5vw, 44px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  max-width: 900px;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  color: rgba(255,255,255,.6);
+  font-size: 15px;
+  font-weight: 300;
+  max-width: 760px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.hero-meta { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,.55);
+  font-size: 13px;
+}
+.hero-meta-item strong { color: rgba(255,255,255,.85); font-weight: 500; }
+.hero-meta-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.hero-badge {
+  position: absolute;
+  top: 0; right: 0;
+  background: var(--gold);
+  color: var(--teal-dark);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 0 0 0 6px;
+}
+
+/* ── PROGRESS BAR ───────────────────────────────────────── */
+.progress-bar { height: 4px; background: rgba(200,168,75,.15); position: relative; }
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transition: width .3s ease;
+}
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.layout {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (min-width: 820px) {
+  .layout {
+    grid-template-columns: 320px minmax(0, 1fr);
+    padding: 48px 32px 80px;
+    gap: 32px;
+  }
+}
+
+/* ── MOBILE TOGGLE CONTAINER ────────────────────────────── */
+.mobile-toggle-container {
+  padding: 16px 16px 0;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+@media (min-width: 820px) {
+  .mobile-toggle-container {
+    display: none;
+  }
+}
+
+/* ── SIDEBAR ────────────────────────────────────────────── */
+.sidebar {
+  display: none;
+}
+.sidebar.mobile-open {
+  display: block;
+}
+@media (min-width: 820px) {
+  .sidebar {
+    display: block !important;
+    position: sticky;
+    top: 24px;
+  }
+}
+
+.sidebar-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.sidebar-head {
+  background: var(--teal);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: .02em;
+}
+.sidebar-count {
+  background: rgba(255,255,255,.15);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-family: 'DM Mono', monospace;
+}
+.sidebar-body { padding: 8px 0; max-height: 65vh; overflow-y: auto; }
+.sidebar-body::-webkit-scrollbar { width: 4px; }
+.sidebar-body::-webkit-scrollbar-track { background: transparent; }
+.sidebar-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.module-group { margin-bottom: 4px; }
+.module-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 18px 6px;
+  border-top: 1px solid rgba(221, 214, 197, 0.3);
+}
+.module-group:first-child .module-label { border-top: none; }
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  border-left: 3px solid transparent;
+  transition: all .15s ease;
+  position: relative;
+}
+.toc-item:hover { background: var(--teal-xlight); border-left-color: var(--teal-light); }
+.toc-item.active { background: var(--teal-xlight); border-left-color: var(--teal); }
+.toc-item.active .toc-num { background: var(--teal); color: var(--white); }
+.toc-item.active .toc-text { color: var(--teal-dark); font-weight: 600; }
+.toc-num {
+  min-width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--muted);
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.toc-text { font-size: 13px; color: #333; line-height: 1.4; transition: color .15s; flex-grow: 1; }
+.toc-item .toc-arrow {
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity .15s;
+  flex-shrink: 0;
+}
+.toc-item:hover .toc-arrow, .toc-item.active .toc-arrow { opacity: 1; }
+
+/* ── SEARCH ─────────────────────────────────────────────── */
+.search-wrap {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.search-wrap input {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px 10px 8px 34px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s;
+}
+.search-wrap input:focus { border-color: var(--teal); background: var(--white); }
+.search-wrap input::placeholder { color: var(--muted); }
+.search-icon {
+  position: absolute;
+  left: 22px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* ── MAIN CONTENT ───────────────────────────────────────── */
+.welcome-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 768px) {
+  .welcome-card { padding: 60px 40px; }
+}
+.welcome-icon {
+  width: 64px; height: 64px;
+  background: var(--teal-xlight);
+  border: 2px solid var(--teal-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+}
+.welcome-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: var(--teal-dark);
+  margin-bottom: 12px;
+}
+.welcome-card p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 440px; margin: 0 auto; }
+.welcome-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  background: var(--gold-light);
+  border: 1px solid rgba(200,168,75,.3);
+  color: #8a6f20;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* ── CONTENT PANEL ──────────────────────────────────────── */
+.content-panel { display: none; animation: panelIn .25s ease; }
+.content-panel.visible { display: block; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.panel-header {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 6px 6px 0 0;
+  padding: 24px 20px;
+  border-bottom: none;
+}
+@media (min-width: 768px) {
+  .panel-header { padding: 28px 32px 24px; }
+}
+.panel-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.panel-num {
+  background: var(--teal);
+  color: var(--white);
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 3px;
+  letter-spacing: .05em;
+}
+.panel-module-tag {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.panel-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--teal-dark);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.panel-desc { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 1000px; }
+.panel-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+.btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+}
+.btn-primary { background: var(--teal); color: var(--white); border: none; }
+.btn-primary:hover { background: var(--teal-dark); }
+.btn-secondary { background: var(--white); color: var(--teal); border: 1.5px solid var(--teal-light); }
+.btn-secondary:hover { background: var(--teal-xlight); border-color: var(--teal); }
+
+.panel-body {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 0 0 6px 6px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 768px) {
+  .panel-body { padding: 32px; }
+}
+.panel-iframe-wrap {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  position: relative;
+}
+.panel-iframe-wrap iframe {
+  width: 100%;
+  height: 50vh;
+  min-height: 460px;
+  border: none;
+  display: block;
+}
+@media (min-width: 1024px) {
+  .panel-iframe-wrap iframe { height: 70vh; min-height: 680px; }
+}
+
+.iframe-loader {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 2;
+  transition: opacity .3s ease;
+}
+.iframe-loader.hidden { opacity: 0; pointer-events: none; }
+.loader-ring {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-text { font-size: 12px; color: var(--muted); }
+
+.placeholder-wrap {
+  background: var(--cream);
+  border: 1.5px dashed var(--border);
+  border-radius: 4px;
+  padding: 60px 20px;
+  text-align: center;
+}
+.placeholder-wrap h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--teal-dark);
+  margin-bottom: 8px;
+}
+.placeholder-wrap p { font-size: 13.5px; color: var(--muted); line-height: 1.65; max-width: 380px; margin: 0 auto; }
+.code-tag {
+  display: inline-block;
+  background: var(--teal-xlight);
+  border: 1px solid var(--teal-light);
+  color: var(--teal-dark);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-top: 12px;
+}
+
+/* ── NAV ARROWS ─────────────────────────────────────────── */
+.nav-arrows { display: flex; justify-content: space-between; margin-top: 20px; gap: 16px; }
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .15s;
+  flex: 1;
+  justify-content: center;
+}
+@media (min-width: 480px) {
+  .nav-btn { flex: none; width: auto; }
+}
+.nav-btn:hover { background: var(--teal-xlight); border-color: var(--teal-light); }
+.nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ── MOBILE TOGGLE ──────────────────────────────────────── */
+.mobile-toc-toggle {
+  display: flex;
+  width: 100%;
+  background: var(--teal);
+  color: var(--white);
+  border: none;
+  padding: 14px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.site-footer {
+  background: var(--teal-dark);
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: auto;
+}
+@media (min-width: 768px) {
+  .site-footer { padding: 24px 40px; }
+}
+.site-footer p { color: rgba(255,255,255,.4); font-size: 12px; }
+.site-footer a {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: opacity .15s;
+}
+.site-footer a:hover { opacity: .75; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Programming Course</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+      Development &amp; Technology · Programming Languages
+    </div>
+    <h1>Learn Python Programming —<br><em>Beginner to Master</em></h1>
+    <p class="hero-sub">A comprehensive Python course covering fundamentals, data structures, OOP, multithreading, file handling, database programming, and GUI development with 100+ hands-on chal[...]
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-dot"></div>
+        <strong>65</strong>&nbsp;Sections
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-dot"></div>
+        <strong>355</strong>&nbsp;Lectures
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-dot"></div>
+        <strong>61h 3m</strong>&nbsp;Total Length
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-dot"></div>
+        <strong>Beginner to Master</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+
+<div class="mobile-toggle-container">
+  <button class="mobile-toc-toggle" onclick="toggleMobileSidebar()">
+    <span id="toggleButtonText">📋 View Course Contents</span>
+    <svg id="toggleButtonArrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-head">
+        <h2>Course Contents</h2>
+        <span class="sidebar-count">65</span>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="tocSearch" placeholder="Search sections…" oninput="filterToc(this.value)">
+      </div>
+      <div class="sidebar-body" id="tocBody">
+
+        <div class="module-group">
+          <div class="module-label">Part 1 — Python Foundations</div>
+          <button class="toc-item" onclick="openTopic(0)" id="toc-0">
+            <span class="toc-num">01</span>
+            <span class="toc-text">Introduction to Python</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(1)" id="toc-1">
+            <span class="toc-num">02</span>
+            <span class="toc-text">Python Installation and Setup</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(2)" id="toc-2">
+            <span class="toc-num">03</span>
+            <span class="toc-text">What are Variables?</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(3)" id="toc-3">
+            <span class="toc-num">04</span>
+            <span class="toc-text">Python Datatypes</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(4)" id="toc-4">
+            <span class="toc-num">05</span>
+            <span class="toc-text">Literals &amp; Constants</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(5)" id="toc-5">
+            <span class="toc-num">06</span>
+            <span class="toc-text">Base &amp; Type Conversion Methods</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(6)" id="toc-6">
+            <span class="toc-num">07</span>
+            <span class="toc-text">Operators and Expressions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(7)" id="toc-7">
+            <span class="toc-num">08</span>
+            <span class="toc-text">Challenges using Expressions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(8)" id="toc-8">
+            <span class="toc-num">09</span>
+            <span class="toc-text">Arithmetic Assignment Operators</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(9)" id="toc-9">
+            <span class="toc-num">10</span>
+            <span class="toc-text">Conditional Statements</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 2 — Control Flow &amp; Strings</div>
+          <button class="toc-item" onclick="openTopic(10)" id="toc-10">
+            <span class="toc-num">11</span>
+            <span class="toc-text">Challenges on Conditional Statements</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(11)" id="toc-11">
+            <span class="toc-num">12</span>
+            <span class="toc-text">Loop Statements — While Loop</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(12)" id="toc-12">
+            <span class="toc-num">13</span>
+            <span class="toc-text">Challenges on While Loop</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(13)" id="toc-13">
+            <span class="toc-num">14</span>
+            <span class="toc-text">For Loop</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(14)" id="toc-14">
+            <span class="toc-num">15</span>
+            <span class="toc-text">Challenges on For Loop</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(15)" id="toc-15">
+            <span class="toc-num">16</span>
+            <span class="toc-text">String Datatype</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(16)" id="toc-16">
+            <span class="toc-num">17</span>
+            <span class="toc-text">Challenges on String</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 3 — Advanced Data Structures</div>
+          <button class="toc-item" onclick="openTopic(17)" id="toc-17">
+            <span class="toc-num">18</span>
+            <span class="toc-text">List</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(18)" id="toc-18">
+            <span class="toc-num">19</span>
+            <span class="toc-text">Challenges on List</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(19)" id="toc-19">
+            <span class="toc-num">20</span>
+            <span class="toc-text">Tuple</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(20)" id="toc-20">
+            <span class="toc-num">21</span>
+            <span class="toc-text">Set</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(21)" id="toc-21">
+            <span class="toc-num">22</span>
+            <span class="toc-text">Dictionary</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(22)" id="toc-22">
+            <span class="toc-num">23</span>
+            <span class="toc-text">Challenges on Advanced Datatypes</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(23)" id="toc-23">
+            <span class="toc-num">24</span>
+            <span class="toc-text">Comprehensions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 4 — Functions</div>
+          <button class="toc-item" onclick="openTopic(24)" id="toc-24">
+            <span class="toc-num">25</span>
+            <span class="toc-text">Functions — Basics</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(25)" id="toc-25">
+            <span class="toc-num">26</span>
+            <span class="toc-text">Challenges on Functions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(26)" id="toc-26">
+            <span class="toc-num">27</span>
+            <span class="toc-text">Advanced Functions (Lambda, Map, Filter)</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(27)" id="toc-27">
+            <span class="toc-num">28</span>
+            <span class="toc-text">Recursive Functions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(28)" id="toc-28">
+            <span class="toc-num">29</span>
+            <span class="toc-text">Challenges on Advanced Functions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(29)" id="toc-29">
+            <span class="toc-num">30</span>
+            <span class="toc-text">Decorators</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(30)" id="toc-30">
+            <span class="toc-num">31</span>
+            <span class="toc-text">Generators and Iterators</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 5 — Object-Oriented Programming</div>
+          <button class="toc-item" onclick="openTopic(31)" id="toc-31">
+            <span class="toc-num">32</span>
+            <span class="toc-text">Classes and Objects</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(32)" id="toc-32">
+            <span class="toc-num">33</span>
+            <span class="toc-text">Constructors and Destructors</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(33)" id="toc-33">
+            <span class="toc-num">34</span>
+            <span class="toc-text">Inheritance</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(34)" id="toc-34">
+            <span class="toc-num">35</span>
+            <span class="toc-text">Polymorphism and Overriding</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(35)" id="toc-35">
+            <span class="toc-num">36</span>
+            <span class="toc-text">Encapsulation and Abstraction</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(36)" id="toc-36">
+            <span class="toc-num">37</span>
+            <span class="toc-text">Magic / Dunder Methods</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(37)" id="toc-37">
+            <span class="toc-num">38</span>
+            <span class="toc-text">Challenges on OOP</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 6 — Exception Handling</div>
+          <button class="toc-item" onclick="openTopic(38)" id="toc-38">
+            <span class="toc-num">39</span>
+            <span class="toc-text">Exception Handling — try, except, finally</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(39)" id="toc-39">
+            <span class="toc-num">40</span>
+            <span class="toc-text">User-Defined Exceptions</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(40)" id="toc-40">
+            <span class="toc-num">41</span>
+            <span class="toc-text">Challenges on Exception Handling</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 7 — File Handling</div>
+          <button class="toc-item" onclick="openTopic(41)" id="toc-41">
+            <span class="toc-num">42</span>
+            <span class="toc-text">File Handling — Read, Write, Append</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(42)" id="toc-42">
+            <span class="toc-num">43</span>
+            <span class="toc-text">Working with CSV Files</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(43)" id="toc-43">
+            <span class="toc-num">44</span>
+            <span class="toc-text">Challenges on File Handling</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 8 — Multithreading</div>
+          <button class="toc-item" onclick="openTopic(44)" id="toc-44">
+            <span class="toc-num">45</span>
+            <span class="toc-text">Introduction to Multithreading</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(45)" id="toc-45">
+            <span class="toc-num">46</span>
+            <span class="toc-text">Thread Synchronization and Locks</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(46)" id="toc-46">
+            <span class="toc-num">47</span>
+            <span class="toc-text">Challenges on Multithreading</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 9 — Database Programming</div>
+          <button class="toc-item" onclick="openTopic(47)" id="toc-47">
+            <span class="toc-num">48</span>
+            <span class="toc-text">SQLite — Introduction and Setup</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(48)" id="toc-48">
+            <span class="toc-num">49</span>
+            <span class="toc-text">CRUD Operations with SQLite</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(49)" id="toc-49">
+            <span class="toc-num">50</span>
+            <span class="toc-text">Challenges on Database Programming</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 10 — Python Modules</div>
+          <button class="toc-item" onclick="openTopic(50)" id="toc-50">
+            <span class="toc-num">51</span>
+            <span class="toc-text">Modules — Introduction and Importing</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(51)" id="toc-51">
+            <span class="toc-num">52</span>
+            <span class="toc-text">Data Structures Module</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(52)" id="toc-52">
+            <span class="toc-num">53</span>
+            <span class="toc-text">Date and Time Module</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(53)" id="toc-53">
+            <span class="toc-num">54</span>
+            <span class="toc-text">OS Module</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(54)" id="toc-54">
+            <span class="toc-num">55</span>
+            <span class="toc-text">Math Module</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(55)" id="toc-55">
+            <span class="toc-num">56</span>
+            <span class="toc-text">NumPy Module</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(56)" id="toc-56">
+            <span class="toc-num">57</span>
+            <span class="toc-text">Challenges on Modules</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="module-group">
+          <div class="module-label">Part 11 — GUI Programming with Tkinter</div>
+          <button class="toc-item" onclick="openTopic(57)" id="toc-57">
+            <span class="toc-num">58</span>
+            <span class="toc-text">Introduction to Tkinter</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(58)" id="toc-58">
+            <span class="toc-num">59</span>
+            <span class="toc-text">Tkinter Widgets and Layout</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(59)" id="toc-59">
+            <span class="toc-num">60</span>
+            <span class="toc-text">Event Handling in Tkinter</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(60)" id="toc-60">
+            <span class="toc-num">61</span>
+            <span class="toc-text">Project: Simple Calculator</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(61)" id="toc-61">
+            <span class="toc-num">62</span>
+            <span class="toc-text">Project: Student Registration Form</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(62)" id="toc-62">
+            <span class="toc-num">63</span>
+            <span class="toc-text">Project: To-Do List Application</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(63)" id="toc-63">
+            <span class="toc-num">64</span>
+            <span class="toc-text">Project: Quiz Application</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="toc-item" onclick="openTopic(64)" id="toc-64">
+            <span class="toc-num">65</span>
+            <span class="toc-text">Course Wrap-Up &amp; Next Steps</span>
+            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="mainArea">
+
+    <div id="welcomeState" class="welcome-card">
+      <div class="welcome-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a6b72" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h6z"/></svg>
+      </div>
+      <h2>Select a section to begin</h2>
+      <p>Choose any section from the course contents on the left to open its lecture notes right here.</p>
+      <div class="welcome-hint">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
+        Each section links to its own lecture notes page
+      </div>
+    </div>
+
+    <div id="contentPanel" class="content-panel">
+      <div class="panel-header">
+        <div class="panel-eyebrow">
+          <span class="panel-num" id="panelNum">01</span>
+          <span class="panel-module-tag" id="panelModule">Part 1 — Python Foundations</span>
+        </div>
+        <h2 id="panelTitle">Section Title</h2>
+        <p class="panel-desc" id="panelDesc">Lecture notes for this section.</p>
+        <div class="panel-actions">
+          <a href="#" id="panelOpenLink" class="btn-primary" target="_blank">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open Full Page
+          </a>
+          <button class="btn-secondary" onclick="copyLink()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Link
+          </button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-iframe-wrap">
+          <div class="iframe-loader" id="iframeLoader">
+            <div class="loader-ring"></div>
+            <p class="loader-text">Loading lecture…</p>
+          </div>
+          <iframe id="contentIframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        </div>
+      </div>
+      <div class="nav-arrows">
+        <button class="nav-btn" id="prevBtn" onclick="previousTopic()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Previous
+        </button>
+        <button class="nav-btn" id="nextBtn" onclick="nextTopic()">
+          Next
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2024 Python Programming Course. All rights reserved.</p>
+  <a href="#top">Back to Top</a>
+</footer>
+
+<script>
+const courseData = [
+  { title: "Introduction to Python", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Python Installation and Setup", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "What are Variables?", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Python Datatypes", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Literals & Constants", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Base & Type Conversion Methods", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Operators and Expressions", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Challenges using Expressions", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Arithmetic Assignment Operators", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Conditional Statements", module: "Part 1 — Python Foundations", url: "#" },
+  { title: "Challenges on Conditional Statements", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "Loop Statements — While Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "Challenges on While Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "For Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "Challenges on For Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "String Datatype", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "Challenges on String", module: "Part 2 — Control Flow & Strings", url: "#" },
+  { title: "List", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Challenges on List", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Tuple", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Set", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Dictionary", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Challenges on Advanced Datatypes", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Comprehensions", module: "Part 3 — Advanced Data Structures", url: "#" },
+  { title: "Functions — Basics", module: "Part 4 — Functions", url: "#" },
+  { title: "Challenges on Functions", module: "Part 4 — Functions", url: "#" },
+  { title: "Advanced Functions (Lambda, Map, Filter)", module: "Part 4 — Functions", url: "#" },
+  { title: "Recursive Functions", module: "Part 4 — Functions", url: "#" },
+  { title: "Challenges on Advanced Functions", module: "Part 4 — Functions", url: "#" },
+  { title: "Decorators", module: "Part 4 — Functions", url: "#" },
+  { title: "Generators and Iterators", module: "Part 4 — Functions", url: "#" },
+  { title: "Classes and Objects", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Constructors and Destructors", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Inheritance", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Polymorphism and Overriding", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Encapsulation and Abstraction", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Magic / Dunder Methods", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Challenges on OOP", module: "Part 5 — Object-Oriented Programming", url: "#" },
+  { title: "Exception Handling — try, except, finally", module: "Part 6 — Exception Handling", url: "#" },
+  { title: "User-Defined Exceptions", module: "Part 6 — Exception Handling", url: "#" },
+  { title: "Challenges on Exception Handling", module: "Part 6 — Exception Handling", url: "#" },
+  { title: "File Handling — Read, Write, Append", module: "Part 7 — File Handling", url: "#" },
+  { title: "Working with CSV Files", module: "Part 7 — File Handling", url: "#" },
+  { title: "Challenges on File Handling", module: "Part 7 — File Handling", url: "#" },
+  { title: "Introduction to Multithreading", module: "Part 8 — Multithreading", url: "#" },
+  { title: "Thread Synchronization and Locks", module: "Part 8 — Multithreading", url: "#" },
+  { title: "Challenges on Multithreading", module: "Part 8 — Multithreading", url: "#" },
+  { title: "SQLite — Introduction and Setup", module: "Part 9 — Database Programming", url: "#" },
+  { title: "CRUD Operations with SQLite", module: "Part 9 — Database Programming", url: "#" },
+  { title: "Challenges on Database Programming", module: "Part 9 — Database Programming", url: "#" },
+  { title: "Modules — Introduction and Importing", module: "Part 10 — Python Modules", url: "#" },
+  { title: "Data Structures Module", module: "Part 10 — Python Modules", url: "#" },
+  { title: "Date and Time Module", module: "Part 10 — Python Modules", url: "#" },
+  { title: "OS Module", module: "Part 10 — Python Modules", url: "#" },
+  { title: "Math Module", module: "Part 10 — Python Modules", url: "#" },
+  { title: "NumPy Module", module: "Part 10 — Python Modules", url: "#" },
+  { title: "Challenges on Modules", module: "Part 10 — Python Modules", url: "#" },
+  { title: "Introduction to Tkinter", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Tkinter Widgets and Layout", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Event Handling in Tkinter", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Project: Simple Calculator", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Project: Student Registration Form", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Project: To-Do List Application", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Project: Quiz Application", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
+  { title: "Course Wrap-Up & Next Steps", module: "Part 11 — GUI Programming with Tkinter", url: "#" }
+];
+
+let currentTopic = -1;
+
+function openTopic(index) {
+  currentTopic = index;
+  const topic = courseData[index];
+  
+  document.getElementById('welcomeState').style.display = 'none';
+  document.getElementById('contentPanel').classList.add('visible');
+  
+  document.getElementById('panelNum').textContent = String(index + 1).padStart(2, '0');
+  document.getElementById('panelModule').textContent = topic.module;
+  document.getElementById('panelTitle').textContent = topic.title;
+  document.getElementById('panelDesc').textContent = `Lecture notes and content for ${topic.title}`;
+  document.getElementById('panelOpenLink').href = topic.url;
+  
+  // Scroll topic into view
+  const tocItem = document.getElementById(`toc-${index}`);
+  if (tocItem) {
+    tocItem.classList.add('active');
+    tocItem.scrollIntoView({ block: 'nearest' });
+    document.querySelectorAll('.toc-item.active').forEach((el, i) => {
+      if (i > 0) el.classList.remove('active');
+    });
+  }
+  
+  // Update progress bar
+  const progress = ((index + 1) / courseData.length) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+  
+  // Update nav buttons
+  document.getElementById('prevBtn').disabled = index === 0;
+  document.getElementById('nextBtn').disabled = index === courseData.length - 1;
+}
+
+function nextTopic() {
+  if (currentTopic < courseData.length - 1) {
+    openTopic(currentTopic + 1);
+  }
+}
+
+function previousTopic() {
+  if (currentTopic > 0) {
+    openTopic(currentTopic - 1);
+  }
+}
+
+function filterToc(query) {
+  const items = document.querySelectorAll('.toc-item');
+  items.forEach(item => {
+    const text = item.querySelector('.toc-text').textContent.toLowerCase();
+    item.style.display = text.includes(query.toLowerCase()) ? 'flex' : 'none';
+  });
+}
+
+function toggleMobileSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.classList.toggle('mobile-open');
+  const button = document.getElementById('toggleButtonText');
+  const arrow = document.getElementById('toggleButtonArrow');
+  
+  if (sidebar.classList.contains('mobile-open')) {
+    button.textContent = '📋 Hide Course Contents';
+    arrow.style.transform = 'rotate(180deg)';
+  } else {
+    button.textContent = '📋 View Course Contents';
+    arrow.style.transform = 'rotate(0deg)';
+  }
+}
+
+function copyLink() {
+  const link = document.getElementById('panelOpenLink').href;
+  navigator.clipboard.writeText(link).then(() => {
+    alert('Link copied to clipboard!');
+  });
+}
+</script>
+
+</body>
+</html>
