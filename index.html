@@ -1,1177 +1,801 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn Python Programming — Course Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --teal:       #1a6b72;
-  --teal-dark:  #0e4449;
-  --teal-mid:   #256b72;
-  --teal-light: #d6edef;
-  --teal-xlight:#eef7f8;
-  --gold:       #c8a84b;
-  --gold-light: #f5ead0;
-  --cream:      #faf6ef;
-  --paper:      #fffdf9;
-  --ink:        #181818;
-  --muted:      #6b6b6b;
-  --border:     #ddd6c5;
-  --white:      #ffffff;
-  --shadow-sm:  0 1px 4px rgba(0,0,0,.08);
-  --shadow-md:  0 4px 24px rgba(0,0,0,.12);
-  --shadow-lg:  0 12px 48px rgba(0,0,0,.18);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Programming Course Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #0b0f19;
+      --bg-sidebar: #111827;
+      --bg-card: #1f2937;
+      --bg-card-hover: #374151;
+      --border-color: #374151;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent-color: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-glow: rgba(59, 130, 246, 0.15);
+      --success-color: #10b981;
+      --sidebar-width: 350px;
+      --header-height: 70px;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--cream);
-  color: var(--ink);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ── HERO ───────────────────────────────────────────────── */
-.hero {
-  background: var(--teal-dark);
-  position: relative;
-  overflow: hidden;
-  padding: 60px 24px;
-}
-@media (min-width: 768px) {
-  .hero { padding: 72px 40px 64px; }
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 110% 40%, rgba(200,168,75,.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 80% at -10% 80%, rgba(26,107,114,.5) 0%, transparent 60%),
-    repeating-linear-gradient(-45deg, transparent, transparent 22px, rgba(255,255,255,.018) 22px, rgba(255,255,255,.018) 44px);
-}
-.hero-inner { max-width: 1400px; margin: 0 auto; position: relative; }
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(200,168,75,.18);
-  border: 1px solid rgba(200,168,75,.4);
-  color: var(--gold);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 2px;
-  margin-bottom: 24px;
-}
-.hero-eyebrow svg { flex-shrink: 0; }
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 4.5vw, 44px);
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1.2;
-  margin-bottom: 16px;
-  max-width: 900px;
-}
-.hero h1 em { font-style: italic; color: var(--gold); }
-.hero-sub {
-  color: rgba(255,255,255,.6);
-  font-size: 15px;
-  font-weight: 300;
-  max-width: 760px;
-  line-height: 1.7;
-  margin-bottom: 32px;
-}
-.hero-meta { display: flex; flex-wrap: wrap; gap: 16px 24px; }
-.hero-meta-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: rgba(255,255,255,.55);
-  font-size: 13px;
-}
-.hero-meta-item strong { color: rgba(255,255,255,.85); font-weight: 500; }
-.hero-meta-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  flex-shrink: 0;
-}
-.hero-badge {
-  position: absolute;
-  top: 0; right: 0;
-  background: var(--gold);
-  color: var(--teal-dark);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: 0 0 0 6px;
-}
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ── PROGRESS BAR ───────────────────────────────────────── */
-.progress-bar { height: 4px; background: rgba(200,168,75,.15); position: relative; }
-.progress-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--teal), var(--gold));
-  transition: width .3s ease;
-}
+    /* --- Sidebar Styles --- */
+    .sidebar {
+      width: var(--sidebar-width);
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      z-index: 100;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-/* ── LAYOUT ─────────────────────────────────────────────── */
-.layout {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  align-items: start;
-}
+    .sidebar-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-@media (min-width: 820px) {
-  .layout {
-    grid-template-columns: 320px minmax(0, 1fr);
-    padding: 48px 32px 80px;
-    gap: 32px;
-  }
-}
+    .sidebar-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 6px;
+      background: linear-gradient(to right, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-/* ── MOBILE TOGGLE CONTAINER ────────────────────────────── */
-.mobile-toggle-container {
-  padding: 16px 16px 0;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-@media (min-width: 820px) {
-  .mobile-toggle-container {
-    display: none;
-  }
-}
+    .sidebar-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
 
-/* ── SIDEBAR ────────────────────────────────────────────── */
-.sidebar {
-  display: none;
-}
-.sidebar.mobile-open {
-  display: block;
-}
-@media (min-width: 820px) {
-  .sidebar {
-    display: block !important;
-    position: sticky;
-    top: 24px;
-  }
-}
+    .search-container {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
 
-.sidebar-card {
-  background: var(--paper);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-.sidebar-head {
-  background: var(--teal);
-  padding: 16px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.sidebar-head h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--white);
-  letter-spacing: .02em;
-}
-.sidebar-count {
-  background: rgba(255,255,255,.15);
-  color: var(--white);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-family: 'DM Mono', monospace;
-}
-.sidebar-body { padding: 8px 0; max-height: 65vh; overflow-y: auto; }
-.sidebar-body::-webkit-scrollbar { width: 4px; }
-.sidebar-body::-webkit-scrollbar-track { background: transparent; }
-.sidebar-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .search-input {
+      width: 100%;
+      background-color: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s;
+    }
 
-.module-group { margin-bottom: 4px; }
-.module-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  padding: 12px 18px 6px;
-  border-top: 1px solid rgba(221, 214, 197, 0.3);
-}
-.module-group:first-child .module-label { border-top: none; }
+    .search-input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
 
-.toc-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 18px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  border-left: 3px solid transparent;
-  transition: all .15s ease;
-  position: relative;
-}
-.toc-item:hover { background: var(--teal-xlight); border-left-color: var(--teal-light); }
-.toc-item.active { background: var(--teal-xlight); border-left-color: var(--teal); }
-.toc-item.active .toc-num { background: var(--teal); color: var(--white); }
-.toc-item.active .toc-text { color: var(--teal-dark); font-weight: 600; }
-.toc-num {
-  min-width: 24px; height: 24px;
-  border-radius: 50%;
-  background: var(--border);
-  color: var(--muted);
-  font-size: 10px;
-  font-family: 'DM Mono', monospace;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all .15s;
-}
-.toc-text { font-size: 13px; color: #333; line-height: 1.4; transition: color .15s; flex-grow: 1; }
-.toc-item .toc-arrow {
-  color: var(--muted);
-  opacity: 0;
-  transition: opacity .15s;
-  flex-shrink: 0;
-}
-.toc-item:hover .toc-arrow, .toc-item.active .toc-arrow { opacity: 1; }
+    .toc-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 12px;
+    }
 
-/* ── SEARCH ─────────────────────────────────────────────── */
-.search-wrap {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.search-wrap input {
-  width: 100%;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 8px 10px 8px 34px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  color: var(--ink);
-  outline: none;
-  transition: border-color .15s;
-}
-.search-wrap input:focus { border-color: var(--teal); background: var(--white); }
-.search-wrap input::placeholder { color: var(--muted); }
-.search-icon {
-  position: absolute;
-  left: 22px; top: 50%;
-  transform: translateY(-50%);
-  color: var(--muted);
-  pointer-events: none;
-}
+    .toc-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .toc-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .toc-scroll::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 3px;
+    }
 
-/* ── MAIN CONTENT ───────────────────────────────────────── */
-.welcome-card {
-  background: var(--paper);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 40px 20px;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-@media (min-width: 768px) {
-  .welcome-card { padding: 60px 40px; }
-}
-.welcome-icon {
-  width: 64px; height: 64px;
-  background: var(--teal-xlight);
-  border: 2px solid var(--teal-light);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px;
-}
-.welcome-card h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  color: var(--teal-dark);
-  margin-bottom: 12px;
-}
-.welcome-card p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 440px; margin: 0 auto; }
-.welcome-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 24px;
-  background: var(--gold-light);
-  border: 1px solid rgba(200,168,75,.3);
-  color: #8a6f20;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 20px;
-}
+    .module-group {
+      margin-bottom: 20px;
+    }
 
-/* ── CONTENT PANEL ──────────────────────────────────────── */
-.content-panel { display: none; animation: panelIn .25s ease; }
-.content-panel.visible { display: block; }
-@keyframes panelIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.panel-header {
-  background: var(--paper);
-  border: 1px solid var(--border);
-  border-radius: 6px 6px 0 0;
-  padding: 24px 20px;
-  border-bottom: none;
-}
-@media (min-width: 768px) {
-  .panel-header { padding: 28px 32px 24px; }
-}
-.panel-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.panel-num {
-  background: var(--teal);
-  color: var(--white);
-  font-size: 10px;
-  font-family: 'DM Mono', monospace;
-  font-weight: 500;
-  padding: 3px 9px;
-  border-radius: 3px;
-  letter-spacing: .05em;
-}
-.panel-module-tag {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-.panel-header h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(20px, 3.5vw, 28px);
-  color: var(--teal-dark);
-  line-height: 1.3;
-  margin-bottom: 10px;
-}
-.panel-desc { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 1000px; }
-.panel-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .module-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-color);
+      font-weight: 700;
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
 
-.btn-primary, .btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all .15s;
-}
-.btn-primary { background: var(--teal); color: var(--white); border: none; }
-.btn-primary:hover { background: var(--teal-dark); }
-.btn-secondary { background: var(--white); color: var(--teal); border: 1.5px solid var(--teal-light); }
-.btn-secondary:hover { background: var(--teal-xlight); border-color: var(--teal); }
+    .toc-item {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-muted);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      font-family: inherit;
+    }
 
-.panel-body {
-  background: var(--paper);
-  border: 1px solid var(--border);
-  border-radius: 0 0 6px 6px;
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
-}
-@media (min-width: 768px) {
-  .panel-body { padding: 32px; }
-}
-.panel-iframe-wrap {
-  width: 100%;
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  position: relative;
-}
-.panel-iframe-wrap iframe {
-  width: 100%;
-  height: 50vh;
-  min-height: 460px;
-  border: none;
-  display: block;
-}
-@media (min-width: 1024px) {
-  .panel-iframe-wrap iframe { height: 70vh; min-height: 680px; }
-}
+    .toc-item:hover {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+    }
 
-.iframe-loader {
-  position: absolute;
-  inset: 0;
-  background: var(--cream);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  z-index: 2;
-  transition: opacity .3s ease;
-}
-.iframe-loader.hidden { opacity: 0; pointer-events: none; }
-.loader-ring {
-  width: 36px; height: 36px;
-  border: 3px solid var(--border);
-  border-top-color: var(--teal);
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loader-text { font-size: 12px; color: var(--muted); }
+    .toc-item.active {
+      background-color: var(--accent-glow);
+      color: var(--accent-color);
+      font-weight: 600;
+    }
 
-.placeholder-wrap {
-  background: var(--cream);
-  border: 1.5px dashed var(--border);
-  border-radius: 4px;
-  padding: 60px 20px;
-  text-align: center;
-}
-.placeholder-wrap h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  color: var(--teal-dark);
-  margin-bottom: 8px;
-}
-.placeholder-wrap p { font-size: 13.5px; color: var(--muted); line-height: 1.65; max-width: 380px; margin: 0 auto; }
-.code-tag {
-  display: inline-block;
-  background: var(--teal-xlight);
-  border: 1px solid var(--teal-light);
-  color: var(--teal-dark);
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 3px;
-  margin-top: 12px;
-}
+    .toc-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background-color: var(--bg-main);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+    
+    .toc-item.active .toc-num {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
 
-/* ── NAV ARROWS ─────────────────────────────────────────── */
-.nav-arrows { display: flex; justify-content: space-between; margin-top: 20px; gap: 16px; }
-.nav-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--paper);
-  border: 1px solid var(--border);
-  color: var(--teal);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 10px 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all .15s;
-  flex: 1;
-  justify-content: center;
-}
-@media (min-width: 480px) {
-  .nav-btn { flex: none; width: auto; }
-}
-.nav-btn:hover { background: var(--teal-xlight); border-color: var(--teal-light); }
-.nav-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .toc-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
 
-/* ── MOBILE TOGGLE ──────────────────────────────────────── */
-.mobile-toc-toggle {
-  display: flex;
-  width: 100%;
-  background: var(--teal);
-  color: var(--white);
-  border: none;
-  padding: 14px 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 6px;
-  box-shadow: var(--shadow-sm);
-}
+    /* --- Main Workspace Styles --- */
+    .workspace {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
 
-/* ── FOOTER ─────────────────────────────────────────────── */
-.site-footer {
-  background: var(--teal-dark);
-  padding: 24px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: auto;
-}
-@media (min-width: 768px) {
-  .site-footer { padding: 24px 40px; }
-}
-.site-footer p { color: rgba(255,255,255,.4); font-size: 12px; }
-.site-footer a {
-  color: var(--gold);
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 500;
-  transition: opacity .15s;
-}
-.site-footer a:hover { opacity: .75; }
+    /* Mobile Header Navigation Trigger */
+    .mobile-nav-bar {
+      height: var(--header-height);
+      background-color: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      display: none;
+      align-items: center;
+      padding: 0 20px;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--cream); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-</style>
+    .mobile-toggle-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .mobile-toggle-btn svg {
+      transition: transform 0.2s;
+    }
+
+    .progress-container {
+      height: 3px;
+      background-color: var(--border-color);
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, var(--accent-color), var(--success-color));
+      transition: width 0.4s ease;
+    }
+
+    /* --- Content View Panel --- */
+    .content-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .content-panel.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .panel-header {
+      padding: 24px 32px;
+      background-color: rgba(17, 24, 39, 0.4);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .meta-badge span::after {
+      content: "•";
+      margin-left: 6px;
+      color: var(--text-muted);
+    }
+
+    .meta-badge span:last-child::after {
+      content: "";
+    }
+
+    .panel-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .panel-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      line-line-height: 1.5;
+    }
+
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 32px;
+      background-color: rgba(17, 24, 39, 0.2);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background-color: var(--bg-card-hover);
+      border-color: var(--text-muted);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    /* --- Sandbox Viewer Container --- */
+    .sandbox-container {
+      flex: 1;
+      position: relative;
+      background-color: #000;
+    }
+
+    .content-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #ffffff;
+    }
+
+    .iframe-loader {
+      position: absolute;
+      inset: 0;
+      background-color: var(--bg-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      transition: opacity 0.2s ease;
+      z-index: 5;
+    }
+
+    .iframe-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- Welcome Screen Dashboard Block --- */
+    .welcome-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      z-index: 2;
+      background-color: var(--bg-main);
+    }
+
+    .welcome-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .welcome-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Responsive Breakpoints Handling */
+    @media (max-width: 1024px) {
+      :root { --sidebar-width: 300px; }
+      .panel-header { padding: 20px 24px; }
+      .action-bar { padding: 12px 24px; }
+    }
+
+    @media (max-width: 820px) {
+      body { flex-direction: column; }
+      .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        height: calc(100% - var(--header-height));
+        transform: translateX(-100%);
+      }
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      .mobile-nav-bar { display: flex; }
+      .panel-header { padding: 16px 20px; }
+      .panel-title { font-size: 1.4rem; }
+      .action-bar { padding: 10px 20px; }
+      .btn span { display: none; }
+      .btn svg { margin: 0; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="hero-badge">Programming Course</div>
-  <div class="hero-inner">
-    <div class="hero-eyebrow">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
-      Development &amp; Technology · Programming Languages
-    </div>
-    <h1>Learn Python Programming —<br><em>Beginner to Master</em></h1>
-    <p class="hero-sub">A comprehensive Python course covering fundamentals, data structures, OOP, multithreading, file handling, database programming, and GUI development with 100+ hands-on chal[...]
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <div class="hero-meta-dot"></div>
-        <strong>65</strong>&nbsp;Sections
-      </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-dot"></div>
-        <strong>355</strong>&nbsp;Lectures
-      </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-dot"></div>
-        <strong>61h 3m</strong>&nbsp;Total Length
-      </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-dot"></div>
-        <strong>Beginner to Master</strong>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
-
-<div class="mobile-toggle-container">
-  <button class="mobile-toc-toggle" onclick="toggleMobileSidebar()">
-    <span id="toggleButtonText">📋 View Course Contents</span>
-    <svg id="toggleButtonArrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
-  </button>
-</div>
-
-<div class="layout">
-
+  <!-- Sidebar Components Stack -->
   <aside class="sidebar">
-    <div class="sidebar-card">
-      <div class="sidebar-head">
-        <h2>Course Contents</h2>
-        <span class="sidebar-count">65</span>
+    <div class="sidebar-header">
+      <h1 class="sidebar-title">Python Core Architecture</h1>
+      <p class="sidebar-subtitle">Interactive Student Training Hub</p>
+    </div>
+    
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search syllabus topics..." oninput="filterToc(this.value)">
+    </div>
+    
+    <div class="toc-scroll">
+      
+      <!-- Part 1 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 1 — Python Foundations</h2>
+        <button class="toc-item" id="toc-0" onclick="openTopic(0)"><span class="toc-num">01</span><span class="toc-text">Introduction to Python</span></button>
+        <button class="toc-item" id="toc-1" onclick="openTopic(1)"><span class="toc-num">02</span><span class="toc-text">Python Installation and Setup</span></button>
+        <button class="toc-item" id="toc-2" onclick="openTopic(2)"><span class="toc-num">03</span><span class="toc-text">What are Variables?</span></button>
+        <button class="toc-item" id="toc-3" onclick="openTopic(3)"><span class="toc-num">04</span><span class="toc-text">Python Datatypes</span></button>
+        <button class="toc-item" id="toc-4" onclick="openTopic(4)"><span class="toc-num">05</span><span class="toc-text">Literals & Constants</span></button>
+        <button class="toc-item" id="toc-5" onclick="openTopic(5)"><span class="toc-num">06</span><span class="toc-text">Base & Type Conversion Methods</span></button>
+        <button class="toc-item" id="toc-6" onclick="openTopic(6)"><span class="toc-num">07</span><span class="toc-text">Operators and Expressions</span></button>
+        <button class="toc-item" id="toc-7" onclick="openTopic(7)"><span class="toc-num">08</span><span class="toc-text">Challenges using Expressions</span></button>
+        <button class="toc-item" id="toc-8" onclick="openTopic(8)"><span class="toc-num">09</span><span class="toc-text">Arithmetic Assignment Operators</span></button>
+        <button class="toc-item" id="toc-9" onclick="openTopic(9)"><span class="toc-num">10</span><span class="toc-text">Conditional Statements</span></button>
       </div>
-      <div class="search-wrap">
-        <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="tocSearch" placeholder="Search sections…" oninput="filterToc(this.value)">
+
+      <!-- Part 2 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 2 — Control Flow & Strings</h2>
+        <button class="toc-item" id="toc-10" onclick="openTopic(10)"><span class="toc-num">11</span><span class="toc-text">Challenges on Conditional Statements</span></button>
+        <button class="toc-item" id="toc-11" onclick="openTopic(11)"><span class="toc-num">12</span><span class="toc-text">Loop Statements — While Loop</span></button>
+        <button class="toc-item" id="toc-12" onclick="openTopic(12)"><span class="toc-num">13</span><span class="toc-text">Challenges on While Loop</span></button>
+        <button class="toc-item" id="toc-13" onclick="openTopic(13)"><span class="toc-num">14</span><span class="toc-text">For Loop</span></button>
+        <button class="toc-item" id="toc-14" onclick="openTopic(14)"><span class="toc-num">15</span><span class="toc-text">Challenges on For Loop</span></button>
+        <button class="toc-item" id="toc-15" onclick="openTopic(15)"><span class="toc-num">16</span><span class="toc-text">String Datatype</span></button>
+        <button class="toc-item" id="toc-16" onclick="openTopic(16)"><span class="toc-num">17</span><span class="toc-text">Challenges on String</span></button>
       </div>
-      <div class="sidebar-body" id="tocBody">
 
-        <div class="module-group">
-          <div class="module-label">Part 1 — Python Foundations</div>
-          <button class="toc-item" onclick="openTopic(0)" id="toc-0">
-            <span class="toc-num">01</span>
-            <span class="toc-text">Introduction to Python</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(1)" id="toc-1">
-            <span class="toc-num">02</span>
-            <span class="toc-text">Python Installation and Setup</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(2)" id="toc-2">
-            <span class="toc-num">03</span>
-            <span class="toc-text">What are Variables?</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(3)" id="toc-3">
-            <span class="toc-num">04</span>
-            <span class="toc-text">Python Datatypes</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(4)" id="toc-4">
-            <span class="toc-num">05</span>
-            <span class="toc-text">Literals &amp; Constants</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(5)" id="toc-5">
-            <span class="toc-num">06</span>
-            <span class="toc-text">Base &amp; Type Conversion Methods</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(6)" id="toc-6">
-            <span class="toc-num">07</span>
-            <span class="toc-text">Operators and Expressions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(7)" id="toc-7">
-            <span class="toc-num">08</span>
-            <span class="toc-text">Challenges using Expressions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(8)" id="toc-8">
-            <span class="toc-num">09</span>
-            <span class="toc-text">Arithmetic Assignment Operators</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(9)" id="toc-9">
-            <span class="toc-num">10</span>
-            <span class="toc-text">Conditional Statements</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 2 — Control Flow &amp; Strings</div>
-          <button class="toc-item" onclick="openTopic(10)" id="toc-10">
-            <span class="toc-num">11</span>
-            <span class="toc-text">Challenges on Conditional Statements</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(11)" id="toc-11">
-            <span class="toc-num">12</span>
-            <span class="toc-text">Loop Statements — While Loop</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(12)" id="toc-12">
-            <span class="toc-num">13</span>
-            <span class="toc-text">Challenges on While Loop</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(13)" id="toc-13">
-            <span class="toc-num">14</span>
-            <span class="toc-text">For Loop</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(14)" id="toc-14">
-            <span class="toc-num">15</span>
-            <span class="toc-text">Challenges on For Loop</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(15)" id="toc-15">
-            <span class="toc-num">16</span>
-            <span class="toc-text">String Datatype</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(16)" id="toc-16">
-            <span class="toc-num">17</span>
-            <span class="toc-text">Challenges on String</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 3 — Advanced Data Structures</div>
-          <button class="toc-item" onclick="openTopic(17)" id="toc-17">
-            <span class="toc-num">18</span>
-            <span class="toc-text">List</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(18)" id="toc-18">
-            <span class="toc-num">19</span>
-            <span class="toc-text">Challenges on List</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(19)" id="toc-19">
-            <span class="toc-num">20</span>
-            <span class="toc-text">Tuple</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(20)" id="toc-20">
-            <span class="toc-num">21</span>
-            <span class="toc-text">Set</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(21)" id="toc-21">
-            <span class="toc-num">22</span>
-            <span class="toc-text">Dictionary</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(22)" id="toc-22">
-            <span class="toc-num">23</span>
-            <span class="toc-text">Challenges on Advanced Datatypes</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(23)" id="toc-23">
-            <span class="toc-num">24</span>
-            <span class="toc-text">Comprehensions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 4 — Functions</div>
-          <button class="toc-item" onclick="openTopic(24)" id="toc-24">
-            <span class="toc-num">25</span>
-            <span class="toc-text">Functions — Basics</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(25)" id="toc-25">
-            <span class="toc-num">26</span>
-            <span class="toc-text">Challenges on Functions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(26)" id="toc-26">
-            <span class="toc-num">27</span>
-            <span class="toc-text">Advanced Functions (Lambda, Map, Filter)</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(27)" id="toc-27">
-            <span class="toc-num">28</span>
-            <span class="toc-text">Recursive Functions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(28)" id="toc-28">
-            <span class="toc-num">29</span>
-            <span class="toc-text">Challenges on Advanced Functions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(29)" id="toc-29">
-            <span class="toc-num">30</span>
-            <span class="toc-text">Decorators</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(30)" id="toc-30">
-            <span class="toc-num">31</span>
-            <span class="toc-text">Generators and Iterators</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 5 — Object-Oriented Programming</div>
-          <button class="toc-item" onclick="openTopic(31)" id="toc-31">
-            <span class="toc-num">32</span>
-            <span class="toc-text">Classes and Objects</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(32)" id="toc-32">
-            <span class="toc-num">33</span>
-            <span class="toc-text">Constructors and Destructors</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(33)" id="toc-33">
-            <span class="toc-num">34</span>
-            <span class="toc-text">Inheritance</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(34)" id="toc-34">
-            <span class="toc-num">35</span>
-            <span class="toc-text">Polymorphism and Overriding</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(35)" id="toc-35">
-            <span class="toc-num">36</span>
-            <span class="toc-text">Encapsulation and Abstraction</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(36)" id="toc-36">
-            <span class="toc-num">37</span>
-            <span class="toc-text">Magic / Dunder Methods</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(37)" id="toc-37">
-            <span class="toc-num">38</span>
-            <span class="toc-text">Challenges on OOP</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 6 — Exception Handling</div>
-          <button class="toc-item" onclick="openTopic(38)" id="toc-38">
-            <span class="toc-num">39</span>
-            <span class="toc-text">Exception Handling — try, except, finally</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(39)" id="toc-39">
-            <span class="toc-num">40</span>
-            <span class="toc-text">User-Defined Exceptions</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(40)" id="toc-40">
-            <span class="toc-num">41</span>
-            <span class="toc-text">Challenges on Exception Handling</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 7 — File Handling</div>
-          <button class="toc-item" onclick="openTopic(41)" id="toc-41">
-            <span class="toc-num">42</span>
-            <span class="toc-text">File Handling — Read, Write, Append</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(42)" id="toc-42">
-            <span class="toc-num">43</span>
-            <span class="toc-text">Working with CSV Files</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(43)" id="toc-43">
-            <span class="toc-num">44</span>
-            <span class="toc-text">Challenges on File Handling</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 8 — Multithreading</div>
-          <button class="toc-item" onclick="openTopic(44)" id="toc-44">
-            <span class="toc-num">45</span>
-            <span class="toc-text">Introduction to Multithreading</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(45)" id="toc-45">
-            <span class="toc-num">46</span>
-            <span class="toc-text">Thread Synchronization and Locks</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(46)" id="toc-46">
-            <span class="toc-num">47</span>
-            <span class="toc-text">Challenges on Multithreading</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 9 — Database Programming</div>
-          <button class="toc-item" onclick="openTopic(47)" id="toc-47">
-            <span class="toc-num">48</span>
-            <span class="toc-text">SQLite — Introduction and Setup</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(48)" id="toc-48">
-            <span class="toc-num">49</span>
-            <span class="toc-text">CRUD Operations with SQLite</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(49)" id="toc-49">
-            <span class="toc-num">50</span>
-            <span class="toc-text">Challenges on Database Programming</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 10 — Python Modules</div>
-          <button class="toc-item" onclick="openTopic(50)" id="toc-50">
-            <span class="toc-num">51</span>
-            <span class="toc-text">Modules — Introduction and Importing</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(51)" id="toc-51">
-            <span class="toc-num">52</span>
-            <span class="toc-text">Data Structures Module</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(52)" id="toc-52">
-            <span class="toc-num">53</span>
-            <span class="toc-text">Date and Time Module</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(53)" id="toc-53">
-            <span class="toc-num">54</span>
-            <span class="toc-text">OS Module</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(54)" id="toc-54">
-            <span class="toc-num">55</span>
-            <span class="toc-text">Math Module</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(55)" id="toc-55">
-            <span class="toc-num">56</span>
-            <span class="toc-text">NumPy Module</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(56)" id="toc-56">
-            <span class="toc-num">57</span>
-            <span class="toc-text">Challenges on Modules</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
-        <div class="module-group">
-          <div class="module-label">Part 11 — GUI Programming with Tkinter</div>
-          <button class="toc-item" onclick="openTopic(57)" id="toc-57">
-            <span class="toc-num">58</span>
-            <span class="toc-text">Introduction to Tkinter</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(58)" id="toc-58">
-            <span class="toc-num">59</span>
-            <span class="toc-text">Tkinter Widgets and Layout</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(59)" id="toc-59">
-            <span class="toc-num">60</span>
-            <span class="toc-text">Event Handling in Tkinter</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(60)" id="toc-60">
-            <span class="toc-num">61</span>
-            <span class="toc-text">Project: Simple Calculator</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(61)" id="toc-61">
-            <span class="toc-num">62</span>
-            <span class="toc-text">Project: Student Registration Form</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(62)" id="toc-62">
-            <span class="toc-num">63</span>
-            <span class="toc-text">Project: To-Do List Application</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(63)" id="toc-63">
-            <span class="toc-num">64</span>
-            <span class="toc-text">Project: Quiz Application</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="toc-item" onclick="openTopic(64)" id="toc-64">
-            <span class="toc-num">65</span>
-            <span class="toc-text">Course Wrap-Up &amp; Next Steps</span>
-            <svg class="toc-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
-
+      <!-- Part 3 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 3 — Advanced Data Structures</h2>
+        <button class="toc-item" id="toc-17" onclick="openTopic(17)"><span class="toc-num">18</span><span class="toc-text">List</span></button>
+        <button class="toc-item" id="toc-18" onclick="openTopic(18)"><span class="toc-num">19</span><span class="toc-text">Challenges on List</span></button>
+        <button class="toc-item" id="toc-19" onclick="openTopic(19)"><span class="toc-num">20</span><span class="toc-text">Tuple</span></button>
+        <button class="toc-item" id="toc-20" onclick="openTopic(20)"><span class="toc-num">21</span><span class="toc-text">Set</span></button>
+        <button class="toc-item" id="toc-21" onclick="openTopic(21)"><span class="toc-num">22</span><span class="toc-text">Dictionary</span></button>
+        <button class="toc-item" id="toc-22" onclick="openTopic(22)"><span class="toc-num">23</span><span class="toc-text">Challenges on Advanced Datatypes</span></button>
+        <button class="toc-item" id="toc-23" onclick="openTopic(23)"><span class="toc-num">24</span><span class="toc-text">Comprehensions</span></button>
       </div>
+
+      <!-- Part 4 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 4 — Functions</h2>
+        <button class="toc-item" id="toc-24" onclick="openTopic(24)"><span class="toc-num">25</span><span class="toc-text">Functions — Basics</span></button>
+        <button class="toc-item" id="toc-25" onclick="openTopic(25)"><span class="toc-num">26</span><span class="toc-text">Challenges on Functions</span></button>
+        <button class="toc-item" id="toc-26" onclick="openTopic(26)"><span class="toc-num">27</span><span class="toc-text">Advanced Functions (Lambda, Map, Filter)</span></button>
+        <button class="toc-item" id="toc-27" onclick="openTopic(27)"><span class="toc-num">28</span><span class="toc-text">Recursive Functions</span></button>
+        <button class="toc-item" id="toc-28" onclick="openTopic(28)"><span class="toc-num">29</span><span class="toc-text">Challenges on Advanced Functions</span></button>
+        <button class="toc-item" id="toc-29" onclick="openTopic(29)"><span class="toc-num">30</span><span class="toc-text">Decorators</span></button>
+        <button class="toc-item" id="toc-30" onclick="openTopic(30)"><span class="toc-num">31</span><span class="toc-text">Generators and Iterators</span></button>
+      </div>
+
+      <!-- Part 5 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 5 — Object-Oriented Programming</h2>
+        <button class="toc-item" id="toc-31" onclick="openTopic(31)"><span class="toc-num">32</span><span class="toc-text">Classes and Objects</span></button>
+        <button class="toc-item" id="toc-32" onclick="openTopic(32)"><span class="toc-num">33</span><span class="toc-text">Constructors and Destructors</span></button>
+        <button class="toc-item" id="toc-33" onclick="openTopic(33)"><span class="toc-num">34</span><span class="toc-text">Inheritance</span></button>
+        <button class="toc-item" id="toc-34" onclick="openTopic(34)"><span class="toc-num">35</span><span class="toc-text">Polymorphism and Overriding</span></button>
+        <button class="toc-item" id="toc-35" onclick="openTopic(35)"><span class="toc-num">36</span><span class="toc-text">Encapsulation and Abstraction</span></button>
+        <button class="toc-item" id="toc-36" onclick="openTopic(36)"><span class="toc-num">37</span><span class="toc-text">Magic / Dunder Methods</span></button>
+        <button class="toc-item" id="toc-37" onclick="openTopic(37)"><span class="toc-num">38</span><span class="toc-text">Challenges on OOP</span></button>
+      </div>
+
+      <!-- Part 6 -->
+      <div class="module-group">
+        <h2 class="module-title">Part 6 — Exception Handling</h2>
+        <button class="toc-item" id="toc-38" onclick="openTopic(38)"><span class="toc-num">39</span><span class="toc-text">Exception Handling — try, except, finally</span></button>
+        <button class="toc-item" id="toc-39" onclick="openTopic(39)"><span class="toc-num">40</span><span class="toc-text">User-Defined Exceptions</span></button>
+      </div>
+
     </div>
   </aside>
 
-  <main class="main" id="mainArea">
-
-    <div id="welcomeState" class="welcome-card">
-      <div class="welcome-icon">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a6b72" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h6z"/></svg>
-      </div>
-      <h2>Select a section to begin</h2>
-      <p>Choose any section from the course contents on the left to open its lecture notes right here.</p>
-      <div class="welcome-hint">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12" y2="16"/></svg>
-        Each section links to its own lecture notes page
-      </div>
+  <!-- Main Content View Area -->
+  <main class="workspace" id="mainContentArea">
+    
+    <!-- Mobile Response Header -->
+    <div class="mobile-nav-bar">
+      <button class="mobile-toggle-btn" onclick="toggleMobileSidebar()">
+        <span id="toggleButtonArrow">📋</span> <span id="toggleButtonText">View Course Contents</span>
+      </button>
+      <div style="font-weight:700; font-size:0.9rem; color:var(--text-muted);">Python Space</div>
     </div>
 
-    <div id="contentPanel" class="content-panel">
-      <div class="panel-header">
-        <div class="panel-eyebrow">
-          <span class="panel-num" id="panelNum">01</span>
-          <span class="panel-module-tag" id="panelModule">Part 1 — Python Foundations</span>
+    <!-- Syllabus Completion Progress Indicator Tracker -->
+    <div class="progress-container">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Default Initial Welcome Banner Card Dashboard -->
+    <div class="welcome-card" id="welcomeCard">
+      <div class="welcome-icon">🐍</div>
+      <h2 class="welcome-title">Welcome to Python Core Operations</h2>
+      <p class="welcome-subtitle">Select any operational module or lab assignment challenge entry from the sidebar index list layout view to initialization your code exploration engine space environments.</p>
+      <button class="btn btn-primary" onclick="openTopic(0)">Start Learning Module 1</button>
+    </div>
+
+    <!-- Main Module Display Canvas Layout Panels wrapper -->
+    <div class="content-panel" id="contentPanel">
+      
+      <header class="panel-header">
+        <div class="meta-badge">
+          <span id="panelNum">00</span>
+          <span id="panelModule">Module Target Area</span>
         </div>
-        <h2 id="panelTitle">Section Title</h2>
-        <p class="panel-desc" id="panelDesc">Lecture notes for this section.</p>
-        <div class="panel-actions">
-          <a href="#" id="panelOpenLink" class="btn-primary" target="_blank">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Open Full Page
-          </a>
-          <button class="btn-secondary" onclick="copyLink()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copy Link
+        <h1 class="panel-title" id="panelTitle">No Topic Loaded</h1>
+        <p class="panel-desc" id="panelDesc">Please make an index structural tracking selection profile to process frame components blocks.</p>
+      </header>
+
+      <div class="action-bar">
+        <div class="nav-btn-group">
+          <button class="btn" id="prevBtn" onclick="navigateTopic(-1)" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <span>Previous</span>
+          </button>
+          <button class="btn" id="nextBtn" onclick="navigateTopic(1)" disabled>
+            <span>Next</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
         </div>
-      </div>
-      <div class="panel-body">
-        <div class="panel-iframe-wrap">
-          <div class="iframe-loader" id="iframeLoader">
-            <div class="loader-ring"></div>
-            <p class="loader-text">Loading lecture…</p>
-          </div>
-          <iframe id="contentIframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+        
+        <div class="nav-btn-group">
+          <button class="btn" onclick="copyLink()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy Link</span>
+          </button>
+          <a class="btn btn-primary" id="viewMaterialBtn" target="_blank" href="#">
+            <span>Open Raw Raw</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          </a>
         </div>
       </div>
-      <div class="nav-arrows">
-        <button class="nav-btn" id="prevBtn" onclick="previousTopic()">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-          Previous
-        </button>
-        <button class="nav-btn" id="nextBtn" onclick="nextTopic()">
-          Next
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-    </div>
 
+      <!-- Live Preview Canvas Sandbox Section Container block workspace -->
+      <div class="sandbox-container">
+        <div class="iframe-loader hidden" id="iframeLoader">
+          <div class="spinner"></div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">Fetching documentation nodes components...</div>
+        </div>
+        <iframe class="content-frame" id="contentFrame" onload="onFrameLoad()" src="about:blank"></iframe>
+      </div>
+
+    </div>
   </main>
 
-</div>
+  <!-- Setup Module Mapping Scripts Execution System Array Profiles definitions -->
+  <script>
+    const GITHUB_BASE = 'https://nkhooah-bot.github.io/python-programming/';
 
-<footer class="site-footer">
-  <p>&copy; 2024 Python Programming Course. All rights reserved.</p>
-  <a href="#top">Back to Top</a>
-</footer>
+    const topics = [
+      // Part 1 — Python Foundations
+      { num: '01', module: 'Part 1 — Python Foundations', title: 'Introduction to Python', file: 'lecture_intro_python.html', desc: 'An introductory overview of Python features, architecture, and writing your very first Python execution block.' },
+      { num: '02', module: 'Part 1 — Python Foundations', title: 'Python Installation and Setup', file: 'lecture_install_setup.html', desc: 'Setting up the Python environment, configuring system variables, and launching integrated development environments.' },
+      { num: '03', module: 'Part 1 — Python Foundations', title: 'What are Variables?', file: 'lecture_variables.html', desc: 'Understanding memory pointers, naming rules, dynamic binding, and data storage references in Python.' },
+      { num: '04', module: 'Part 1 — Python Foundations', title: 'Python Datatypes', file: 'lecture_datatypes.html', desc: 'Deep dive into fundamental literal data classes including integers, floats, complex types, and standard classifications.' },
+      { num: '05', module: 'Part 1 — Python Foundations', title: 'Literals & Constants', file: 'lecture_literals_constants.html', desc: 'Exploring fixed scalar literal values, constant naming conventions, and immutable configurations.' },
+      { num: '06', module: 'Part 1 — Python Foundations', title: 'Base & Type Conversion Methods', file: 'lecture_type_conversion.html', desc: 'Mastering implicit and explicit type casting alongside base formatting parameters like binary, octal, and hexadecimal.' },
+      { num: '07', module: 'Part 1 — Python Foundations', title: 'Operators and Expressions', file: 'lecture_operators.html', desc: 'Evaluating relational, identity, arithmetic, and logical syntax structures inside computation blocks.' },
+      { num: '08', module: 'Part 1 — Python Foundations', title: 'Challenges using Expressions', file: 'challenge_expressions.html', desc: 'Hands-on programming assignments designed to practice operator precedence and compound algorithmic configurations.' },
+      { num: '09', module: 'Part 1 — Python Foundations', title: 'Arithmetic Assignment Operators', file: 'lecture_assignment_operators.html', desc: 'Working with short-circuit updates, augmented evaluations, and modifying values in-place efficiently.' },
+      { num: '10', module: 'Part 1 — Python Foundations', title: 'Conditional Statements', file: 'lecture_conditionals.html', desc: 'Building logic trees using clear structural flows with standard if, elif, and nested conditional structures.' },
 
-<script>
-const courseData = [
-  { title: "Introduction to Python", module: "Part 1 — Python Foundations", url: "Lecture-1.html" },
-  { title: "Python Installation and Setup", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "What are Variables?", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Python Datatypes", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Literals & Constants", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Base & Type Conversion Methods", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Operators and Expressions", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Challenges using Expressions", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Arithmetic Assignment Operators", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Conditional Statements", module: "Part 1 — Python Foundations", url: "#" },
-  { title: "Challenges on Conditional Statements", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "Loop Statements — While Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "Challenges on While Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "For Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "Challenges on For Loop", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "String Datatype", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "Challenges on String", module: "Part 2 — Control Flow & Strings", url: "#" },
-  { title: "List", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Challenges on List", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Tuple", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Set", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Dictionary", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Challenges on Advanced Datatypes", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Comprehensions", module: "Part 3 — Advanced Data Structures", url: "#" },
-  { title: "Functions — Basics", module: "Part 4 — Functions", url: "#" },
-  { title: "Challenges on Functions", module: "Part 4 — Functions", url: "#" },
-  { title: "Advanced Functions (Lambda, Map, Filter)", module: "Part 4 — Functions", url: "#" },
-  { title: "Recursive Functions", module: "Part 4 — Functions", url: "#" },
-  { title: "Challenges on Advanced Functions", module: "Part 4 — Functions", url: "#" },
-  { title: "Decorators", module: "Part 4 — Functions", url: "#" },
-  { title: "Generators and Iterators", module: "Part 4 — Functions", url: "#" },
-  { title: "Classes and Objects", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Constructors and Destructors", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Inheritance", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Polymorphism and Overriding", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Encapsulation and Abstraction", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Magic / Dunder Methods", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Challenges on OOP", module: "Part 5 — Object-Oriented Programming", url: "#" },
-  { title: "Exception Handling — try, except, finally", module: "Part 6 — Exception Handling", url: "#" },
-  { title: "User-Defined Exceptions", module: "Part 6 — Exception Handling", url: "#" },
-  { title: "Challenges on Exception Handling", module: "Part 6 — Exception Handling", url: "#" },
-  { title: "File Handling — Read, Write, Append", module: "Part 7 — File Handling", url: "#" },
-  { title: "Working with CSV Files", module: "Part 7 — File Handling", url: "#" },
-  { title: "Challenges on File Handling", module: "Part 7 — File Handling", url: "#" },
-  { title: "Introduction to Multithreading", module: "Part 8 — Multithreading", url: "#" },
-  { title: "Thread Synchronization and Locks", module: "Part 8 — Multithreading", url: "#" },
-  { title: "Challenges on Multithreading", module: "Part 8 — Multithreading", url: "#" },
-  { title: "SQLite — Introduction and Setup", module: "Part 9 — Database Programming", url: "#" },
-  { title: "CRUD Operations with SQLite", module: "Part 9 — Database Programming", url: "#" },
-  { title: "Challenges on Database Programming", module: "Part 9 — Database Programming", url: "#" },
-  { title: "Modules — Introduction and Importing", module: "Part 10 — Python Modules", url: "#" },
-  { title: "Data Structures Module", module: "Part 10 — Python Modules", url: "#" },
-  { title: "Date and Time Module", module: "Part 10 — Python Modules", url: "#" },
-  { title: "OS Module", module: "Part 10 — Python Modules", url: "#" },
-  { title: "Math Module", module: "Part 10 — Python Modules", url: "#" },
-  { title: "NumPy Module", module: "Part 10 — Python Modules", url: "#" },
-  { title: "Challenges on Modules", module: "Part 10 — Python Modules", url: "#" },
-  { title: "Introduction to Tkinter", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Tkinter Widgets and Layout", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Event Handling in Tkinter", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Project: Simple Calculator", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Project: Student Registration Form", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Project: To-Do List Application", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Project: Quiz Application", module: "Part 11 — GUI Programming with Tkinter", url: "#" },
-  { title: "Course Wrap-Up & Next Steps", module: "Part 11 — GUI Programming with Tkinter", url: "#" }
-];
+      // Part 2 — Control Flow & Strings
+      { num: '11', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on Conditional Statements', file: 'challenge_conditionals.html', desc: 'Coding lab problems constructing truth matrices, input validation guards, and branching evaluations.' },
+      { num: '12', module: 'Part 2 — Control Flow & Strings', title: 'Loop Statements — While Loop', file: 'lecture_while_loops.html', desc: 'Implementing definite and indefinite iteration sequences anchored by expression truth assessments.' },
+      { num: '13', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on While Loop', file: 'challenge_while_loops.html', desc: 'Solving structural iteration algorithms, running trackers, and programmatic control breaks.' },
+      { num: '14', module: 'Part 2 — Control Flow & Strings', title: 'For Loop', file: 'lecture_for_loops.html', desc: 'Traversing explicit sequence indices, data structures, generator boundaries, and range iterations.' },
+      { num: '15', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on For Loop', file: 'challenge_for_loops.html', desc: 'Iterative design challenges including nested matrices extraction, factorial computations, and pattern layouts.' },
+      { num: '16', module: 'Part 2 — Control Flow & Strings', title: 'String Datatype', file: 'lecture_strings.html', desc: 'Deep dive into character arrays, unicode representations, immutability behaviors, and slicing structures.' },
+      { num: '17', module: 'Part 2 — Control Flow & Strings', title: 'Challenges on String', file: 'challenge_strings.html', desc: 'Algorithmic string parser challenges covering validation checks, token sorting, and formatting routines.' },
 
-let currentTopic = -1;
+      // Part 3 — Advanced Data Structures
+      { num: '18', module: 'Part 3 — Advanced Data Structures', title: 'List', file: 'lecture_lists.html', desc: 'Utilizing ordered linear vectors, mutable sequences, reference slicing syntax, and storage tracking methods.' },
+      { num: '19', module: 'Part 3 — Advanced Data Structures', title: 'Challenges on List', file: 'challenge_lists.html', desc: 'Matrix array operations, search optimizations, indexing modifications, and custom filter configurations.' },
+      { num: '20', module: 'Part 3 — Advanced Data Structures', title: 'Tuple', file: 'lecture_tuples.html', desc: 'Understanding structural packing, positional layout items, sequence immutability optimizations, and data integrity safeguards.' },
+      { num: '21', module: 'Part 3 — Advanced Data Structures', title: 'Set', file: 'lecture_sets.html', desc: 'Utilizing unique data groupings, hashing keys, mathematical interactions, intersection matches, and differences.' },
+      { num: '22', module: 'Part 3 — Advanced Data Structures', title: 'Dictionary', file: 'lecture_dictionaries.html', desc: 'Building map tables, key-value mappings, complex lookup tables, handling updates, and nested models.' },
+      { num: '23', module: 'Part 3 — Advanced Data Structures', title: 'Challenges on Advanced Datatypes', file: 'challenge_advanced_datatypes.html', desc: 'Complex compound structures mapping data combinations, unique filter applications, and parsing trees.' },
+      { num: '24', module: 'Part 3 — Advanced Data Structures', title: 'Comprehensions', file: 'lecture_comprehensions.html', desc: 'Writing declarative inline transformations for array layouts, associative arrays, and filter pipelines.' },
 
-function openTopic(index) {
-  currentTopic = index;
-  const topic = courseData[index];
-  
-  document.getElementById('welcomeState').style.display = 'none';
-  document.getElementById('contentPanel').classList.add('visible');
-  
-  document.getElementById('panelNum').textContent = String(index + 1).padStart(2, '0');
-  document.getElementById('panelModule').textContent = topic.module;
-  document.getElementById('panelTitle').textContent = topic.title;
-  document.getElementById('panelDesc').textContent = `Lecture notes and content for ${topic.title}`;
-  document.getElementById('panelOpenLink').href = topic.url;
-  
-  // Scroll topic into view
-  const tocItem = document.getElementById(`toc-${index}`);
-  if (tocItem) {
-    tocItem.classList.add('active');
-    tocItem.scrollIntoView({ block: 'nearest' });
-    document.querySelectorAll('.toc-item.active').forEach((el, i) => {
-      if (i > 0) el.classList.remove('active');
+      // Part 4 — Functions
+      { num: '25', module: 'Part 4 — Functions', title: 'Functions — Basics', file: 'lecture_functions_basics.html', desc: 'Structuring operational parameters, dynamic scopes, reference values, tracking stacks, and return scopes.' },
+      { num: '26', module: 'Part 4 — Functions', title: 'Challenges on Functions', file: 'challenge_functions.html', desc: 'Designing reusable software layers, validation blocks, pipeline components, and isolated operations.' },
+      { num: '27', module: 'Part 4 — Functions', title: 'Advanced Functions (Lambda, Map, Filter)', file: 'lecture_advanced_functions.html', desc: 'Leveraging functional methods, processing pipelines, structural operations, and transient configurations.' },
+      { num: '28', module: 'Part 4 — Functions', title: 'Recursive Functions', file: 'lecture_recursion.html', desc: 'Building logical stack definitions, termination pathways, handling operational depth, and structure trees.' },
+      { num: '29', module: 'Part 4 — Functions', title: 'Challenges on Advanced Functions', file: 'challenge_advanced_functions.html', desc: 'Constructing recursive math systems, analytical data processing trees, and data pipeline flows.' },
+      { num: '30', module: 'Part 4 — Functions', title: 'Decorators', file: 'lecture_decorators.html', desc: 'Writing runtime meta-wrappers, function modifications, tracing execution times, and interface bindings.' },
+      { num: '31', module: 'Part 4 — Functions', title: 'Generators and Iterators', file: 'lecture_generators.html', desc: 'Building iterative item streaming pipelines, lazy evaluation sequences, memory spaces, and custom yield rules.' },
+
+      // Part 5 — Object-Oriented Programming
+      { num: '32', module: 'Part 5 — Object-Oriented Programming', title: 'Classes and Objects', file: 'lecture_classes_objects.html', desc: 'Modeling application data models, defining custom types, initialization spaces, and instance scopes.' },
+      { num: '33', module: 'Part 5 — Object-Oriented Programming', title: 'Constructors and Destructors', file: 'lecture_constructors.html', desc: 'Tracking entity operational life cycles, state loading rules, resource cleanups, and memory releases.' },
+      { num: '34', module: 'Part 5 — Object-Oriented Programming', title: 'Inheritance', file: 'lecture_inheritance.html', desc: 'Extending behavior tracking layers, hierarchical classifications, parent classes, and overriding methods.' },
+      { num: '35', module: 'Part 5 — Object-Oriented Programming', title: 'Polymorphism and Overriding', file: 'lecture_polymorphism.html', desc: 'Implementing multi-type shared calls, overriding methods, and creating abstract runtime integrations.' },
+      { num: '36', module: 'Part 5 — Object-Oriented Programming', title: 'Encapsulation and Abstraction', file: 'lecture_encapsulation.html', desc: 'Protecting structural properties, private scopes, setting interface gates, and hiding logic blocks.' },
+      { num: '37', module: 'Part 5 — Object-Oriented Programming', title: 'Magic / Dunder Methods', file: 'lecture_dunder_methods.html', desc: 'Overloading internal engine processes, managing comparisons, rendering strings, and custom actions.' },
+      { num: '38', module: 'Part 5 — Object-Oriented Programming', title: 'Challenges on OOP', file: 'challenge_oop.html', desc: 'Building enterprise tracking modules, abstract system relationships, and processing engine patterns.' },
+
+      // Part 6 — Exception Handling
+      { num: '39', module: 'Part 6 — Exception Handling', title: 'Exception Handling — try, except, finally', file: 'lecture_exception_handling.html', desc: 'Isolating process faults, catching runtime errors, error messaging, and system execution recovery.' },
+      { num: '40', module: 'Part 6 — Exception Handling', title: 'User-Defined Exceptions', file: 'lecture_custom_exceptions.html', desc: 'Extending base failure handlers, configuring specific application crashes, validation logic, and diagnostic metrics.' }
+    ];
+
+    let currentIndex = -1;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const topicParam = params.get('topic');
+      
+      if (topicParam !== null) {
+        const topicIdx = parseInt(topicParam, 10);
+        if (!isNaN(topicIdx) && topicIdx >= 0 && topicIdx < topics.length) {
+          openTopic(topicIdx);
+          return;
+        }
+      }
+      updateProgressBar();
     });
-  }
-  
-  // Update progress bar
-  const progress = ((index + 1) / courseData.length) * 100;
-  document.getElementById('progressFill').style.width = progress + '%';
-  
-  // Update nav buttons
-  document.getElementById('prevBtn').disabled = index === 0;
-  document.getElementById('nextBtn').disabled = index === courseData.length - 1;
-}
 
-function nextTopic() {
-  if (currentTopic < courseData.length - 1) {
-    openTopic(currentTopic + 1);
-  }
-}
+    function openTopic(index) {
+      if (index < 0 || index >= topics.length) return;
+      currentIndex = index;
+      
+      document.querySelectorAll('.toc-item').forEach(btn => btn.classList.remove('active'));
+      
+      const activeBtn = document.getElementById(`toc-${index}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar.classList.contains('mobile-open')) {
+        toggleMobileSidebar();
+      }
+      
+      document.getElementById('welcomeCard').style.display = 'none';
+      
+      const panel = document.getElementById('contentPanel');
+      panel.classList.add('visible');
+      
+      document.getElementById('panelNum').textContent = topics[index].num;
+      document.getElementById('panelModule').textContent = topics[index].module;
+      document.getElementById('panelTitle').textContent = topics[index].title;
+      document.getElementById('panelDesc').textContent = topics[index].desc;
+      
+      document.getElementById('prevBtn').disabled = (index === 0);
+      document.getElementById('nextBtn').disabled = (index === topics.length - 1);
+      
+      const targetUrl = GITHUB_BASE + topics[index].file;
+      document.getElementById('viewMaterialBtn').href = targetUrl;
+      
+      const iframe = document.getElementById('contentFrame');
+      document.getElementById('iframeLoader').classList.remove('hidden');
+      iframe.src = targetUrl;
+      
+      updateProgressBar();
+      
+      if (window.innerWidth < 820) {
+        document.getElementById('mainContentArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
 
-function previousTopic() {
-  if (currentTopic > 0) {
-    openTopic(currentTopic - 1);
-  }
-}
+    function onFrameLoad() {
+      setTimeout(() => {
+        document.getElementById('iframeLoader').classList.add('hidden');
+      }, 200);
+    }
 
-function filterToc(query) {
-  const items = document.querySelectorAll('.toc-item');
-  items.forEach(item => {
-    const text = item.querySelector('.toc-text').textContent.toLowerCase();
-    item.style.display = text.includes(query.toLowerCase()) ? 'flex' : 'none';
-  });
-}
+    function navigateTopic(dir) {
+      const next = currentIndex + dir;
+      if (next >= 0 && next < topics.length) openTopic(next);
+    }
 
-function toggleMobileSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-  sidebar.classList.toggle('mobile-open');
-  const button = document.getElementById('toggleButtonText');
-  const arrow = document.getElementById('toggleButtonArrow');
-  
-  if (sidebar.classList.contains('mobile-open')) {
-    button.textContent = '📋 Hide Course Contents';
-    arrow.style.transform = 'rotate(180deg)';
-  } else {
-    button.textContent = '📋 View Course Contents';
-    arrow.style.transform = 'rotate(0deg)';
-  }
-}
+    function copyLink() {
+      if (currentIndex < 0) return;
+      const url = GITHUB_BASE + topics[currentIndex].file;
+      navigator.clipboard.writeText(url).then(() => {
+        const btn = event.currentTarget;
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+        setTimeout(() => { btn.innerHTML = orig; }, 1800);
+      });
+    }
 
-function copyLink() {
-  const link = document.getElementById('panelOpenLink').href;
-  navigator.clipboard.writeText(link).then(() => {
-    alert('Link copied to clipboard!');
-  });
-}
-</script>
+    function filterToc(query) {
+      const q = query.toLowerCase().trim();
+      document.querySelectorAll('.toc-item').forEach((btn, i) => {
+        const text = topics[i].title.toLowerCase();
+        btn.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+      });
+      
+      document.querySelectorAll('.module-group').forEach(group => {
+        const anyVisible = [...group.querySelectorAll('.toc-item')].some(b => b.style.display !== 'none');
+        group.style.display = anyVisible ? 'block' : 'none';
+      });
+    }
 
+    function updateProgressBar() {
+      const fill = document.getElementById('progressFill');
+      if (!fill) return;
+      if (currentIndex < 0) {
+        fill.style.width = '0%';
+      } else {
+        const pct = ((currentIndex + 1) / topics.length) * 100;
+        fill.style.width = `${pct}%`;
+      }
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      const arrow = document.getElementById('toggleButtonArrow');
+      const txt = document.getElementById('toggleButtonText');
+      
+      sidebar.classList.toggle('mobile-open');
+      
+      if (sidebar.classList.contains('mobile-open')) {
+        arrow.style.transform = 'rotate(180deg)';
+        txt.textContent = '❌ Close Course Contents';
+      } else {
+        arrow.style.transform = 'rotate(0deg)';
+        txt.textContent = '📋 View Course Contents';
+      }
+    }
+  </script>
 </body>
 </html>
