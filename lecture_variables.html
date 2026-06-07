@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lectures 16–18 – Variable Names, Input &amp; print()</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72;
+    --teal-dark: #124f54;
+    --teal-light: #e8f4f5;
+    --gold: #c8a84b;
+    --cream: #fdf6ec;
+    --paper: #fffdf9;
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --border: #d4c9b0;
+    --code-bg: #f5f2ec;
+    --accent: #e85d2a;
+    --green: #3d9970;
+    --red: #e85d2a;
+    --page-width: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.015) 10px,rgba(0,0,0,.015) 20px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 30px 20px 60px;
+  }
+  #toolbar { max-width: var(--page-width); margin: 0 auto 18px; display: flex; justify-content: flex-end; gap: 10px; }
+  #toolbar button { background: var(--teal); color: #fff; border: none; padding: 9px 20px; border-radius: 4px; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .05em; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .2s; }
+  #toolbar button:hover { background: var(--teal-dark); }
+  #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25), 0 1px 4px rgba(0,0,0,.15); border-radius: 2px; }
+  #cover { background: var(--teal); padding: 64px 64px 56px; position: relative; overflow: hidden; }
+  #cover::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.03) 18px,rgba(255,255,255,.03) 36px); }
+  #cover .badge { display: inline-block; background: var(--gold); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 24px; position: relative; }
+  #cover h1 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: #fff; line-height: 1.2; position: relative; margin-bottom: 12px; }
+  #cover .subtitle { color: rgba(255,255,255,.65); font-size: 15px; letter-spacing: .04em; position: relative; margin-bottom: 40px; }
+  #cover .meta { display: flex; gap: 32px; position: relative; }
+  #cover .meta-item { color: rgba(255,255,255,.7); font-size: 13px; }
+  #cover .meta-item strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+  #body { padding: 48px 64px 64px; }
+  #toc { background: var(--cream); border: 1px solid var(--border); border-left: 4px solid var(--teal); padding: 28px 32px; margin-bottom: 48px; border-radius: 2px; }
+  #toc h2 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-dark); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  #toc ol { list-style: none; counter-reset: toc-counter; }
+  #toc > ol > li { counter-increment: toc-counter; margin-bottom: 6px; }
+  #toc a { color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: baseline; gap: 8px; padding: 4px 6px; border-radius: 3px; transition: background .15s; }
+  #toc a::before { content: counter(toc-counter) "."; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 13px; min-width: 18px; }
+  #toc a:hover { background: rgba(26,107,114,.08); }
+  #toc .toc-sub { list-style: none; padding-left: 26px; margin-top: 4px; }
+  #toc .toc-sub li { margin-bottom: 3px; }
+  #toc .toc-sub a { font-weight: 400; font-size: 13px; color: var(--muted); }
+  #toc .toc-sub a::before { display: none; }
+  .section { margin-bottom: 52px; scroll-margin-top: 20px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--teal-light); }
+  .section-num { background: var(--teal); color: #fff; font-family: 'Playfair Display', serif; font-size: 13px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal-dark); font-weight: 600; }
+  p { font-size: 14.5px; line-height: 1.75; color: #2c2c2c; margin-bottom: 14px; }
+  .concept-card { background: var(--cream); border: 1px solid var(--border); border-radius: 4px; padding: 16px 20px; margin-bottom: 12px; }
+  .concept-card h4 { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--teal-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .concept-card h4::before { content: '◆'; color: var(--gold); font-size: 10px; }
+  .concept-card ul { padding-left: 18px; margin: 0; }
+  .concept-card li { font-size: 13.5px; line-height: 1.65; color: #333; margin-bottom: 4px; }
+  .code-block { background: #1e2a2b; border-radius: 6px; overflow: hidden; margin: 20px 0; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+  .code-header { background: #0f1a1b; padding: 8px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .code-header span { font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--gold); letter-spacing: .05em; }
+  .code-dots { display: flex; gap: 5px; }
+  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #e85d2a; } .dot-y { background: #c8a84b; } .dot-g { background: #3d9970; }
+  pre { padding: 20px 24px; font-family: 'Source Code Pro', monospace; font-size: 13px; line-height: 1.7; overflow-x: auto; color: #d4cfbe; }
+  .kw { color: #e85d2a; } .fn { color: #88cfdb; } .st { color: #a8c97a; } .nm { color: #c8a84b; } .cm { color: #6b7e7f; font-style: italic; } .var { color: #d4cfbe; } .op { color: #e08060; }
+  .callout { background: var(--teal-light); border-left: 3px solid var(--teal); padding: 14px 18px; margin: 16px 0; border-radius: 0 4px 4px 0; font-size: 13.5px; line-height: 1.65; color: var(--teal-dark); }
+  .callout strong { color: var(--teal-dark); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+  .data-card { border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .data-card-head { background: var(--teal); color: #fff; padding: 8px 14px; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+  .data-card-body { padding: 12px 14px; font-size: 13px; background: var(--cream); }
+  .data-card-body li { margin-bottom: 4px; list-style-position: inside; color: #333; }
+  .takeaway-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 680px) { .takeaway-grid { grid-template-columns: 1fr; } }
+  .takeaway-item { display: flex; gap: 10px; align-items: flex-start; background: var(--cream); border: 1px solid var(--border); border-radius: 4px; padding: 12px 14px; }
+  .takeaway-icon { background: var(--gold); color: var(--teal-dark); font-size: 12px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .takeaway-item p { font-size: 13px; line-height: 1.55; margin-bottom: 0; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  h3.sub { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--teal-dark); margin: 24px 0 10px; padding-left: 12px; border-left: 3px solid var(--gold); }
+  #footer { background: var(--teal-dark); color: rgba(255,255,255,.5); text-align: center; font-size: 12px; padding: 18px 64px; letter-spacing: .04em; display: flex; justify-content: space-between; }
+  #footer span { color: var(--gold); }
+  .chip { display: inline-block; background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(26,107,114,.25); border-radius: 3px; font-size: 12px; font-weight: 700; padding: 2px 8px; margin: 2px 3px 2px 0; font-family: 'Source Code Pro', monospace; }
+
+  /* ── Rule table ───────────────────────────────── */
+  .rule-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; }
+  .rule-table th { background: var(--teal); color: #fff; padding: 9px 14px; text-align: left; font-weight: 700; letter-spacing: .04em; font-size: 12px; text-transform: uppercase; }
+  .rule-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); color: #333; vertical-align: middle; }
+  .rule-table tr:nth-child(even) td { background: var(--cream); }
+  .valid { color: var(--green); font-weight: 700; }
+  .invalid { color: var(--red); font-weight: 700; }
+
+  /* ── Exercise blocks ──────────────────────────── */
+  .ex-section { margin: 28px 0; }
+  .ex-level { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; margin-bottom: 14px; }
+  .ex-easy    { background: #d4edda; color: #155724; }
+  .ex-medium  { background: #fff3cd; color: #856404; }
+  .ex-hard    { background: #f8d7da; color: #721c24; }
+  .ex-list { list-style: none; padding: 0; }
+  .ex-list li { display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; background: var(--paper); font-size: 13.5px; line-height: 1.6; }
+  .ex-num { background: var(--teal); color: #fff; font-size: 11px; font-weight: 700; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ex-easy   .ex-num { background: #28a745; }
+  .ex-medium .ex-num { background: #c8a84b; }
+  .ex-hard   .ex-num { background: #dc3545; }
+
+  /* ── Lecture divider banner ───────────────────── */
+  .lecture-banner { background: var(--teal-dark); color: #fff; padding: 18px 24px; border-radius: 4px; margin: 48px 0 32px; display: flex; align-items: center; gap: 16px; }
+  .lecture-badge { background: var(--gold); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
+  .lecture-banner h2 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; }
+
+  @media print { body { background: white; padding: 0; } #toolbar { display: none; } #document { box-shadow: none; max-width: 100%; } .section { page-break-inside: avoid; } .code-block { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <button onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Export / Print as PDF
+  </button>
+</div>
+
+<div id="document">
+
+  <div id="cover">
+    <div class="badge">Learn Python Programming · Beginner to Master</div>
+    <h1>Variable Names, User Input &amp; the print() Function</h1>
+    <p class="subtitle">Section 3: Python Fundamentals &nbsp;·&nbsp; Lectures 16 – 18</p>
+    <div class="meta">
+      <div class="meta-item"><strong>Course</strong>Python Programming</div>
+      <div class="meta-item"><strong>Section</strong>3 – Python Fundamentals</div>
+      <div class="meta-item"><strong>Lectures</strong>16, 17 &amp; 18</div>
+    </div>
+  </div>
+
+  <div id="body">
+
+    <!-- ── TOC ─────────────────────────────────────── -->
+    <nav id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li>
+          <a href="#lec16">Lecture 16 – Rules for Variable Names</a>
+          <ul class="toc-sub">
+            <li><a href="#lec16-summary">Summary</a></li>
+            <li><a href="#lec16-rules">Naming Rules &amp; Guidelines</a></li>
+            <li><a href="#lec16-code">Example Code</a></li>
+            <li><a href="#lec16-takeaways">Key Takeaways</a></li>
+            <li><a href="#lec16-ex">Exercises</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#lec17">Lecture 17 – Taking Input from the User</a>
+          <ul class="toc-sub">
+            <li><a href="#lec17-summary">Summary</a></li>
+            <li><a href="#lec17-concepts">Key Concepts</a></li>
+            <li><a href="#lec17-code">Example Code</a></li>
+            <li><a href="#lec17-takeaways">Key Takeaways</a></li>
+            <li><a href="#lec17-ex">Exercises</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#lec18">Lecture 18 – The print() Function</a>
+          <ul class="toc-sub">
+            <li><a href="#lec18-summary">Summary</a></li>
+            <li><a href="#lec18-concepts">Key Concepts</a></li>
+            <li><a href="#lec18-code">Example Code</a></li>
+            <li><a href="#lec18-takeaways">Key Takeaways</a></li>
+            <li><a href="#lec18-ex">Exercises</a></li>
+          </ul>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  LECTURE 16 – VARIABLE NAMES                -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="lecture-banner" id="lec16">
+      <span class="lecture-badge">Lecture 16</span>
+      <h2>Rules for Variable Names</h2>
+    </div>
+
+    <section class="section" id="lec16-summary">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2 class="section-title">Lecture Summary</h2>
+      </div>
+      <p>This lecture covers the rules and guidelines Python enforces when naming variables. Understanding these rules is essential because an invalid variable name causes an immediate <span class="chip">SyntaxError</span> that stops the program from running. Beyond the hard rules, there are also professional naming conventions that make code readable and maintainable.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec16-rules">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2 class="section-title">Key Concepts &amp; Explanations</h2>
+      </div>
+
+      <h3 class="sub">Rule 1 – Use Meaningful Names (Guideline)</h3>
+      <p>A variable name should clearly describe the data it holds. Meaningful names make code self-documenting.</p>
+      <div class="two-col">
+        <div class="data-card">
+          <div class="data-card-head">✅ Good Names</div>
+          <div class="data-card-body">
+            <ul>
+              <li><span class="chip">product_id</span> — stores a product ID</li>
+              <li><span class="chip">price</span> — stores a price value</li>
+              <li><span class="chip">customer_name</span> — stores a name</li>
+            </ul>
+          </div>
+        </div>
+        <div class="data-card">
+          <div class="data-card-head">❌ Poor Names</div>
+          <div class="data-card-body">
+            <ul>
+              <li><span class="chip">x</span> — tells you nothing</li>
+              <li><span class="chip">a1</span> — not descriptive</li>
+              <li><span class="chip">temp</span> — vague purpose</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub">Rule 2 – Alphanumeric Characters and Underscore Only</h3>
+      <div class="concept-card">
+        <h4>Allowed Characters</h4>
+        <ul>
+          <li>Letters: <span class="chip">A–Z</span> and <span class="chip">a–z</span></li>
+          <li>Digits: <span class="chip">0–9</span></li>
+          <li>Underscore: <span class="chip">_</span> (the only special character allowed)</li>
+          <li>Spaces, hyphens, and all other symbols are <strong>not allowed</strong></li>
+        </ul>
+      </div>
+
+      <h3 class="sub">Rule 3 – Must Start with a Letter or Underscore</h3>
+      <div class="callout">
+        <strong>Important:</strong> A variable name <strong>cannot begin with a digit</strong>. Starting with a number causes a <span class="chip">SyntaxError: invalid decimal literal</span> because Python tries to interpret it as a number.
+      </div>
+
+      <h3 class="sub">Rule 4 – Cannot Use Python Keywords</h3>
+      <p>Python reserves certain words for its own syntax. You cannot use them as variable names.</p>
+      <div class="concept-card">
+        <h4>Common Python Keywords</h4>
+        <ul>
+          <li><span class="chip">if</span> <span class="chip">else</span> <span class="chip">while</span> <span class="chip">for</span> <span class="chip">return</span> <span class="chip">class</span> <span class="chip">import</span> <span class="chip">None</span> <span class="chip">True</span> <span class="chip">False</span></li>
+          <li>Note: <span class="chip">False</span> (capital F) is a keyword — <span class="chip">false</span> (lowercase) is not, but using it is discouraged.</li>
+        </ul>
+      </div>
+
+      <h3 class="sub">Rule 5 – Python is Case Sensitive</h3>
+      <p><span class="chip">price</span>, <span class="chip">Price</span>, and <span class="chip">PRICE</span> are three completely different variables. Always be consistent with capitalisation.</p>
+
+      <h3 class="sub">Valid vs Invalid — Quick Reference Table</h3>
+      <table class="rule-table">
+        <thead>
+          <tr><th>Name</th><th>Valid?</th><th>Reason</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip">product_id</span></td><td class="valid">✅ Valid</td><td>Meaningful, alphanumeric + underscore</td></tr>
+          <tr><td><span class="chip">_address</span></td><td class="valid">✅ Valid</td><td>Starts with underscore</td></tr>
+          <tr><td><span class="chip">abc123np</span></td><td class="valid">✅ Valid</td><td>Starts with letter, alphanumeric</td></tr>
+          <tr><td><span class="chip">1address</span></td><td class="invalid">❌ Invalid</td><td>Starts with a digit</td></tr>
+          <tr><td><span class="chip">customer-name</span></td><td class="invalid">❌ Invalid</td><td>Contains a hyphen</td></tr>
+          <tr><td><span class="chip">cust name</span></td><td class="invalid">❌ Invalid</td><td>Contains a space</td></tr>
+          <tr><td><span class="chip">if</span></td><td class="invalid">❌ Invalid</td><td>Python keyword</td></tr>
+          <tr><td><span class="chip">None</span></td><td class="invalid">❌ Invalid</td><td>Python keyword</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec16-code">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2 class="section-title">Example Code</h2>
+      </div>
+
+      <h3 class="sub">Valid Variable Declarations</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>valid_names.py</span>
+        </div>
+        <pre><span class="cm"># All of these are valid variable names</span>
+<span class="var">product_id</span> <span class="op">=</span> <span class="nm">153</span>
+<span class="var">price</span> <span class="op">=</span> <span class="nm">23.15</span>
+<span class="var">customer_name</span> <span class="op">=</span> <span class="st">"James"</span>
+<span class="var">_address</span> <span class="op">=</span> <span class="st">"Maseru"</span>
+<span class="var">abc123np</span> <span class="op">=</span> <span class="nm">15</span>
+
+<span class="fn">print</span>(<span class="var">product_id</span>, <span class="var">price</span>, <span class="var">customer_name</span>)
+<span class="cm"># Output: 153 23.15 James</span></pre>
+      </div>
+
+      <h3 class="sub">Case Sensitivity Demonstration</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>case_sensitive.py</span>
+        </div>
+        <pre><span class="var">price</span> <span class="op">=</span> <span class="nm">10</span>
+<span class="var">Price</span> <span class="op">=</span> <span class="nm">20</span>
+<span class="var">PRICE</span> <span class="op">=</span> <span class="nm">30</span>
+
+<span class="fn">print</span>(<span class="var">price</span>, <span class="var">Price</span>, <span class="var">PRICE</span>)
+<span class="cm"># Output: 10 20 30  — all three are separate variables</span></pre>
+      </div>
+
+      <h3 class="sub">Invalid Name — Error Example</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>invalid_name.py</span>
+        </div>
+        <pre><span class="nm">1</span><span class="var">a</span> <span class="op">=</span> <span class="nm">25</span>
+<span class="cm"># Output: SyntaxError: invalid decimal literal</span>
+<span class="cm"># Python sees "1" and expects a number, not a variable name</span></pre>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec16-takeaways">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2 class="section-title">Key Takeaways</h2>
+      </div>
+      <div class="takeaway-grid">
+        <div class="takeaway-item"><div class="takeaway-icon">1</div><p>Variable names must only contain letters, digits, and underscores — no spaces or hyphens.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">2</div><p>Names must start with a letter or underscore, never a digit.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">3</div><p>Python keywords like <span class="chip">if</span>, <span class="chip">for</span>, <span class="chip">None</span> cannot be used as variable names.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">4</div><p>Python is case sensitive — <span class="chip">Name</span> and <span class="chip">name</span> are different variables.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">5</div><p>Always choose meaningful names like <span class="chip">student_age</span> rather than vague names like <span class="chip">x</span>.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">6</div><p>An invalid name causes a <span class="chip">SyntaxError</span> that stops the program immediately.</p></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- EXERCISES 16 -->
+    <section class="section" id="lec16-ex">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2 class="section-title">Exercises – Variable Names</h2>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-easy">🟢 Easy</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-easy">1</span>Write three valid variable names and assign your name, age, and city to them. Print all three.</li>
+          <li><span class="ex-num ex-easy">2</span>Look at this list and identify which names are valid and which are invalid: <span class="chip">2fast</span>, <span class="chip">fast_2</span>, <span class="chip">my-score</span>, <span class="chip">_total</span>, <span class="chip">class</span>.</li>
+          <li><span class="ex-num ex-easy">3</span>Create variables <span class="chip">Price</span>, <span class="chip">price</span>, and <span class="chip">PRICE</span> with values 10, 20, and 30. Print them and observe the output.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-medium">🟡 Intermediate</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-medium">4</span>Write a short program that stores a product name, its price, and quantity in stock using well-named variables. Calculate the total stock value (price × quantity) and print a neat sentence showing the result.</li>
+          <li><span class="ex-num ex-medium">5</span>Rename the following poorly named variables to meaningful ones and explain your choices: <span class="chip">a = 100</span>, <span class="chip">b = 0.15</span>, <span class="chip">c = a * b</span>. (Hint: think of a shop selling items with VAT.)</li>
+          <li><span class="ex-num ex-medium">6</span>Try assigning a value to the keyword <span class="chip">for</span> and observe the error. Write the error message and explain in one sentence why it happens.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-hard">🔴 Difficult</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-hard">7</span>Write a program that creates variables for a student's: first name, last name, student ID, year of study, and GPA. Use the underscore naming convention throughout. Then print a formatted student profile using only one <span class="chip">print()</span> statement.</li>
+          <li><span class="ex-num ex-hard">8</span>Using the <span class="chip">id()</span> function, investigate what happens when two variables are assigned the same integer value (e.g. both equal to 5). Do they share the same memory address? Repeat with a large integer (e.g. 99999). Write your findings with code evidence.</li>
+          <li><span class="ex-num ex-hard">9</span>Write a program that intentionally uses all five naming mistakes (starts with digit, contains hyphen, contains space, uses keyword, uses <span class="chip">None</span>). Run each line separately, record the exact error Python gives for each, and write a one-line explanation for each error.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  LECTURE 17 – USER INPUT                    -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="lecture-banner" id="lec17">
+      <span class="lecture-badge">Lecture 17</span>
+      <h2>Taking Input from the User</h2>
+    </div>
+
+    <section class="section" id="lec17-summary">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2 class="section-title">Lecture Summary</h2>
+      </div>
+      <p>This lecture introduces the <span class="chip">input()</span> function, which pauses a running program and waits for the user to type something. It explains a critical rule: <span class="chip">input()</span> <strong>always returns a string</strong>, regardless of what the user types. To use numbers, you must explicitly convert the result using <span class="chip">int()</span> or <span class="chip">float()</span>.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec17-concepts">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2 class="section-title">Key Concepts &amp; Explanations</h2>
+      </div>
+
+      <h3 class="sub">The input() Function</h3>
+      <div class="concept-card">
+        <h4>How it works</h4>
+        <ul>
+          <li><span class="chip">input()</span> pauses the program and waits for keyboard input.</li>
+          <li>The string passed to <span class="chip">input()</span> is the <strong>prompt</strong> shown to the user.</li>
+          <li>The result is <strong>always a string</strong> — even if the user types a number.</li>
+          <li>To use the result as a number, you must convert it with <span class="chip">int()</span> or <span class="chip">float()</span>.</li>
+        </ul>
+      </div>
+
+      <h3 class="sub">Type Conversion</h3>
+      <div class="two-col">
+        <div class="data-card">
+          <div class="data-card-head">int() — Whole Numbers</div>
+          <div class="data-card-body">
+            <ul>
+              <li>Converts a string to an integer.</li>
+              <li>Use for age, quantity, year, etc.</li>
+              <li>Fails if the input contains letters or decimals.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="data-card">
+          <div class="data-card-head">float() — Decimal Numbers</div>
+          <div class="data-card-body">
+            <ul>
+              <li>Converts a string to a decimal number.</li>
+              <li>Use for price, weight, temperature, etc.</li>
+              <li>Accepts values like <span class="chip">3.14</span> or <span class="chip">99.0</span>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Common Mistake:</strong> Trying to do arithmetic on input without converting it first causes a <span class="chip">TypeError</span>. For example, <span class="chip">age + 1</span> will fail if <span class="chip">age</span> was obtained directly from <span class="chip">input()</span> without conversion.
+      </div>
+
+      <h3 class="sub">Taking Multiple Inputs</h3>
+      <div class="concept-card">
+        <h4>Using .split()</h4>
+        <ul>
+          <li><span class="chip">.split()</span> breaks a single input string into multiple parts at each space.</li>
+          <li>You can assign each part directly: <span class="chip">name, age = input("Enter: ").split()</span></li>
+          <li>Always convert to the correct type after splitting when numbers are expected.</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec17-code">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2 class="section-title">Example Code</h2>
+      </div>
+
+      <h3 class="sub">Basic Input and Greeting</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>basic_input.py</span>
+        </div>
+        <pre><span class="var">name</span> <span class="op">=</span> <span class="fn">input</span>(<span class="st">"Enter your name: "</span>)
+<span class="fn">print</span>(<span class="st">"Hello"</span>, <span class="var">name</span>)
+<span class="cm"># If user types: Alice</span>
+<span class="cm"># Output: Hello Alice</span></pre>
+      </div>
+
+      <h3 class="sub">TypeError Without Conversion vs Correct Conversion</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>conversion.py</span>
+        </div>
+        <pre><span class="cm"># ❌ Wrong — age is a string, cannot add 1</span>
+<span class="var">age</span> <span class="op">=</span> <span class="fn">input</span>(<span class="st">"Enter your age: "</span>)
+<span class="fn">print</span>(<span class="st">"Next year you will be"</span>, <span class="var">age</span> <span class="op">+</span> <span class="nm">1</span>)  <span class="cm"># TypeError!</span>
+
+<span class="cm"># ✅ Correct — convert to int first</span>
+<span class="var">age</span> <span class="op">=</span> <span class="fn">int</span>(<span class="fn">input</span>(<span class="st">"Enter your age: "</span>))
+<span class="fn">print</span>(<span class="st">"Next year you will be"</span>, <span class="var">age</span> <span class="op">+</span> <span class="nm">1</span>)
+<span class="cm"># If user types: 20 → Output: Next year you will be 21</span></pre>
+      </div>
+
+      <h3 class="sub">Rectangle Area Program</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>rectangle_area.py</span>
+        </div>
+        <pre><span class="cm"># Program to calculate the area of a rectangle</span>
+<span class="var">length</span> <span class="op">=</span> <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Enter the length: "</span>))
+<span class="var">width</span>  <span class="op">=</span> <span class="fn">float</span>(<span class="fn">input</span>(<span class="st">"Enter the width: "</span>))
+<span class="var">area</span>   <span class="op">=</span> <span class="var">length</span> <span class="op">*</span> <span class="var">width</span>
+<span class="fn">print</span>(<span class="st">"Area of the rectangle is:"</span>, <span class="var">area</span>)</pre>
+      </div>
+
+      <h3 class="sub">Multiple Inputs with .split()</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>multiple_input.py</span>
+        </div>
+        <pre><span class="cm"># Taking name and age on one line</span>
+<span class="var">name</span>, <span class="var">age</span> <span class="op">=</span> <span class="fn">input</span>(<span class="st">"Enter your name and age separated by space: "</span>).<span class="fn">split</span>()
+<span class="var">age</span> <span class="op">=</span> <span class="fn">int</span>(<span class="var">age</span>)
+<span class="fn">print</span>(<span class="st">"In 5 years,"</span>, <span class="var">name</span>, <span class="st">"will be"</span>, <span class="var">age</span> <span class="op">+</span> <span class="nm">5</span>)
+<span class="cm"># If user types: Alice 20</span>
+<span class="cm"># Output: In 5 years, Alice will be 25</span></pre>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec17-takeaways">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2 class="section-title">Key Takeaways</h2>
+      </div>
+      <div class="takeaway-grid">
+        <div class="takeaway-item"><div class="takeaway-icon">1</div><p><span class="chip">input()</span> always returns a <strong>string</strong>, regardless of what the user types.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">2</div><p>Use <span class="chip">int()</span> to convert input to a whole number and <span class="chip">float()</span> for decimal numbers.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">3</div><p>Adding a number to an unconverted input causes a <span class="chip">TypeError</span>.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">4</div><p>Use <span class="chip">.split()</span> to collect multiple values from a single input line.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">5</div><p>Always write a clear prompt so the user knows what to enter.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">6</div><p>Conversion and input can be combined: <span class="chip">int(input("Age: "))</span>.</p></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- EXERCISES 17 -->
+    <section class="section" id="lec17-ex">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2 class="section-title">Exercises – User Input</h2>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-easy">🟢 Easy</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-easy">1</span>Write a program that asks the user for their name and prints <em>"Welcome, [name]!"</em></li>
+          <li><span class="ex-num ex-easy">2</span>Ask the user to enter two whole numbers and print their sum.</li>
+          <li><span class="ex-num ex-easy">3</span>Ask the user for their birth year, convert it to an integer, and print how old they are in 2025.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-medium">🟡 Intermediate</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-medium">4</span>Write a program that asks the user to enter the price of an item and a quantity. Calculate the total cost and print it formatted as <em>"Total: M[amount]"</em> using local currency.</li>
+          <li><span class="ex-num ex-medium">5</span>Ask the user to enter three subject marks as decimals on a single line separated by spaces. Calculate and print the average.</li>
+          <li><span class="ex-num ex-medium">6</span>Write a temperature converter that asks the user to enter a temperature in Celsius and prints the equivalent in Fahrenheit. Formula: <span class="chip">F = (C × 9/5) + 32</span>.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-hard">🔴 Difficult</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-hard">7</span>Write a simple shop program that asks the user for: item name, unit price, and quantity purchased. Calculate: subtotal, 15% VAT amount, and grand total. Print a formatted receipt showing all three values.</li>
+          <li><span class="ex-num ex-hard">8</span>Ask the user to enter their full name (first and last) and year of birth on a single line separated by a space. Extract and print: first name, last name, age in 2025, and initials (e.g. J.D.).</li>
+          <li><span class="ex-num ex-hard">9</span>Write a program that asks the user to input five numbers on one line separated by commas (<span class="chip">.split(",")</span>). Convert them all to floats, then print: the minimum, maximum, sum, and average.</li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  LECTURE 18 – print() FUNCTION              -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="lecture-banner" id="lec18">
+      <span class="lecture-badge">Lecture 18</span>
+      <h2>The print() Function</h2>
+    </div>
+
+    <section class="section" id="lec18-summary">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2 class="section-title">Lecture Summary</h2>
+      </div>
+      <p>The <span class="chip">print()</span> function is the most commonly used function in Python. It displays information on the screen. This lecture goes beyond basic usage to cover the <span class="chip">sep</span> and <span class="chip">end</span> parameters that control how values are separated and how lines are terminated, as well as escape characters for formatting text.</p>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec18-concepts">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2 class="section-title">Key Concepts &amp; Explanations</h2>
+      </div>
+
+      <h3 class="sub">What Can You Print?</h3>
+      <div class="concept-card">
+        <h4>print() accepts</h4>
+        <ul>
+          <li><strong>Text (strings):</strong> <span class="chip">print("Hello")</span></li>
+          <li><strong>Numbers:</strong> <span class="chip">print(42)</span> or calculations <span class="chip">print(10 + 5)</span></li>
+          <li><strong>Variables:</strong> <span class="chip">print(name)</span></li>
+          <li><strong>Multiple values:</strong> <span class="chip">print("Age:", age)</span> — separated by spaces by default</li>
+        </ul>
+      </div>
+
+      <h3 class="sub">The sep Parameter</h3>
+      <p>When printing multiple values, Python uses a space as the default separator. You can change this with <span class="chip">sep</span>.</p>
+      <div class="two-col">
+        <div class="data-card">
+          <div class="data-card-head">Default Separator (space)</div>
+          <div class="data-card-body">
+            <ul>
+              <li><span class="chip">print("John", "Doe")</span></li>
+              <li>Output: <span class="chip">John Doe</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="data-card">
+          <div class="data-card-head">Custom Separator</div>
+          <div class="data-card-body">
+            <ul>
+              <li><span class="chip">print("John", "Doe", sep="-")</span></li>
+              <li>Output: <span class="chip">John-Doe</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="sub">The end Parameter</h3>
+      <p>By default, <span class="chip">print()</span> adds a newline <span class="chip">\n</span> at the end, moving the cursor to the next line. Use <span class="chip">end</span> to change this.</p>
+      <div class="callout">
+        <strong>Practical use:</strong> Setting <span class="chip">end=" "</span> allows two print statements to output on the same line. This is useful for building formatted output progressively.
+      </div>
+
+      <h3 class="sub">Escape Characters</h3>
+      <table class="rule-table">
+        <thead>
+          <tr><th>Escape</th><th>Meaning</th><th>Example Output</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chip">\n</span></td><td>New line</td><td>Moves to next line</td></tr>
+          <tr><td><span class="chip">\t</span></td><td>Tab space</td><td>Adds horizontal indent</td></tr>
+          <tr><td><span class="chip">\"</span></td><td>Double quote inside string</td><td>She said, "Hello!"</td></tr>
+          <tr><td><span class="chip">\'</span></td><td>Single quote inside string</td><td>It's working</td></tr>
+          <tr><td><span class="chip">\\</span></td><td>Literal backslash</td><td>\</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec18-code">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2 class="section-title">Example Code</h2>
+      </div>
+
+      <h3 class="sub">Basic Printing</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>basic_print.py</span>
+        </div>
+        <pre><span class="fn">print</span>(<span class="st">"Welcome to Python"</span>)    <span class="cm"># Text</span>
+<span class="fn">print</span>(<span class="nm">10</span> <span class="op">+</span> <span class="nm">5</span>)                   <span class="cm"># Calculation → 15</span>
+<span class="var">a</span> <span class="op">=</span> <span class="nm">10</span>
+<span class="fn">print</span>(<span class="st">"The value of a is"</span>, <span class="var">a</span>)  <span class="cm"># Text + variable → The value of a is 10</span></pre>
+      </div>
+
+      <h3 class="sub">sep and end Parameters</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>sep_end.py</span>
+        </div>
+        <pre><span class="cm"># Default separator is a space</span>
+<span class="fn">print</span>(<span class="st">"John"</span>, <span class="st">"Doe"</span>)               <span class="cm"># Output: John Doe</span>
+
+<span class="cm"># Custom separator</span>
+<span class="fn">print</span>(<span class="st">"John"</span>, <span class="st">"Doe"</span>, <span class="var">sep</span><span class="op">=</span><span class="st">"-"</span>)     <span class="cm"># Output: John-Doe</span>
+<span class="fn">print</span>(<span class="st">"2025"</span>, <span class="st">"06"</span>, <span class="st">"01"</span>, <span class="var">sep</span><span class="op">=</span><span class="st">"/"</span>) <span class="cm"># Output: 2025/06/01</span>
+
+<span class="cm"># end parameter — print on same line</span>
+<span class="fn">print</span>(<span class="st">"Hello"</span>, <span class="var">end</span><span class="op">=</span><span class="st">" "</span>)
+<span class="fn">print</span>(<span class="st">"World"</span>)                      <span class="cm"># Output: Hello World</span></pre>
+      </div>
+
+      <h3 class="sub">Escape Characters</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>escape_chars.py</span>
+        </div>
+        <pre><span class="fn">print</span>(<span class="st">"Line 1\nLine 2"</span>)
+<span class="cm"># Output:</span>
+<span class="cm"># Line 1</span>
+<span class="cm"># Line 2</span>
+
+<span class="fn">print</span>(<span class="st">"Name:\tJohn"</span>)
+<span class="cm"># Output: Name:    John</span>
+
+<span class="fn">print</span>(<span class="st">"She said, \"Hello!\""</span>)
+<span class="cm"># Output: She said, "Hello!"</span></pre>
+      </div>
+
+      <h3 class="sub">Formatted Student Profile</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+          <span>student_profile.py</span>
+        </div>
+        <pre><span class="var">name</span> <span class="op">=</span> <span class="st">"Alice"</span>
+<span class="var">age</span>  <span class="op">=</span> <span class="nm">20</span>
+<span class="var">gpa</span>  <span class="op">=</span> <span class="nm">3.75</span>
+
+<span class="fn">print</span>(<span class="st">"--- Student Profile ---"</span>)
+<span class="fn">print</span>(<span class="st">"Name:\t"</span>, <span class="var">name</span>, <span class="var">sep</span><span class="op">=</span><span class="st">""</span>)
+<span class="fn">print</span>(<span class="st">"Age:\t"</span>, <span class="var">age</span>,  <span class="var">sep</span><span class="op">=</span><span class="st">""</span>)
+<span class="fn">print</span>(<span class="st">"GPA:\t"</span>, <span class="var">gpa</span>,  <span class="var">sep</span><span class="op">=</span><span class="st">""</span>)
+<span class="cm"># Output:</span>
+<span class="cm"># --- Student Profile ---</span>
+<span class="cm"># Name:   Alice</span>
+<span class="cm"># Age:    20</span>
+<span class="cm"># GPA:    3.75</span></pre>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="lec18-takeaways">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2 class="section-title">Key Takeaways</h2>
+      </div>
+      <div class="takeaway-grid">
+        <div class="takeaway-item"><div class="takeaway-icon">1</div><p><span class="chip">print()</span> can output text, numbers, variables, calculations, and combinations of all of these.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">2</div><p>Multiple values are separated by a space by default; use <span class="chip">sep</span> to change the separator.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">3</div><p>By default, each <span class="chip">print()</span> ends with a newline; use <span class="chip">end</span> to keep output on the same line.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">4</div><p><span class="chip">\n</span> adds a new line, <span class="chip">\t</span> adds a tab inside any string.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">5</div><p>Use <span class="chip">\"</span> or <span class="chip">\'</span> to include quote characters inside a printed string.</p></div>
+        <div class="takeaway-item"><div class="takeaway-icon">6</div><p>Combining <span class="chip">sep</span>, <span class="chip">end</span>, and escape characters gives full control over output formatting.</p></div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- EXERCISES 18 -->
+    <section class="section" id="lec18-ex">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2 class="section-title">Exercises – The print() Function</h2>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-easy">🟢 Easy</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-easy">1</span>Print your full name, age, and country on three separate lines using three separate <span class="chip">print()</span> calls.</li>
+          <li><span class="ex-num ex-easy">2</span>Print the result of <span class="chip">100 + 250</span>, <span class="chip">45 * 3</span>, and <span class="chip">200 / 4</span> each on its own line with a label, e.g. <em>"Sum: 350"</em>.</li>
+          <li><span class="ex-num ex-easy">3</span>Use the <span class="chip">sep</span> parameter to print <em>"2025/06/01"</em> from three separate string values <span class="chip">"2025"</span>, <span class="chip">"06"</span>, <span class="chip">"01"</span> in a single <span class="chip">print()</span> call.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-medium">🟡 Intermediate</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-medium">4</span>Print the following using only <strong>one</strong> <span class="chip">print()</span> statement and escape characters:<br>
+            <em>Line 1: Student Name: John</em><br>
+            <em>Line 2: Course: Python</em><br>
+            <em>Line 3: Grade: A</em>
+          </li>
+          <li><span class="ex-num ex-medium">5</span>Use <span class="chip">end</span> to print the numbers 1 through 5 all on the same line separated by commas, like: <em>1, 2, 3, 4, 5</em>. Use five separate <span class="chip">print()</span> calls.</li>
+          <li><span class="ex-num ex-medium">6</span>Print a sentence that includes both single and double quotes, for example: <em>He said, "It's a great day!"</em>. Use escape characters.</li>
+        </ul>
+      </div>
+
+      <div class="ex-section">
+        <span class="ex-level ex-hard">🔴 Difficult</span>
+        <ul class="ex-list">
+          <li><span class="ex-num ex-hard">7</span>Create variables for a product name, price, and quantity. Then print a formatted invoice using <span class="chip">\t</span> for alignment, like:<br>
+            <em>Item &nbsp;&nbsp;&nbsp; Price &nbsp;&nbsp; Qty &nbsp;&nbsp; Total</em><br>
+            <em>Bread &nbsp; 12.50 &nbsp; 3 &nbsp;&nbsp;&nbsp; 37.50</em>
+          </li>
+          <li><span class="ex-num ex-hard">8</span>Write a program that prints a 3×3 multiplication table for the number entered by the user, formatted with <span class="chip">\t</span> so the columns align neatly. Use nine <span class="chip">print()</span> calls with <span class="chip">end</span> to control line breaks.</li>
+          <li><span class="ex-num ex-hard">9</span>Combine <span class="chip">input()</span> and <span class="chip">print()</span>: ask the user for their first name, last name, and year of birth. Then print a personalised ID card layout using escape characters, <span class="chip">sep</span>, and <span class="chip">end</span> to format it neatly — including their age calculated from 2025.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="footer">
+    <span>Learn Python Programming – Beginner to Master</span>
+    <span>Section 3 · <span>Lectures 16 – 18</span></span>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('#toc a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
