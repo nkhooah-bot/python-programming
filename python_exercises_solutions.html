@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Exercises – Questions &amp; Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72; --teal-dark: #124f54; --teal-light: #e8f4f5;
+    --gold: #c8a84b; --cream: #fdf6ec; --paper: #fffdf9;
+    --ink: #1e1e1e; --muted: #6b6b6b; --border: #d4c9b0;
+    --green: #2d7a4f; --green-light: #e6f4ec;
+    --page-width: 860px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.015) 10px,rgba(0,0,0,.015) 20px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 30px 20px 60px;
+  }
+  #toolbar { max-width: var(--page-width); margin: 0 auto 18px; display: flex; justify-content: flex-end; gap: 10px; }
+  #toolbar button { background: var(--teal); color: #fff; border: none; padding: 9px 20px; border-radius: 4px; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .2s; }
+  #toolbar button:hover { background: var(--teal-dark); }
+
+  #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25); border-radius: 2px; }
+
+  /* Cover */
+  #cover { background: var(--teal); padding: 60px 64px 52px; position: relative; overflow: hidden; }
+  #cover::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.03) 18px,rgba(255,255,255,.03) 36px); }
+  #cover .badge { display: inline-block; background: var(--gold); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 22px; position: relative; }
+  #cover h1 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: #fff; line-height: 1.2; position: relative; margin-bottom: 10px; }
+  #cover .subtitle { color: rgba(255,255,255,.65); font-size: 15px; position: relative; margin-bottom: 36px; }
+  #cover .meta { display: flex; gap: 32px; position: relative; }
+  #cover .meta-item { color: rgba(255,255,255,.7); font-size: 13px; }
+  #cover .meta-item strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+
+  /* Body */
+  #body { padding: 48px 64px 64px; }
+  p { font-size: 14.5px; line-height: 1.75; color: #2c2c2c; margin-bottom: 12px; }
+
+  /* TOC */
+  #toc { background: var(--cream); border: 1px solid var(--border); border-left: 4px solid var(--teal); padding: 24px 28px; margin-bottom: 44px; border-radius: 2px; }
+  #toc h2 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--teal-dark); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  #toc ol { list-style: none; counter-reset: toc-c; }
+  #toc > ol > li { counter-increment: toc-c; margin-bottom: 5px; }
+  #toc a { color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: baseline; gap: 8px; padding: 4px 6px; border-radius: 3px; transition: background .15s; }
+  #toc a::before { content: counter(toc-c) "."; color: var(--gold); font-family: 'Playfair Display', serif; font-size: 13px; min-width: 18px; }
+  #toc a:hover { background: rgba(26,107,114,.08); }
+
+  /* Section */
+  .section { margin-bottom: 56px; scroll-margin-top: 20px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 2px solid var(--teal-light); }
+  .section-num { background: var(--teal); color: #fff; font-family: 'Playfair Display', serif; font-size: 13px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 21px; color: var(--teal-dark); font-weight: 600; }
+
+  /* Question card */
+  .q-card { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 32px; }
+  .q-header { background: var(--teal-dark); color: #fff; padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .q-num { background: var(--gold); color: var(--teal-dark); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 2px; white-space: nowrap; }
+  .q-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; }
+  .q-body { padding: 20px 24px; background: var(--paper); }
+  .q-body p { font-size: 14px; margin-bottom: 10px; }
+  .q-body ul { padding-left: 20px; margin-bottom: 10px; }
+  .q-body li { font-size: 14px; line-height: 1.65; color: #333; margin-bottom: 3px; }
+
+  /* Requirement box */
+  .req-box { background: var(--cream); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 0 4px 4px 0; padding: 12px 16px; margin: 12px 0; font-size: 13.5px; }
+  .req-box strong { color: var(--teal-dark); }
+
+  /* Code block */
+  .code-block { background: #1e2a2b; border-radius: 6px; overflow: hidden; margin: 14px 0; box-shadow: 0 2px 10px rgba(0,0,0,.15); }
+  .code-header { background: #0f1a1b; padding: 7px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .code-header span { font-family: 'Source Code Pro', monospace; font-size: 11px; color: var(--gold); letter-spacing: .05em; }
+  .code-dots { display: flex; gap: 5px; }
+  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #e85d2a; } .dot-y { background: #c8a84b; } .dot-g { background: #3d9970; }
+  pre { padding: 18px 22px; font-family: 'Source Code Pro', monospace; font-size: 12.5px; line-height: 1.7; overflow-x: auto; color: #d4cfbe; }
+  .kw  { color: #e85d2a; }
+  .fn  { color: #88cfdb; }
+  .st  { color: #a8c97a; }
+  .nm  { color: #c8a84b; }
+  .cm  { color: #6b7e7f; font-style: italic; }
+  .var { color: #d4cfbe; }
+  .op  { color: #e08060; }
+  .fstr{ color: #c8e8a0; }
+
+  /* Solution toggle */
+  .sol-toggle { width: 100%; background: var(--green); color: #fff; border: none; padding: 11px 20px; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .04em; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background .2s; }
+  .sol-toggle:hover { background: #235e40; }
+  .sol-toggle .arrow { transition: transform .25s; }
+  .sol-toggle.open .arrow { transform: rotate(180deg); }
+  .sol-body { display: none; padding: 20px 24px; background: var(--green-light); border-top: 1px solid #b8dfc8; }
+  .sol-body.open { display: block; }
+  .sol-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+
+  /* Output box */
+  .output-box { background: #1e2a2b; border-radius: 4px; padding: 12px 18px; margin-top: 10px; font-family: 'Source Code Pro', monospace; font-size: 12.5px; color: #a8c97a; line-height: 1.7; }
+  .output-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+
+  /* Callout */
+  .callout { background: var(--teal-light); border-left: 3px solid var(--teal); padding: 12px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; font-size: 13.5px; line-height: 1.65; color: var(--teal-dark); }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* Chip */
+  .chip { display: inline-block; background: var(--teal-light); color: var(--teal-dark); border: 1px solid rgba(26,107,114,.25); border-radius: 3px; font-size: 12px; font-weight: 700; padding: 2px 7px; font-family: 'Source Code Pro', monospace; }
+
+  /* Sub heading */
+  h3.sub { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--teal-dark); margin: 20px 0 8px; padding-left: 12px; border-left: 3px solid var(--gold); }
+
+  /* Footer */
+  #footer { background: var(--teal-dark); color: rgba(255,255,255,.5); font-size: 12px; padding: 16px 64px; letter-spacing: .04em; display: flex; justify-content: space-between; }
+  #footer span { color: var(--gold); }
+
+  @media print { body { background: #fff; padding: 0; } #toolbar { display: none; } #document { box-shadow: none; max-width: 100%; } }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <button onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Export / Print as PDF
+  </button>
+</div>
+
+<div id="document">
+
+  <div id="cover">
+    <div class="badge">Learn Python Programming · Beginner to Master</div>
+    <h1>Python Exercises — Questions &amp; Solutions</h1>
+    <p class="subtitle">Variables, f-strings, Swapping &amp; Formatted Tables</p>
+    <div class="meta">
+      <div class="meta-item"><strong>Course</strong>Python Programming</div>
+      <div class="meta-item"><strong>Topics</strong>Variables · f-strings · Value Swapping · Formatting</div>
+      <div class="meta-item"><strong>Exercises</strong>5 Questions</div>
+    </div>
+  </div>
+
+  <div id="body">
+
+    <!-- TOC -->
+    <nav id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+        <li><a href="#q1">Q1 – Name Tag (f-string)</a></li>
+        <li><a href="#q2">Q2 – Swap Values (no third variable)</a></li>
+        <li><a href="#q3">Q3 – Swap Values via Arithmetic</a></li>
+        <li><a href="#q4">Q4 – Product Variables &amp; Stock Value</a></li>
+        <li><a href="#q5">Q5 – Formatted Product Table</a></li>
+      </ol>
+    </nav>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- Q1 – NAME TAG                             -->
+    <!-- ══════════════════════════════════════════ -->
+    <section class="section" id="q1">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2 class="section-title">Question 1 – Name Tag</h2>
+      </div>
+
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Exercise 1</span>
+          <span class="q-title">Name Tag using f-string formatting</span>
+        </div>
+        <div class="q-body">
+          <p>Create three variables and use <strong>f-string formatting</strong> to print one complete sentence.</p>
+          <div class="req-box">
+            <strong>Variables to create:</strong> <span class="chip">name</span>, <span class="chip">age</span>, <span class="chip">city</span><br><br>
+            <strong>Required output format:</strong><br>
+            <span class="chip">Hello, my name is __, I am __ years old, and I live in __.</span>
+          </div>
+          <p>Assign your own values to the variables. Use f-string formatting — do <strong>not</strong> use the <span class="chip">+</span> operator or comma-separated print arguments.</p>
+        </div>
+
+        <!-- Solution -->
+        <button class="sol-toggle" onclick="toggleSol(this)">
+          ▶ Show Solution
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sol-body">
+          <div class="sol-label">✅ Solution</div>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+              <span>name_tag.py</span>
+            </div>
+            <pre><span class="cm"># Create variables and assign values</span>
+<span class="var">name</span> <span class="op">=</span> <span class="st">"Thabo"</span>
+<span class="var">age</span>  <span class="op">=</span> <span class="nm">25</span>
+<span class="var">city</span> <span class="op">=</span> <span class="st">"Maseru"</span>
+
+<span class="cm"># Print the sentence using f-string formatting</span>
+<span class="fn">print</span>(<span class="fstr">f"Hello, my name is {<span class="var">name</span>}, I am {<span class="var">age</span>} years old, and I live in {<span class="var">city</span>}."</span>)</pre>
+          </div>
+          <div class="output-label">Expected Output</div>
+          <div class="output-box">Hello, my name is Thabo, I am 25 years old, and I live in Maseru.</div>
+          <div class="callout" style="margin-top:12px;">
+            <strong>Key point:</strong> An f-string starts with <span class="chip">f"..."</span>. Variables are placed inside curly braces <span class="chip">{variable}</span> directly within the string — Python replaces them with their values automatically.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- Q2 – SWAP (no third variable)             -->
+    <!-- ══════════════════════════════════════════ -->
+    <section class="section" id="q2">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2 class="section-title">Question 2 – Swap Values</h2>
+      </div>
+
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Exercise 2</span>
+          <span class="q-title">Swap two values without using a third variable</span>
+        </div>
+        <div class="q-body">
+          <p>Assign the values below, then swap them <strong>without using a third variable</strong>.</p>
+          <div class="req-box">
+            <strong>Starting values:</strong> <span class="chip">a = 5</span> &nbsp; <span class="chip">b = 10</span><br><br>
+            <strong>Required output format:</strong><br>
+            <span class="chip">a = 10, b = 5</span>
+          </div>
+          <p>After swapping, <code>a</code> should hold the original value of <code>b</code>, and <code>b</code> should hold the original value of <code>a</code>.</p>
+        </div>
+
+        <button class="sol-toggle" onclick="toggleSol(this)">
+          ▶ Show Solution
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sol-body">
+          <div class="sol-label">✅ Solution</div>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+              <span>swap_values.py</span>
+            </div>
+            <pre><span class="cm"># Starting values</span>
+<span class="var">a</span> <span class="op">=</span> <span class="nm">5</span>
+<span class="var">b</span> <span class="op">=</span> <span class="nm">10</span>
+
+<span class="cm"># Swap using Python's tuple unpacking — no third variable needed</span>
+<span class="var">a</span>, <span class="var">b</span> <span class="op">=</span> <span class="var">b</span>, <span class="var">a</span>
+
+<span class="fn">print</span>(<span class="fstr">f"a = {<span class="var">a</span>}, b = {<span class="var">b</span>}"</span>)</pre>
+          </div>
+          <div class="output-label">Expected Output</div>
+          <div class="output-box">a = 10, b = 5</div>
+          <div class="callout" style="margin-top:12px;">
+            <strong>How it works:</strong> Python evaluates the right-hand side <span class="chip">b, a</span> as a tuple <span class="chip">(10, 5)</span> first, then assigns the values back — so <span class="chip">a</span> gets 10 and <span class="chip">b</span> gets 5 in a single step. No temporary variable is needed.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- Q3 – SWAP VIA ARITHMETIC                  -->
+    <!-- ══════════════════════════════════════════ -->
+    <section class="section" id="q3">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2 class="section-title">Question 3 – Swap via Arithmetic</h2>
+      </div>
+
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Exercise 3</span>
+          <span class="q-title">Swap two values using arithmetic only (no third variable)</span>
+        </div>
+        <div class="q-body">
+          <p>Swap the values of <span class="chip">a</span> and <span class="chip">b</span> using <strong>only addition and subtraction</strong> — no third variable, no tuple unpacking.</p>
+          <div class="req-box">
+            <strong>Starting values:</strong> <span class="chip">a = 10</span> &nbsp; <span class="chip">b = 20</span><br><br>
+            <strong>Method:</strong> Use the arithmetic swap technique:<br>
+            Step 1: <span class="chip">a = a + b</span><br>
+            Step 2: <span class="chip">b = a - b</span><br>
+            Step 3: <span class="chip">a = a - b</span>
+          </div>
+          <p>Print the result as: <span class="chip">After swap: a = , b =</span></p>
+        </div>
+
+        <button class="sol-toggle" onclick="toggleSol(this)">
+          ▶ Show Solution
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sol-body">
+          <div class="sol-label">✅ Solution</div>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+              <span>arithmetic_swap.py</span>
+            </div>
+            <pre><span class="cm"># Initial values</span>
+<span class="var">a</span> <span class="op">=</span> <span class="nm">10</span>
+<span class="var">b</span> <span class="op">=</span> <span class="nm">20</span>
+
+<span class="cm"># Swapping via arithmetic</span>
+<span class="var">a</span> <span class="op">=</span> <span class="var">a</span> <span class="op">+</span> <span class="var">b</span>  <span class="cm"># a becomes 30</span>
+<span class="var">b</span> <span class="op">=</span> <span class="var">a</span> <span class="op">-</span> <span class="var">b</span>  <span class="cm"># b becomes 10  (original value of a)</span>
+<span class="var">a</span> <span class="op">=</span> <span class="var">a</span> <span class="op">-</span> <span class="var">b</span>  <span class="cm"># a becomes 20  (original value of b)</span>
+
+<span class="fn">print</span>(<span class="st">"After swap: a ="</span>, <span class="var">a</span>, <span class="st">", b ="</span>, <span class="var">b</span>)</pre>
+          </div>
+          <div class="output-label">Expected Output</div>
+          <div class="output-box">After swap: a = 20 , b = 10</div>
+          <div class="callout" style="margin-top:12px;">
+            <strong>Step-by-step trace:</strong><br>
+            Start: <span class="chip">a=10, b=20</span><br>
+            After step 1 <span class="chip">a = a+b</span>: <span class="chip">a=30, b=20</span><br>
+            After step 2 <span class="chip">b = a-b</span>: <span class="chip">a=30, b=10</span> ← b now holds original a<br>
+            After step 3 <span class="chip">a = a-b</span>: <span class="chip">a=20, b=10</span> ← a now holds original b
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- Q4 – PRODUCT VARIABLES                    -->
+    <!-- ══════════════════════════════════════════ -->
+    <section class="section" id="q4">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2 class="section-title">Question 4 – Product Variables &amp; Stock Value</h2>
+      </div>
+
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Exercise 4</span>
+          <span class="q-title">Declare product variables and calculate total stock value</span>
+        </div>
+        <div class="q-body">
+          <p>Declare variables for <strong>three products</strong>, each with a name, price, and stock quantity. Then calculate and print the total stock value for each product.</p>
+          <div class="req-box">
+            <strong>Products to create:</strong><br>
+            <span class="chip">name1</span> = "Laptop" &nbsp; <span class="chip">price1</span> = 999.99 &nbsp; <span class="chip">stock1</span> = 12<br>
+            <span class="chip">name2</span> = "Mouse" &nbsp;&nbsp; <span class="chip">price2</span> = 25.50 &nbsp;&nbsp; <span class="chip">stock2</span> = 150<br>
+            <span class="chip">name3</span> = "Keyboard" &nbsp; <span class="chip">price3</span> = 79.99 &nbsp;&nbsp; <span class="chip">stock3</span> = 45
+          </div>
+          <p>For each product calculate: <span class="chip">total_value = price × stock</span> and print it.</p>
+        </div>
+
+        <button class="sol-toggle" onclick="toggleSol(this)">
+          ▶ Show Solution
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sol-body">
+          <div class="sol-label">✅ Solution</div>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+              <span>products.py</span>
+            </div>
+            <pre><span class="cm"># Declaring variables and assigning values</span>
+<span class="var">name1</span>  <span class="op">=</span> <span class="st">"Laptop"</span>
+<span class="var">price1</span> <span class="op">=</span> <span class="nm">999.99</span>
+<span class="var">stock1</span> <span class="op">=</span> <span class="nm">12</span>
+
+<span class="var">name2</span>  <span class="op">=</span> <span class="st">"Mouse"</span>
+<span class="var">price2</span> <span class="op">=</span> <span class="nm">25.5</span>
+<span class="var">stock2</span> <span class="op">=</span> <span class="nm">150</span>
+
+<span class="var">name3</span>  <span class="op">=</span> <span class="st">"Keyboard"</span>
+<span class="var">price3</span> <span class="op">=</span> <span class="nm">79.99</span>
+<span class="var">stock3</span> <span class="op">=</span> <span class="nm">45</span>
+
+<span class="cm"># Calculate total stock value for each product</span>
+<span class="var">total1</span> <span class="op">=</span> <span class="var">price1</span> <span class="op">*</span> <span class="var">stock1</span>
+<span class="var">total2</span> <span class="op">=</span> <span class="var">price2</span> <span class="op">*</span> <span class="var">stock2</span>
+<span class="var">total3</span> <span class="op">=</span> <span class="var">price3</span> <span class="op">*</span> <span class="var">stock3</span>
+
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name1</span>}: stock value = ${<span class="var">total1</span>:.2f}"</span>)
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name2</span>}: stock value = ${<span class="var">total2</span>:.2f}"</span>)
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name3</span>}: stock value = ${<span class="var">total3</span>:.2f}"</span>)</pre>
+          </div>
+          <div class="output-label">Expected Output</div>
+          <div class="output-box">Laptop: stock value = $11999.88
+Mouse: stock value = $3825.00
+Keyboard: stock value = $3599.55</div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- Q5 – FORMATTED TABLE                      -->
+    <!-- ══════════════════════════════════════════ -->
+    <section class="section" id="q5">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2 class="section-title">Question 5 – Formatted Product Table</h2>
+      </div>
+
+      <div class="q-card">
+        <div class="q-header">
+          <span class="q-num">Exercise 5</span>
+          <span class="q-title">Print a neatly aligned product table with 2 decimal prices</span>
+        </div>
+        <div class="q-body">
+          <p>Using the same three products from Question 4, print them as a <strong>formatted table</strong> with aligned columns. Prices must show exactly 2 decimal places and be prefixed with <span class="chip">$</span>.</p>
+          <div class="req-box">
+            <strong>Required table format:</strong><br><br>
+            <span class="chip">Product &nbsp;&nbsp; Price &nbsp;&nbsp;&nbsp; Stock</span><br>
+            <span class="chip">Laptop &nbsp;&nbsp;&nbsp; $999.99 &nbsp; 12</span><br>
+            <span class="chip">Mouse &nbsp;&nbsp;&nbsp;&nbsp; $25.50 &nbsp;&nbsp; 150</span><br>
+            <span class="chip">Keyboard &nbsp; $79.99 &nbsp;&nbsp; 45</span><br><br>
+            Use f-string alignment: <span class="chip">&lt;10</span> for left-align in a 10-character field, <span class="chip">&lt;7.2f</span> for price formatting.
+          </div>
+        </div>
+
+        <button class="sol-toggle" onclick="toggleSol(this)">
+          ▶ Show Solution
+          <span class="arrow">▼</span>
+        </button>
+        <div class="sol-body">
+          <div class="sol-label">✅ Solution</div>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots"><span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span></div>
+              <span>formatted_table.py</span>
+            </div>
+            <pre><span class="cm"># Product data</span>
+<span class="var">name1</span>  <span class="op">=</span> <span class="st">"Laptop"</span>  <span class="op">;</span>  <span class="var">price1</span> <span class="op">=</span> <span class="nm">999.99</span> <span class="op">;</span>  <span class="var">stock1</span> <span class="op">=</span> <span class="nm">12</span>
+<span class="var">name2</span>  <span class="op">=</span> <span class="st">"Mouse"</span>   <span class="op">;</span>  <span class="var">price2</span> <span class="op">=</span>  <span class="nm">25.5</span>  <span class="op">;</span>  <span class="var">stock2</span> <span class="op">=</span> <span class="nm">150</span>
+<span class="var">name3</span>  <span class="op">=</span> <span class="st">"Keyboard"</span><span class="op">;</span>  <span class="var">price3</span> <span class="op">=</span>  <span class="nm">79.99</span> <span class="op">;</span>  <span class="var">stock3</span> <span class="op">=</span> <span class="nm">45</span>
+
+<span class="cm"># Print header row</span>
+<span class="fn">print</span>(<span class="fstr">f"{'Product':<span class="nm">10</span>} {'Price':<span class="nm">8</span>} {'Stock'}"</span>)
+
+<span class="cm"># Print each product row  — price left-aligned in 7-char field, 2 decimals</span>
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name1</span>:<span class="nm">10</span>} ${<span class="var">price1</span>:<span class="nm">&lt;7.2f</span>} {<span class="var">stock1</span>}"</span>)
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name2</span>:<span class="nm">10</span>} ${<span class="var">price2</span>:<span class="nm">&lt;7.2f</span>} {<span class="var">stock2</span>}"</span>)
+<span class="fn">print</span>(<span class="fstr">f"{<span class="var">name3</span>:<span class="nm">10</span>} ${<span class="var">price3</span>:<span class="nm">&lt;7.2f</span>} {<span class="var">stock3</span>}"</span>)</pre>
+          </div>
+          <div class="output-label">Expected Output</div>
+          <div class="output-box">Product    Price    Stock
+Laptop     $999.99  12
+Mouse      $25.50   150
+Keyboard   $79.99   45</div>
+          <div class="callout" style="margin-top:12px;">
+            <strong>f-string formatting cheatsheet used here:</strong><br>
+            <span class="chip">{value:&lt;10}</span> — left-align value in a field 10 characters wide<br>
+            <span class="chip">{value:&lt;7.2f}</span> — left-align a float in 7 chars, always show 2 decimal places<br>
+            The <span class="chip">$</span> is placed before the <span class="chip">{price}</span> placeholder so it prints as a prefix.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /body -->
+
+  <div id="footer">
+    <span>Learn Python Programming – Beginner to Master</span>
+    <span>Variables · f-strings · Formatting · <span>5 Exercises</span></span>
+  </div>
+
+</div><!-- /document -->
+
+<script>
+  function toggleSol(btn) {
+    btn.classList.toggle('open');
+    const body = btn.nextElementSibling;
+    body.classList.toggle('open');
+    btn.textContent = '';
+    const isOpen = body.classList.contains('open');
+    btn.innerHTML = (isOpen ? '▼ Hide Solution' : '▶ Show Solution') + ' <span class="arrow"' + (isOpen ? ' style="transform:rotate(180deg)"' : '') + '>▼</span>';
+    btn.onclick = function(){ toggleSol(this); };
+  }
+
+  // Smooth scroll for TOC
+  document.querySelectorAll('#toc a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(link.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+
+</body>
+</html>
