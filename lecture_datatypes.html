@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 5 – Python Data Types</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72;
+    --teal-dark: #124f54;
+    --teal-light: #e8f4f5;
+    --gold: #c8a84b;
+    --cream: #fdf6ec;
+    --paper: #fffdf9;
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --border: #d4c9b0;
+    --code-bg: #f5f2ec;
+    --accent: #e85d2a;
+    --green: #3d9970;
+    --red: #e85d2a;
+    --page-width: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.015) 10px,rgba(0,0,0,.015) 20px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 30px 20px 60px;
+  }
+  #toolbar { max-width: var(--page-width); margin: 0 auto 18px; display: flex; justify-content: flex-end; gap: 10px; }
+  #toolbar button { background: var(--teal); color: #fff; border: none; padding: 9px 20px; border-radius: 4px; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .05em; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .2s; }
+  #toolbar button:hover { background: var(--teal-dark); }
+  #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25), 0 1px 4px rgba(0,0,0,.15); border-radius: 2px; }
+  #cover { background: var(--teal); padding: 64px 64px 56px; position: relative; overflow: hidden; }
+  #cover::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.03) 18px,rgba(255,255,255,.03) 36px); }
+  #cover .badge { display: inline-block; background: var(--gold); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 24px; position: relative; }
+  #cover h1 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: #fff; line-height: 1.2; position: relative; margin-bottom: 12px; }
+  #cover .subtitle { color: rgba(255,255,255,.65); font-size: 15px; letter-spacing: .04em; position: relative; margin-bottom: 40px; }
+  #cover .meta { display: flex; gap: 32px; position: relative; }
+  #cover .meta-item { color: rgba(255,255,255,.7); font-size: 13px; }
+  #cover .meta-item strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
+  #body { padding: 48px 64px 64px; }
+  
+  #toc { background: var(--cream); border: 1px solid var(--border); border-left: 4px solid var(--teal); padding: 28px 32px; margin-bottom: 48px; border-radius: 2px; }
+  #toc h2 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-dark); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  #toc ol { list-style: none; counter-reset: toc-counter; }
+  #toc > ol > li { counter-increment: toc-counter; margin-bottom: 6px; }
+  #toc a { color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; gap: 8px; }
+  #toc a::before { content: counter(toc-counter) "."; color: var(--gold); font-weight: 700; text-align: right; width: 18px; }
+  #toc a:hover { text-decoration: underline; color: var(--teal-dark); }
+  
+  section { margin-bottom: 48px; }
+  section:last-of-type { margin-bottom: 0; }
+  h2.section-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal-dark); font-weight: 700; border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 24px; display: flex; align-items: baseline; gap: 12px; }
+  h2.section-title span.sec-num { font-size: 14px; font-family: 'Lato', sans-serif; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  
+  p { font-size: 15px; line-height: 1.6; color: var(--ink); margin-bottom: 18px; text-align: justify; }
+  p strong { color: var(--teal-dark); font-weight: 700; }
+  
+  ul, ol { margin-bottom: 20px; padding-left: 20px; }
+  li { font-size: 15px; line-height: 1.6; color: var(--ink); margin-bottom: 10px; }
+  li:last-child { margin-bottom: 0; }
+  
+  /* Type definitions layout */
+  .type-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 20px; }
+  .type-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 20px; position: relative; border-top: 3px solid var(--teal); }
+  .type-card.scalar { border-top-color: var(--gold); }
+  .type-card h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-dark); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .type-meta { font-family: 'Source Code Pro', monospace; font-size: 12px; color: var(--muted); background: var(--teal-light); padding: 2px 8px; border-radius: 3px; }
+  .type-card.scalar .type-meta { background: var(--cream); color: #9c7a1e; }
+  
+  .chip { font-family: 'Source Code Pro', monospace; font-size: 13px; font-weight: 600; background: var(--code-bg); color: var(--accent); padding: 1px 5px; border-radius: 3px; border: 1px solid rgba(0,0,0,.05); }
+  
+  /* Code blocks */
+  .code-container { background: var(--code-bg); border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 2px; padding: 20px; font-family: 'Source Code Pro', monospace; font-size: 13.5px; line-height: 1.5; color: #2d2d2d; overflow-x: auto; margin: 18px 0 24px; position: relative; }
+  .code-container::after { content: 'PYTHON'; position: absolute; top: 0; right: 0; background: var(--border); color: var(--muted); font-size: 10px; font-weight: 700; padding: 3px 8px; border-bottom-left-radius: 3px; letter-spacing: .05em; }
+  .code-comment { color: var(--muted); font-style: italic; }
+  .code-error { color: var(--red); font-weight: 600; background: rgba(232, 93, 42, 0.08); padding: 2px 4px; border-radius: 2px; display: inline-block; width: 100%; margin-top: 4px; border-left: 2px solid var(--red); }
+  .code-keyword { color: var(--teal); font-weight: 600; }
+  
+  #footer { background: var(--cream); border-top: 1px solid var(--border); padding: 24px 64px; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .03em; }
+  
+  @media (max-width: 768px) {
+    #toolbar { display: none; }
+    #cover { padding: 40px 32px 36px; }
+    #cover h1 { font-size: 28px; }
+    #body { padding: 32px 24px; }
+    #toc { padding: 20px; margin-bottom: 32px; }
+    #footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="toolbar">
+    <button onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      PRINT LECTURE NOTES
+    </button>
+  </div>
+
+  <div id="document">
+    
+    <header id="cover">
+      <span class="badge">Section 3</span>
+      <h1>Lecture 5: Python Data Types</h1>
+      <div class="subtitle">Learn Python Programming – Beginner to Master</div>
+      <div class="meta">
+        <div class="meta-item"><strong>Course Component</strong>Lecture Summary &amp; Reference</div>
+        <div class="meta-item"><strong>Core Focus</strong>Data Structures &amp; Mutability</div>
+      </div>
+    </header>
+
+    <div id="body">
+      
+      <nav id="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+          <li><a href="#summary">Lecture Summary</a></li>
+          <li><a href="#numeric">Numeric Data Types (Scalar)</a></li>
+          <li><a href="#sequence">Sequence Data Types (Ordered Collection)</a></li>
+          <li><a href="#set">Set Data Type (Unique Unordered Collection)</a></li>
+          <li><a href="#dictionary">Dictionary Data Type (Key-Value Mapping)</a></li>
+          <li><a href="#takeaways">Key Takeaways &amp; Syntax Reference</a></li>
+        </ol>
+      </nav>
+
+      <section id="summary">
+        <h2 class="section-title"><span class="sec-num">Section 1</span>Lecture Summary</h2>
+        <p>
+          This lecture introduces the various fundamental data types available in Python, emphasizing their categories and critical properties. Choosing the right data type is essential for managing how data is stored, manipulated, and accessed efficiently in memory.
+        </p>
+        <p>
+          We begin by exploring <strong>numeric types</strong> that hold single scalar values, such as integers, floating-point numbers, booleans, and complex numbers. The discussion then shifts to collection structures, starting with <strong>sequence types</strong> like lists, tuples, and strings, which support indexed access but differ significantly in their mutability. Finally, we explore unordered collections: <strong>sets</strong>, which enforce uniqueness without index support, and <strong>dictionaries</strong>, which store key-value pairs while maintaining insertion order.
+        </p>
+      </section>
+
+      <section id="numeric">
+        <h2 class="section-title"><span class="sec-num">Section 2</span>Numeric Data Types (Scalar)</h2>
+        <p>
+          Scalar data types store a single individual value at a given time. Python provides four built-in core types for numerical computations:
+        </p>
+        
+        <div class="type-grid">
+          <div class="type-card scalar">
+            <h3>int <span class="type-meta">Integer</span></h3>
+            <p>Represents whole numbers without decimal places. Can be positive, negative, or zero.</p>
+            <div class="code-container">x = 10 <span class="code-comment"># Whole number representation</span></div>
+          </div>
+
+          <div class="type-card scalar">
+            <h3>float <span class="type-meta">Floating-point</span></h3>
+            <p>Represents numbers containing decimal points or fractional parts.</p>
+            <div class="code-container">y = 19.25 <span class="code-comment"># Fractional/decimal number</span></div>
+          </div>
+
+          <div class="type-card scalar">
+            <h3>bool <span class="type-meta">Boolean</span></h3>
+            <p>Represents logical values: either <span class="chip">True</span> or <span class="chip">False</span>. Internally within Python's execution environment, these can also be expressed numerically as <span class="chip">1</span> (True) or <span class="chip">0</span> (False), rendering them highly useful for flags and conditional expressions.</p>
+            <div class="code-container">b = True <span class="code-comment"># Logical boolean state</span></div>
+          </div>
+
+          <div class="type-card scalar">
+            <h3>complex <span class="type-meta">Complex Numbers</span></h3>
+            <p>Used to represent complex mathematical numbers possessing both a distinct real part and an imaginary part, marked by a <span class="chip">j</span> suffix.</p>
+            <div class="code-container">c = 7 + 9j <span class="code-comment"># Real part: 7, Imaginary part: 9</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sequence">
+        <h2 class="section-title"><span class="sec-num">Section 3</span>Sequence Data Types</h2>
+        <p>
+          Sequences are structured collections of values sharing common behaviors: they are strictly <strong>ordered</strong> and <strong>indexed starting from zero</strong> (<span class="chip">0, 1, 2, ...</span>). Sequences gracefully support mixed data types within the same collection container.
+        </p>
+
+        <div class="type-grid">
+          <div class="type-card">
+            <h3>list <span class="type-meta">Mutable Sequence</span></h3>
+            <p>
+              Declaring a list requires enclosing elements in square brackets <span class="chip">[ ]</span>. Lists are completely <strong>mutable</strong>; elements can be updated, appended, or permanently wiped out after creation.
+            </p>
+            <div class="code-container">L = [2, 4, 6, 8, 10]
+print(L[0]) <span class="code-comment"># Access by index: outputs 2</span>
+
+L[3] = 7 <span class="code-comment"># Modification allowed: changes 8 to 7</span>
+L.append(12) <span class="code-comment"># Adds 12 to the end of list</span>
+print(L) <span class="code-comment"># Outputs: [2, 4, 6, 7, 10, 12]</span></div>
+          </div>
+
+          <div class="type-card">
+            <h3>tuple <span class="type-meta">Immutable Sequence</span></h3>
+            <p>
+              Declaring a tuple relies on round parentheses <span class="chip">( )</span>. Tuples appear fundamentally similar to lists but are strictly <strong>immutable</strong>; they cannot be altered, grown, or shrunken once allocated.
+            </p>
+            <div class="code-container">t = (9, 7, 4, 2, 5)
+print(t[2]) <span class="code-comment"># Access by index: outputs 4</span>
+
+t[2] = 8 <span class="code-error"># TypeError: 'tuple' object does not support item assignment</span></div>
+          </div>
+
+          <div class="type-card">
+            <h3>string <span class="type-meta">Immutable Character Sequence</span></h3>
+            <p>
+              Represents a literal ordered sequence of individual characters wrapped neatly in single quotes <span class="chip">'...'</span> or double quotes <span class="chip">"..."</span>. Strings are explicitly <strong>immutable</strong>.
+            </p>
+            <div class="code-container">s = "python"
+print(s[1]) <span class="code-comment"># Access by index: outputs 'y'</span>
+
+s[1] = 'a' <span class="code-error"># TypeError: 'str' object does not support item assignment</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="set">
+        <h2 class="section-title"><span class="sec-num">Section 4</span>Set Data Type</h2>
+        <p>
+          A set is an <strong>unordered collection</strong> of uniquely constrained values. Sets automatically sweep away and ignore any duplicate elements fed into them. 
+        </p>
+        <p>
+          While sets are <strong>mutable</strong> (you can freely add or remove items), they possess <strong>no index support</strong>. Therefore, you cannot access or modify individual elements using bracket indices. Sets are declared via curly braces <span class="chip">{ }</span>.
+        </p>
+        <div class="code-container">S = {3, 7, 2, 9, 5, 9} <span class="code-comment"># Duplicate '9' is automatically stripped out</span>
+print(S) <span class="code-comment"># Outputs unique collection (Order not guaranteed)</span>
+
+S.add(8) <span class="code-comment"># Inserts 8 into the set</span>
+S.remove(7) <span class="code-comment"># Removes 7 from the set</span>
+print(S)</div>
+      </section>
+
+      <section id="dictionary">
+        <h2 class="section-title"><span class="sec-num">Section 5</span>Dictionary Data Type</h2>
+        <p>
+          A dictionary stores associations in the structural form of paired <strong>keys and values</strong>. Dictionaries enforce that all keys must be distinct and unique, though multiple independent keys are free to point to identical duplicate values.
+        </p>
+        <p>
+          Modern Python dictionaries are <strong>ordered</strong>, meaning they preserve insertion patterns reliably. They are highly <strong>mutable</strong>; values linked to valid keys can be swiftly updated. Dictionaries are declared using curly braces containing colon-separated <span class="chip">key: value</span> declarations.
+        </p>
+        <div class="code-container">d = {'name': 'john', 'roll': 126, 'dept': 'cse'}
+print(d['name']) <span class="code-comment"># Access value by key: outputs 'john'</span>
+
+d['name'] = 'kate' <span class="code-comment"># Modifies value of existing key</span>
+print(d) <span class="code-comment"># Outputs updated dictionary</span></div>
+      </section>
+
+      <section id="takeaways">
+        <h2 class="section-title"><span class="sec-num">Section 6</span>Key Takeaways &amp; Syntax Quick Reference</h2>
+        <p>
+          Mastering Python's built-in data types relies heavily on understanding three structural axis definitions: <strong>Mutability</strong>, <strong>Indexing</strong>, and <strong>Ordering</strong>.
+        </p>
+        
+        <ul>
+          <li><strong>Numeric Types:</strong> Hold isolated scalar data points (<span class="chip">int</span>, <span class="chip">float</span>, <span class="chip">bool</span>, <span class="chip">complex</span>).</li>
+          <li><strong>Sequence Types:</strong> Maintained in structural array order and accessed linearly via index; lists stand out as fully mutable, whereas tuples and strings remain rigidly immutable.</li>
+          <li><strong>Sets:</strong> Structural bags containing completely unique nodes; mutable but completely index-less.</li>
+          <li><strong>Dictionaries:</strong> Storage maps containing key-to-value pathways; keys stay uniquely bound and immutable, whereas targeted values can be updated.</li>
+        </ul>
+
+        <div class="type-grid" style="margin-top: 30px;">
+          <div class="type-card" style="border-top-color: var(--gold);">
+            <h3>Syntax Convention Reference Sheet</h3>
+            <ul style="margin-top: 12px; list-style-type: square; padding-left: 20px;">
+              <li><strong>Lists:</strong> Bounded cleanly by square brackets: <span class="chip">[ ]</span></li>
+              <li><strong>Tuples:</strong> Enclosed strictly inside traditional round parentheses: <span class="chip">( )</span></li>
+              <li><strong>Strings:</strong> Captured explicitly inside quotes: <span class="chip">"..."</span> or <span class="chip">'...'</span></li>
+              <li><strong>Sets:</strong> Outlined clearly by plain curly braces: <span class="chip">{ }</span></li>
+              <li><strong>Dictionaries:</strong> Set in curly brackets with mapping syntax: <span class="chip">{key: value}</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div id="footer">
+      <span>Learn Python Programming – Beginner to Master</span>
+      <span>Section 3 · <span>Lecture 5</span></span>
+    </div>
+
+  </div>
+
+</body>
+</html>
