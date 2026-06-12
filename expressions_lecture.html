@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 11 – Python Expressions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72;
+    --teal-dark: #124f54;
+    --teal-light: #e8f4f5;
+    --gold: #c8a84b;
+    --cream: #fdf6ec;
+    --paper: #fffdf9;
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --border: #d4c9b0;
+    --code-bg: #f5f2ec;
+    --accent: #e85d2a;
+    --green: #3d9970;
+    --red: #c0392b;
+    --page-width: 820px;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(0deg, #bfa693 0px, #bfa693 1px, transparent 1px, transparent 31px),
+                      repeating-linear-gradient(90deg, #bfa693 0px, #bfa693 1px, transparent 1px, transparent 31px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 60px 20px;
+  }
+
+  #notebook {
+    background: var(--paper);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 50px 60px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  #notebook::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 45px; bottom: 0;
+    width: 1px;
+    background: #f1c40f;
+    opacity: 0.6;
+  }
+
+  #header {
+    border-bottom: 2px solid var(--teal);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  .meta-section {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .meta-right {
+    color: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.3rem;
+    color: var(--teal-dark);
+    line-height: 1.2;
+    margin-top: 5px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--teal);
+    margin: 35px 0 15px 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin: 20px 0 10px 0;
+  }
+
+  p {
+    margin-bottom: 15px;
+    text-align: justify;
+    font-size: 1.05rem;
+  }
+
+  ul, ol {
+    margin-bottom: 20px;
+    padding-left: 25px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+
+  .code-container {
+    background: var(--code-bg);
+    border-left: 4px solid var(--gold);
+    padding: 15px 20px;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  pre {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    color: #2c3e50;
+  }
+
+  .comment {
+    color: #7f8c8d;
+    font-style: italic;
+  }
+
+  .output {
+    border-top: 1px dashed var(--border);
+    margin-top: 10px;
+    padding-top: 8px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+
+  .output-val {
+    color: var(--teal-dark);
+    font-weight: 600;
+  }
+
+  .note {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    padding: 15px 20px;
+    margin: 25px 0;
+    font-size: 1rem;
+  }
+
+  .note h4 {
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: var(--teal-dark);
+  }
+
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 25px 0;
+  }
+
+  .type-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--teal);
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .type-card h3 {
+    margin-top: 0;
+    color: var(--teal-dark);
+  }
+
+  .chip {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  #footer {
+    margin-top: 50px;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  @media(max-width: 768px) {
+    #notebook { padding: 40px 25px; }
+    #notebook::before { display: none; }
+    .type-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="notebook">
+    
+    <div id="header">
+      <div class="meta-section">
+        <span>Learn Python Programming – Beginner to Master</span>
+        <span class="meta-right">Section 4 · Lecture 11</span>
+      </div>
+      <h1>Expressions</h1>
+    </div>
+
+    <section>
+      <h2>Lecture Summary</h2>
+      <p>
+        In our previous lecture, we isolated arithmetic symbols to analyze their isolated behaviors. However, real-world source files rarely contain simple two-operand math lines. Instead, complex application states rely on compounded operations called <strong>Expressions</strong>.
+      </p>
+      <p>
+        This lecture studies how Python sequences multiple nested operators within a single statement. We explore the laws of <strong>Operator Precedence</strong>, detail directional <strong>Associativity</strong>, and demonstrate how explicit punctuation boundaries allow engineers to override default execution hierarchies to maintain total structural accuracy.
+      </p>
+    </section>
+
+    <section>
+      <h2>What is an Expression?</h2>
+      <p>
+        An expression is any structurally sound combination of operands (variables, raw literals, or function calls) and operators (<span class="chip">+</span>, <span class="chip">-</span>, <span class="chip">*</span>, <span class="chip">/</span>, <span class="chip">**</span>) that the execution engine evaluates to return a single data value.
+      </p>
+      <p>
+        When an expression contains multiple operators, Python relies on a strict internal hierarchy to determine the evaluation order. Changing this order completely changes the resulting data payload.
+      </p>
+    </section>
+
+    <section>
+      <h2>Operator Precedence</h2>
+      <p>
+        Operator precedence establishes the priority tier of each symbolic token. Operators located on higher tiers are resolved completely before lower-tiered operators are evaluated.
+      </p>
+      
+      <div class="note">
+        <h4>The Arithmetic Precedence Hierarchy (Highest to Lowest):</h4>
+        <ol style="margin-top: 8px; margin-bottom: 0; padding-left: 20px;">
+          <li><span class="chip">()</span> &ndash; Parentheses (Explicit grouping isolation)</li>
+          <li><span class="chip">**</span> &ndash; Exponentiation (Power operations)</li>
+          <li><span class="chip">*</span>, <span class="chip">/</span>, <span class="chip">//</span>, <span class="chip">%</span> &ndash; Multiplication, Division, Floor Division, Modulus</li>
+          <li><span class="chip">+</span>, <span class="chip">-</span> &ndash; Addition, Subtraction</li>
+        </ol>
+      </div>
+
+      <div class="code-container">
+        <pre>result = 3 + 4 * 5
+print(result) <span class="comment"># Multiplication (*) executes before Addition (+)</span></pre>
+        <div class="output">
+          <strong>Console Output:</strong><br>
+          <span class="output-val">23</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Operator Associativity</h2>
+      <p>
+        When an expression contains multiple operators with the <strong>same precedence tier</strong> (for example, a line containing both multiplication <span class="chip">*</span> and modulus <span class="chip">%</span>), Python resolves the tie using directional associativity rules.
+      </p>
+
+      <div class="type-grid">
+        <div class="type-card">
+          <h3>Left-to-Right Associativity</h3>
+          <p>Nearly all standard arithmetic operators follow a left-to-right evaluation route. The leftmost operator executes first, and its result is passed to the next operator on the right.</p>
+          <p style="margin-top: 10px;"><strong>Applies to:</strong> <span class="chip">+</span>, <span class="chip">-</span>, <span class="chip">*</span>, <span class="chip">/</span>, <span class="chip">//</span>, <span class="chip">%</span></p>
+        </div>
+        
+        <div class="type-card" style="border-top-color: var(--gold);">
+          <h3>Right-to-Left Associativity</h3>
+          <p>Python's exponentiation operator (<span class="chip">**</span>) features a unique right-to-left associativity rule. When multiple power symbols are chained together, Python evaluates the rightmost operation first.</p>
+          <p style="margin-top: 10px;"><strong>Applies to:</strong> <span class="chip">**</span></p>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <pre><span class="comment"># Left-to-Right Verification: Subtraction</span>
+print(10 - 4 - 2) <span class="comment"># Evaluates as ((10 - 4) - 2)</span>
+
+<span class="comment"># Right-to-Left Verification: Exponentiation</span>
+print(2 ** 3 ** 2) <span class="comment"># Evaluates as (2 ** (3 ** 2)) &rarr; 2 ** 9</span></pre>
+        <div class="output">
+          <strong>Console Output:</strong><br>
+          <span class="output-val">4</span><br>
+          <span class="output-val">512</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Overriding Hierarchies with Parentheses</h2>
+      <p>
+        Parentheses <span class="chip">( )</span> have the highest precedence tier in Python. Enclosing an expression in parentheses forces the engine to isolate and evaluate those operations first, regardless of the default precedence rules.
+      </p>
+      
+      <div class="code-container">
+        <pre><span class="comment"># Overriding Multiplication Precedence</span>
+normal_val = 3 + 4 * 5
+forced_val = (3 + 4) * 5
+
+print("Default Precedence:", normal_val)
+print("Parentheses Forced:", forced_val)</pre>
+        <div class="output">
+          <strong>Console Output:</strong><br>
+          <span class="output-val">Default Precedence: 23</span><br>
+          <span class="output-val">Parentheses Forced: 35</span>
+        </div>
+      </div>
+
+      <div class="code-container">
+        <pre><span class="comment"># Overriding Exponentiation Associativity</span>
+chained_power = 2 ** 3 ** 2
+grouped_power = (2 ** 3) ** 2
+
+print("Default Right-to-Left:", chained_power)
+print("Grouped Left-to-Right:", grouped_power)</pre>
+        <div class="output">
+          <strong>Console Output:</strong><br>
+          <span class="output-val">Default Right-to-Left: 512</span><br>
+          <span class="output-val">Grouped Left-to-Right: 64</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Key Takeaways Reference</h2>
+      <div class="type-card" style="background: var(--paper); border-color: var(--teal);">
+        <ul style="margin-bottom: 0; padding-left: 15px;">
+          <li><strong>Expression Composition:</strong> Expressions blend operators and operands to calculate a single data value without altering source variables in place.</li>
+          <li><strong>Precedence Enforcement:</strong> Exponentiation (<span class="chip">**</span>) takes priority over products or remainders (<span class="chip">*</span>, <span class="chip">/</span>, <span class="chip">//</span>, <span class="chip">%</span>), which outrank basic addition and subtraction (<span class="chip">+</span>, <span class="chip">-</span>).</li>
+          <li><strong>Directional Exceptions:</strong> Standard math operators resolve from left to right, but chained exponentiation (<span class="chip">**</span>) triggers from right to left.</li>
+          <li><strong>Parentheses Rule:</strong> Explicit grouping via parentheses overrides default precedence and associativity rules, providing a clear tool to maintain predictable outcomes in complex lines of code.</li>
+          <li><strong>Readability Tip:</strong> When writing complex expressions, use explicit parentheses to clarify the evaluation order for other programmers, even when Python's default rules would produce the correct result.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="footer">
+      <span>Learn Python Programming – Beginner to Master</span>
+      <span>Section 4 · <span>Lecture 11</span></span>
+    </div>
+
+  </div>
+
+</body>
+</html>
