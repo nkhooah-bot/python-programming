@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecture 6 – Python Literals or Constants</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72;
+    --teal-dark: #124f54;
+    --teal-light: #e8f4f5;
+    --gold: #c8a84b;
+    --cream: #fdf6ec;
+    --paper: #fffdf9;
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --border: #d4c9b0;
+    --code-bg: #f5f2ec;
+    --accent: #e85d2a;
+    --green: #3d9970;
+    --red: #c0392b;
+    --page-width: 820px;
+  }
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(0deg, #bfa693 0px, #bfa693 1px, transparent 1px, transparent 31px),
+                      repeating-linear-gradient(90deg, #bfa693 0px, #bfa693 1px, transparent 1px, transparent 31px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 60px 20px;
+  }
+
+  #notebook {
+    background: var(--paper);
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 50px 60px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  #notebook::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 45px; bottom: 0;
+    width: 1px;
+    background: #f1c40f;
+    opacity: 0.6;
+  }
+
+  #header {
+    border-bottom: 2px solid var(--teal);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+
+  .meta-section {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .meta-right {
+    color: var(--gold);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.3rem;
+    color: var(--teal-dark);
+    line-height: 1.2;
+    margin-top: 5px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--teal);
+    margin: 35px 0 15px 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 5px;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin: 20px 0 10px 0;
+  }
+
+  p {
+    margin-bottom: 15px;
+    text-align: justify;
+    font-size: 1.05rem;
+  }
+
+  ul, ol {
+    margin-bottom: 20px;
+    padding-left: 25px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+
+  .code-container {
+    background: var(--code-bg);
+    border-left: 4px solid var(--gold);
+    padding: 15px 20px;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  pre {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    color: #2c3e50;
+  }
+
+  .comment {
+    color: #7f8c8d;
+    font-style: italic;
+  }
+
+  .output {
+    border-top: 1px dashed var(--border);
+    margin-top: 10px;
+    padding-top: 8px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+
+  .output-val {
+    color: var(--teal-dark);
+    font-weight: 600;
+  }
+
+  .note {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    padding: 15px 20px;
+    margin: 25px 0;
+    font-size: 1rem;
+  }
+
+  .note.error-card {
+    background: #fdf2f2;
+    border-left-color: var(--red);
+  }
+
+  .note h4 {
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: var(--teal-dark);
+  }
+
+  .note.error-card h4 {
+    color: var(--red);
+  }
+
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 25px 0;
+  }
+
+  .type-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--teal);
+    padding: 20px;
+    border-radius: 4px;
+  }
+
+  .type-card h3 {
+    margin-top: 0;
+    color: var(--teal-dark);
+  }
+
+  .chip {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .chip.bad {
+    background: #fdf2f2;
+    color: var(--red);
+  }
+
+  #footer {
+    margin-top: 50px;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  @media(max-width: 768px) {
+    #notebook { padding: 40px 25px; }
+    #notebook::before { display: none; }
+    .type-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="notebook">
+    
+    <div id="header">
+      <div class="meta-section">
+        <span>Learn Python Programming – Beginner to Master</span>
+        <span class="meta-right">Section 3 · Lecture 6</span>
+      </div>
+      <h1>Literals or Constants</h1>
+    </div>
+
+    <section>
+      <h2>Lecture Summary</h2>
+      <p>
+        This lecture thoroughly explores the concept of literals in Python, explaining what literals are and their importance as direct constant values used in programs. It details the critical architectural differences between variables assigned direct values (literals) and those assigned computed balances from expressions or user runtime operations. The discussion deepens into the specific rules governing five primary classifications: integer, float, boolean, complex, and string literals. 
+      </p>
+      <p>
+        Additionally, the material introduces fundamental clean-coding features like the deployment of underscore digit-separators for clean data visualization, flags common syntax or runtime exceptions, and evaluates the unique lexical rules applying to strings enclosed inside single, double, or triple quotes.
+      </p>
+    </section>
+
+    <section>
+      <h2>What are Literals?</h2>
+      <p>
+        In basic terms, <strong>literals are direct constant values explicitly written or hardcoded in a script</strong>. While variables act as abstract naming containers whose assignments can fluctuate dynamically during execution, literals represent the exact, raw static values themselves.
+      </p>
+      
+      <div class="note">
+        <h4>Core Architecture Contrast:</h4>
+        <ul>
+          <li><strong>Literal Value Assignment:</strong> <span class="chip">a = 10</span> &mdash; The number <span class="chip">10</span> is a concrete integer literal.</li>
+          <li><strong>Computed Assignment:</strong> <span class="chip">c = a + b</span> &mdash; The reference variable <span class="chip">c</span> receives a dynamically derived runtime payload, not a pure code-declared literal.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Five Types of Literals</h2>
+      
+      <h3>1. Integer Literals</h3>
+      <p>
+        Integer literals consist of direct, whole-number declarations containing no fractional parts. Python can handle incredibly large integers seamlessly within standard memory boundaries.
+      </p>
+      <ul>
+        <li><strong>Readability Separation Rules:</strong> Commas (<span class="chip bad">,</span>) cannot be typed out within numbers for structural parsing reasons. Instead, Python uses underscores (<span class="chip">_</span>) as visual digit separators.</li>
+        <li><strong>Structural Limits:</strong> Underscores must be declared strictly <em>between</em> numeric characters. Placing them at the absolute beginning or the terminal edge of a digit group is invalid.</li>
+      </ul>
+      
+      <div class="code-container">
+        <pre>a = 201
+b = 13_52_46_198 <span class="comment"># Clean digit separation layout</span>
+print(a, b)</pre>
+        <div class="output">
+          <strong>Console Output:</strong> <span class="output-val">201 135246198</span>
+        </div>
+      </div>
+
+      <h3>2. Float Literals</h3>
+      <p>
+        Float literals describe numbers containing accurate decimal fractions or scientific notation constructs.
+      </p>
+      <ul>
+        <li><strong>Scientific Format:</strong> Supports exponent markers using uppercase <span class="chip">E</span> or lowercase <span class="chip">e</span> tokens (e.g., <span class="chip">12E2</span> represents 12 &times; 10<sup>2</sup>).</li>
+        <li><strong>Separator Exclusions:</strong> Visual underscore lines can separate fractional parts, but they cannot sit immediately adjacent to the structural decimal point marker (<span class="chip bad">._</span> or <span class="chip bad">_.</span>).</li>
+      </ul>
+
+      <div class="code-container">
+        <pre>a = 9.75
+b = 12E2     <span class="comment"># Scientific notation (12 * 10^2)</span>
+c = 12_5.6_7 <span class="comment"># Float with underscores</span>
+
+print(a, b, c)
+print(type(a))</pre>
+        <div class="output">
+          <strong>Console Output:</strong><br>
+          <span class="output-val">9.75 1200.0 125.67</span><br>
+          <span class="output-val">&lt;class 'float'&gt;</span>
+        </div>
+      </div>
+
+      <h3>3. Boolean Literals</h3>
+      <p>
+        Boolean parameters contain exact logical constants. The engine supports exactly two precise literals: <span class="chip">True</span> and <span class="chip">False</span>.
+      </p>
+      <div class="note">
+        <strong>Strict Capitalization Rules:</strong> Python is strictly case-sensitive. Writing full lower-case expressions such as <span class="chip bad">true</span> or <span class="chip bad">false</span> will break parser tokenization and trigger exceptions. Furthermore, underlying native integer representations like <span class="chip">1</span> or <span class="chip">0</span> are numeric values, not genuine boolean literals.
+      </div>
+
+      <h3>4. Complex Literals</h3>
+      <p>
+        Complex values combine explicit real components alongside mathematical imaginary structures. 
+      </p>
+      <ul>
+        <li><strong>Notation Suffix:</strong> The specific lowercase or uppercase character <span class="chip">j</span> must trail the imaginary component directly.</li>
+        <li><strong>Component Formatting:</strong> Both sections can be standard whole integers or independent decimal float entries. Underscores can be embedded cleanly within either part.</li>
+      </ul>
+
+      <div class="code-container">
+        <pre>a = 4 + 5j
+b = 1_2 + 1_4j <span class="comment"># Separator line within components</span>
+print(a, b)</pre>
+        <div class="output">
+          <strong>Console Output:</strong> <span class="output-val">(4+5j) (12+14j)</span>
+        </div>
+      </div>
+
+      <h3>5. String Literals</h3>
+      <p>
+        Strings capture structured textual blocks, alphabetical words, or sentence chains safely. Python offers three distinct enclosing frameworks:
+      </p>
+
+      <div class="type-grid">
+        <div class="type-card">
+          <h3>Single &amp; Double Quotes</h3>
+          <p>Declared via <span class="chip">'...'</span> or <span class="chip">"..."</span> wrappers. Ideal for single-line text. You can nest them to embed quote characters inside without escaping:</p>
+          <pre style="color: #2c3e50;">msg = '"Alexa"'</pre>
+        </div>
+        
+        <div class="type-card" style="border-top-color: var(--gold);">
+          <h3>Triple Quotes</h3>
+          <p>Declared via <span class="chip">'''...'''</span> or <span class="chip">"""..."""</span> wrappers. Intended for spanning multi-line text blocks naturally or writing blocks containing mixed internal quote types.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Common Architectural Pitfalls &amp; Errors</h2>
+      <p>
+        Misdeclaring literal values typically encounters two specific runtime or compilation exceptions in Python:
+      </p>
+      
+      <div class="note error-card">
+        <h4>1. SyntaxError (Malformed Literal Structure)</h4>
+        <p>
+          Occurs if literal layouts break fundamental structural lexing rules. For example, putting a trailing separator underscore line right at the terminal boundary of an entry breaks compilation.
+        </p>
+        <pre>c = 358_ <span class="comment"># SyntaxError: invalid decimal literal</span></pre>
+      </div>
+
+      <div class="note error-card">
+        <h4>2. NameError (Unrecognized Context References)</h4>
+        <p>
+          Occurs when the engine treats an improperly typed or uncapitalized value as an unmapped variable token name. For instance, starting a numeric field with a leading underscore, or forgetting uppercase letters on booleans, fools Python into looking for a pre-declared variable reference.
+        </p>
+        <pre>d = _125  <span class="comment"># NameError: name '_125' is not defined</span>
+flag = false <span class="comment"># NameError: name 'false' is not defined</span></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Key Takeaways Reference</h2>
+      <div class="type-card" style="background: var(--paper); border-color: var(--teal);">
+        <ul style="margin-bottom: 0; padding-left: 15px;">
+          <li><strong>Literal Identity:</strong> Hardcoded immutable constant data elements within code statements.</li>
+          <li><strong>Visual Formatting:</strong> Use internal underscores to keep large numbers highly legible; never allow them to touch edge boundaries or decimals.</li>
+          <li><strong>Case Guardrails:</strong> Always write boolean variables using exact <span class="chip">True</span> and <span class="chip">False</span> styling to guarantee operational validation.</li>
+          <li><strong>Complex Fields:</strong> Suffix imaginary units with the literal <span class="chip">j</span> symbol.</li>
+          <li><strong>String Strategies:</strong> Leverage single or double wrappers for standard lines, and switch over to triple strings for clean multi-line structuring.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="footer">
+      <span>Learn Python Programming – Beginner to Master</span>
+      <span>Section 3 · <span>Lecture 6</span></span>
+    </div>
+
+  </div>
+
+</body>
+</html>
