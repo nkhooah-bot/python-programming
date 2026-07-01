@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lecture – Conditional Statements</title>
+<title>Chapter 6: Python Relational Operators &amp; Conditional Flow</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -16,7 +16,7 @@
     --ink: #1e1e1e;
     --muted: #6b6b6b;
     --border: #d4c9b0;
-    --code-bg: #fdfbe7;
+    --code-bg: #f5f2ec;
     --accent: #e85d2a;
     --green: #3d9970;
     --red: #e85d2a;
@@ -25,445 +25,468 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: #c8bfaf;
-    background-image: repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.015) 10px,rgba(0,0,0,.015) 20px);
+    background-image: repeating-linear-gradient(45deg, #c4baa9 0px, #c4baa9 2px, transparent 2px, transparent 10px);
     font-family: 'Lato', sans-serif;
     color: var(--ink);
-    min-height: 100vh;
-    padding: 30px 20px 60px;
+    line-height: 1.6;
+    padding: 40px 20px;
   }
-  #toolbar { max-width: var(--page-width); margin: 0 auto 18px; display: flex; justify-content: flex-end; gap: 10px; }
-  #toolbar button { background: var(--teal); color: #fff; border: none; padding: 9px 20px; border-radius: 4px; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: .05em; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background .2s; }
-  #toolbar button:hover { background: var(--teal-dark); }
-  #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25), 0 1px 4px rgba(0,0,0,.15); border-radius: 2px; }
-  #cover { background: var(--teal); padding: 64px 64px 56px; position: relative; overflow: hidden; }
-  #cover::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(255,255,255,.03) 18px,rgba(255,255,255,.03) 36px); }
-  #cover .badge { display: inline-block; background: var(--gold); color: var(--teal-dark); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 2px; margin-bottom: 24px; position: relative; }
-  #cover h1 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: #fff; line-height: 1.2; position: relative; margin-bottom: 12px; }
-  #cover .subtitle { color: rgba(255,255,255,.65); font-size: 15px; letter-spacing: .04em; position: relative; margin-bottom: 40px; }
-  #cover .meta { display: flex; gap: 32px; position: relative; }
-  #cover .meta-item { color: rgba(255,255,255,.7); font-size: 13px; }
-  #cover .meta-item strong { display: block; color: var(--gold); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 3px; }
-  #body { padding: 48px 64px 64px; }
-  
-  #toc { background: var(--cream); border: 1px solid var(--border); border-left: 4px solid var(--teal); padding: 28px 32px; margin-bottom: 48px; border-radius: 2px; }
-  #toc h2 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-dark); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-  #toc ol { list-style: none; counter-reset: toc-counter; }
-  #toc > ol > li { counter-increment: toc-counter; margin-bottom: 6px; }
-  #toc a { color: var(--teal); text-decoration: none; font-size: 14px; font-weight: 600; display: flex; gap: 8px; }
-  #toc a::before { content: counter(toc-counter) "."; color: var(--gold); font-weight: 700; text-align: right; width: 18px; }
-  #toc a:hover { text-decoration: underline; color: var(--teal-dark); }
-  
-  section { margin-bottom: 48px; }
-  section:last-of-type { margin-bottom: 0; }
-  h2.section-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal-dark); font-weight: 700; border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 24px; display: flex; align-items: baseline; gap: 12px; }
-  h2.section-title span.sec-num { font-size: 14px; font-family: 'Lato', sans-serif; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
-  
-  p { font-size: 15px; line-height: 1.6; color: var(--ink); margin-bottom: 18px; text-align: justify; }
-  p strong { color: var(--teal-dark); font-weight: 700; }
-  
-  ul, ol { margin-bottom: 20px; padding-left: 20px; }
-  li { font-size: 15px; line-height: 1.6; color: var(--ink); margin-bottom: 10px; }
-  li:last-child { margin-bottom: 0; }
-  
-  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); }
-  th { background-color: var(--teal-light); color: var(--teal-dark); font-family: 'Playfair Display', serif; font-weight: 700; }
-  tr:hover { background-color: var(--cream); }
-
-  .type-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 20px; }
-  .type-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 20px; position: relative; border-top: 3px solid var(--teal); }
-  .type-card.scalar { border-top-color: var(--gold); }
-  .type-card h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--teal-dark); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .type-meta { font-family: 'Source Code Pro', monospace; font-size: 12px; color: var(--muted); background: var(--teal-light); padding: 2px 8px; border-radius: 3px; }
-  .type-card.scalar .type-meta { background: var(--cream); color: #9c7a1e; }
-  
-  .chip { font-family: 'Source Code Pro', monospace; font-size: 13.5px; font-weight: 600; background: #f5f2ec; color: var(--accent); padding: 2px 6px; border-radius: 3px; border: 1px solid rgba(0,0,0,.05); display: inline-block; }
-  
-  /* Flowchart styles */
-  .flowchart { display: flex; flex-direction: column; align-items: center; margin: 24px 0; font-family: 'Lato', sans-serif; }
-  .flow-node { background: #fff; border: 2px solid var(--teal); padding: 12px 20px; border-radius: 4px; font-weight: 600; text-align: center; min-width: 140px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-  .flow-decision { background: var(--cream); border: 2px solid var(--gold); border-radius: 6px; padding: 15px; font-weight: 700; text-align: center; }
-  .flow-branches { display: flex; justify-content: space-between; width: 100%; max-width: 540px; margin: 10px 0; position: relative; }
-  .flow-branch-path { display: flex; flex-direction: column; align-items: center; width: 45%; }
-  .flow-arrow { color: var(--gold); font-size: 20px; font-weight: bold; margin: 4px 0; }
-  .flow-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .flow-label.true { color: var(--green); }
-  .flow-label.false { color: var(--red); }
-
-  /* IDLE TERMINAL DESIGN (MATCHING USER IMAGE) */
-  .code-container { 
-    background: var(--code-bg); 
-    border: 1px solid #d3d3d3; 
-    border-radius: 0px; 
-    padding: 16px 20px; 
-    font-family: 'Courier New', Courier, monospace; 
-    font-size: 14.5px; 
-    line-height: 1.4; 
-    color: #000000; 
-    overflow-x: auto; 
-    margin: 18px 0 24px; 
-    white-space: pre;
+  #page-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 50px 60px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: relative;
   }
-  .code-comment { color: #dd0000; font-style: normal; }
-  .code-keyword { color: #ff7700; font-weight: bold; }
-  .code-builtin { color: #900090; }
-  .code-string { color: #00aa00; }
-  .code-output { color: #0000ff; font-weight: normal; }
+  header {
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .meta-header {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--teal-dark);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .intro-text {
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 15px;
+    font-style: italic;
+  }
+  #toc {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 25px;
+    margin-bottom: 40px;
+  }
+  #toc h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--teal-dark);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 5px;
+  }
+  #toc ul {
+    list-style: none;
+  }
+  #toc li {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  #toc a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--gold);
+    transition: color 0.2s;
+  }
+  #toc a:hover {
+    color: var(--teal);
+    border-bottom-style: solid;
+  }
+  .section-block {
+    margin-bottom: 45px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--teal-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .sec-num {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    background: var(--teal);
+    color: white;
+    padding: 3px 8px;
+    margin-right: 12px;
+    border-radius: 3px;
+    font-weight: 400;
+  }
+  p {
+    margin-bottom: 18px;
+    font-size: 16px;
+    color: #2c2c2c;
+    text-align: justify;
+  }
+  ul {
+    margin-left: 25px;
+    margin-bottom: 18px;
+  }
+  li {
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+  .highlight-box {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--teal-dark);
+    margin-bottom: 8px;
+  }
+  .chip {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    font-size: 13.5px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--teal-dark);
+  }
+  .code-container {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 25px 0;
+    overflow-x: auto;
+    border-radius: 4px;
+  }
+  .code-comment { color: #8c8c8c; font-style: italic; }
+  .code-keyword { color: #a11515; font-weight: 600; }
+  .code-type { color: #1a6b72; font-weight: 600; }
+  .code-string { color: #2b7a3e; }
+  .code-number { color: #b57614; }
   
-  #footer { background: var(--cream); border-top: 1px solid var(--border); padding: 24px 64px; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .03em; }
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  .matrix-table th, .matrix-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+  }
+  .matrix-table th {
+    background-color: var(--teal-light);
+    color: var(--teal-dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+  }
+  .matrix-table td {
+    background-color: var(--paper);
+  }
+
+  /* Exercise Layout Elements */
+  .exercise-card {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    margin-bottom: 25px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .exercise-header {
+    padding: 12px 20px;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-easy { background: #e6f4ea; color: #137333; }
+  .ex-intermediate { background: #fef7e0; color: #b06000; }
+  .ex-difficult { background: #fce8e6; color: #c5221f; }
   
-  @media (max-width: 768px) {
-    #toolbar { display: none; }
-    #cover { padding: 40px 32px 36px; }
-    #cover h1 { font-size: 28px; }
-    #body { padding: 32px 24px; }
-    #toc { padding: 20px; margin-bottom: 32px; }
-    .flow-branches { max-width: 100%; }
-    #footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  .exercise-body {
+    padding: 20px;
+  }
+  .exercise-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--teal-dark);
+    margin-bottom: 8px;
+  }
+
+  #footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    color: var(--muted);
   }
 </style>
 </head>
 <body>
 
-  <div id="toolbar">
-    <button onclick="window.print()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-      PRINT LECTURE NOTES
-    </button>
+<div id="page-container">
+
+  <header>
+    <div class="meta-header">Python Programming Fundamentals</div>
+    <h1>Conditional Statements</h1>
+    <div class="intro-text">
+      In this lecture, you will learn relational operators, conditional logic structures using if and else blocks, and the principles governing non-linear control flow execution in Python.
+    </div>
+  </header>
+
+  <nav id="toc">
+    <h2>What You Will Learn</h2>
+    <ul>
+      <li><a href="#relational-operators">1. Relational Operators (Comparison Matrix)</a></li>
+      <li><a href="#conditional-blocks">2. Conditional Statements Structure &amp; Indentation</a></li>
+      <li><a href="#control-flow">3. Control Flow Mechanics (Linear vs. Conditional)</a></li>
+      <li><a href="#hands-on-challenge">4. Hands-on Laboratory: The Negative Boundary Test</a></li>
+      <li><a href="#practice-exercises">5. Structured Practice Sandbox (Easy, Intermediate, Difficult)</a></li>
+    </ul>
+  </nav>
+
+  <div id="content-wrapper">
+
+    <section class="section-block" id="relational-operators">
+      <h2 class="section-title"><span class="sec-num">Section 1</span>Relational Operators</h2>
+      <p>
+        Relational operators (also known as comparison operators) evaluate the mathematical or empirical relationship between two variables or expressions. When executed, these operators return a strict Boolean metric: either <span class="chip">True</span> or <span class="chip">False</span>.
+      </p>
+
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Operator</th>
+            <th>Meaning</th>
+            <th>Example</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip">&lt;</span></td>
+            <td>Less than</td>
+            <td><code>4 &lt; 5</code></td>
+            <td><strong>True</strong></td>
+          </tr>
+          <tr>
+            <td><span class="chip">&lt;=</span></td>
+            <td>Less than or equal to</td>
+            <td><code>4 &lt;= 5</code></td>
+            <td><strong>True</strong></td>
+          </tr>
+          <tr>
+            <td><span class="chip">&gt;</span></td>
+            <td>Greater than</td>
+            <td><code>4 &gt; 5</code></td>
+            <td><strong>False</strong></td>
+          </tr>
+          <tr>
+            <td><span class="chip">&gt;=</span></td>
+            <td>Greater than or equal to</td>
+            <td><code>4 &gt;= 5</code></td>
+            <td><strong>False</strong></td>
+          </tr>
+          <tr>
+            <td><span class="chip">==</span></td>
+            <td>Equal to</td>
+            <td><code>4 == 5</code></td>
+            <td><strong>False</strong></td>
+          </tr>
+          <tr>
+            <td><span class="chip">!=</span></td>
+            <td>Not equal to</td>
+            <td><code>4 != 5</code></td>
+            <td><strong>True</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <h3>Critical Syntax Warning</h3>
+        <p>
+          Python requires a double equals sign <span class="chip">==</span> to evaluate equivalence testing. Utilizing a single equals token (<span class="chip">=</span>) is reserved strictly for assignment declarations and will trigger systemic parsing errors if misplaced inside a logic gate.
+        </p>
+      </div>
+
+      <p>
+        These evaluators are dynamic and can determine scalar status across disparate data primitives:
+      </p>
+      <ul>
+        <li><strong>Integers:</strong> <code>4 &lt; 5</code> evaluates to True.</li>
+        <li><strong>Floats:</strong> <code>4.0 &gt;= 3.5</code> evaluates to True.</li>
+        <li><strong>Strings:</strong> <code>"apple" != "orange"</code> evaluates to True based on lexical divergence tracking.</li>
+      </ul>
+    </section>
+
+    <section class="section-block" id="conditional-blocks">
+      <h2 class="section-title"><span class="sec-num">Section 2</span>Conditional Statements</h2>
+      <p>
+        Conditional statements empower a program to selectively execute alternate code components based on dynamic conditional states evaluated at runtime. This behavior is primarily controlled through coordinated <span class="chip">if</span> and <span class="chip">else</span> blocks.
+      </p>
+
+      <div class="code-container">
+        <span class="code-keyword">if</span> condition:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Block of code to run if condition is True</span><br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Block of code to run if condition is False</span>
+      </div>
+
+      <p>
+        Unlike traditional environments using visible brackets, Python requires strict <strong>indentation layout configurations</strong> (typically utilizing 4 spaces or 1 tab) to demarcate block scope definitions cleanly. Missing alignment tabs will compromise block encapsulation boundaries and trigger runtime exceptions.
+      </p>
+    </section>
+
+    <section class="section-block" id="control-flow">
+      <h2 class="section-title"><span class="sec-num">Section 3</span>Control Flow</h2>
+      <p>
+        Control flow governs the operational trajectory and execution sequence that instructions follow during runtime operations.
+      </p>
+      
+      <p><strong>Normal (Linear) Flow:</strong> Without logical branch processing paths, code processes line-by-line in a predictable, uniform sequence:</p>
+      <div class="code-container" style="text-align: center; letter-spacing: 1px;">
+        Start &mdash;&gt; Statement 1 &mdash;&gt; Statement 2 &mdash;&gt; Statement 3 &mdash;&gt; End
+      </div>
+
+      <p><strong>Conditional Flow:</strong> When passing through an <span class="chip">if...else</span> framework, execution tracks down a split decision matrix:</p>
+      
+      <div class="highlight-box" style="background-color: var(--cream);">
+        <pre style="font-family: 'Source Code Pro', monospace; font-size: 13.5px; line-height: 1.4; overflow-x: auto;">
+                  [ Start ]
+                      │
+                 [Statement 1]
+                      │
+             ◄ Check Condition ►
+                    ╱   ╲
+             True  ╱     ╲  False
+                  ▼       ▼
+         [Statement A]   [Statement B]
+                  ╲       ╱
+                   ▼     ▼
+                  [ End ]</pre>
+      </div>
+      <p>
+        Depending on the evaluated result of the logical statement, only one branch (either the true <span class="chip">if</span> path or the false <span class="chip">else</span> path) runs before the script resumes standard execution.
+      </p>
+    </section>
+
+    <section class="section-block" id="hands-on-challenge">
+      <h2 class="section-title"><span class="sec-num">Section 4</span>Hands-on Laboratory: Storage Diagnostics Challenge</h2>
+      <p>
+        Instead of just memorizing relational definitions, practice applying these logic structures directly inside your active terminal sandbox workspace using this control challenge:
+      </p>
+
+      <div class="highlight-box">
+        <h3>Your Mission: The Negative Boundary Test</h3>
+        <ol style="margin-left: 20px; margin-top: 5px;">
+          <li>Review the tracking code script provided in the laboratory environment block below.</li>
+          <li>Trace the operations mentally with the initial value set to <code>a = 10</code>. Observe how it executes the positive pathway to display <span class="chip">"Positive"</span>.</li>
+          <li>Modify your instruction by setting the tracking variable allocation to a negative value: <strong><code>a = -5</code></strong>.</li>
+          <li>Execute the updated program sequence and observe how the control engine shifts its pathway to output <span class="chip">"Negative"</span>.</li>
+        </ol>
+      </div>
+
+      <div class="code-container">
+        <span class="code-comment"># Initial assignment declaration</span><br>
+        a = <span class="code-number">10</span><br><br>
+        <span class="code-keyword">if</span> a &gt;= <span class="code-number">0</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;print(<span class="code-string">"Positive"</span>)<br>
+        <span class="code-keyword">else</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;print(<span class="code-string">"Negative"</span>)<br><br>
+        <span class="code-comment"># Output when a = 10: Positive</span>
+      </div>
+    </section>
+
+    <section class="section-block" id="practice-exercises">
+      <h2 class="section-title"><span class="sec-num">Section 5</span>Structured Practice Sandbox</h2>
+      <p>
+        Apply your knowledge of comparison operators, structural layout boundaries, and decision matrices to solve the target challenges below.
+      </p>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-easy">
+          <span>EXERCISE 1 // CORE LEVEL</span>
+          <span>EASY</span>
+        </div>
+        <div class="exercise-body">
+          <h4>The Verification Gateway</h4>
+          <p>
+            Write a program that initializes an integer variable named <span class="chip">age</span>. If the age meets or exceeds the registration limit of <span class="chip">18</span>, print out the message <span class="chip">"Access Granted"</span>. Otherwise, print out <span class="chip">"Access Denied"</span>.
+          </p>
+          <p><strong>Expected Output for age = 20:</strong> <code style="color: var(--green);">Access Granted</code></p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-intermediate">
+          <span>EXERCISE 2 // DEVELOPMENT LEVEL</span>
+          <span>INTERMEDIATE</span>
+        </div>
+        <div class="exercise-body">
+          <h4>The Modulo Balance Engine</h4>
+          <p>
+            Create a logic routine that evaluates whether an input integer variable called <span class="chip">num</span> is an <strong>even</strong> or an <strong>odd</strong> scalar configuration. 
+            <i>(Hint: Use the remainder tracking arithmetic operator <span class="chip">%</span>. If a number divided by 2 leaves a remainder of 0, it is even.)</i>
+          </p>
+          <div class="code-container" style="margin: 10px 0; padding: 10px 15px;">
+            <span class="code-comment"># Use comparison logic against the calculated mod value</span><br>
+            <span class="code-keyword">if</span> num % <span class="code-number">2</span> == <span class="code-number">0</span>:
+          </div>
+          <p><strong>Expected Output for num = 7:</strong> <code style="color: var(--gold);">Odd Number</code></p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-difficult">
+          <span>EXERCISE 3 // ARCHITECT LEVEL</span>
+          <span>DIFFICULT</span>
+        </div>
+        <div class="exercise-body">
+          <h4>Nested Threshold Matrix</h4>
+          <p>
+            Build a comprehensive nested evaluation tree that checks a numeric grade variable named <span class="chip">score</span>. Your script must perform tiered operations following these exact rules:
+          </p>
+          <ul>
+            <li>If the score is <strong>greater than or equal to 50</strong>, check a secondary parameter: if the score is exactly <span class="chip">100</span>, print <span class="chip">"Perfect Pass"</span>; otherwise, print <span class="chip">"Standard Pass"</span>.</li>
+            <li>If the score is <strong>less than 50</strong>, verify if the value falls below zero. If it is negative, print <span class="chip">"Invalid Entry"</span>; otherwise, print <span class="chip">"Fail"</span>.</li>
+          </ul>
+          <p><strong>Expected Test Results:</strong></p>
+          <ul>
+            <li>Score = 100 &rarr; <code style="color: var(--red);">Perfect Pass</code></li>
+            <li>Score = 75 &rarr; <code style="color: var(--red);">Standard Pass</code></li>
+            <li>Score = -5 &rarr; <code style="color: var(--red);">Invalid Entry</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <p>
+        Get comfortable tracking how altering logic conditions updates your output paths. Once your variable evaluation logic runs successfully, move forward to our next chapter, where we will learn how to read built-in system documentation using the terminal manual pages. See you there!
+      </p>
+    </section>
+
   </div>
 
-  <div id="document">
-    
-    <header id="cover">
-      <span class="badge">Section 3</span>
-      <h1>Lecture: Conditional Statements</h1>
-      <div class="subtitle">Learn Python Programming – Beginner to Master</div>
-      <div class="meta">
-        <div class="meta-item"><strong>Course Component</strong>Lecture Summary &amp; Reference</div>
-        <div class="meta-item"><strong>Core Focus</strong>Logical Operators &amp; Truth Tables</div>
-      </div>
-    </header>
-
-    <div id="body">
-      
-      <nav id="toc">
-        <h2>Table of Contents</h2>
-        <ol>
-          <li><a href="#objectives">Learning Objectives</a></li>
-          <li><a href="#operators">Introduction to Logical Operators</a></li>
-          <li><a href="#review">Review: Simple Conditional Statements</a></li>
-          <li><a href="#compound">Compound Conditional Statements</a></li>
-          <li><a href="#truth-tables">Truth Tables &amp; Real-Life Analogies</a></li>
-          <li><a href="#flowcharts">Visualizing Control Flow</a></li>
-          <li><a href="#examples">Python Execution Examples</a></li>
-          <li><a href="#exercises">Programming Practice Exercises</a></li>
-        </ol>
-      </nav>
-
-      <section id="objectives">
-        <h2 class="section-title"><span class="sec-num">Section 1</span>Learning Objectives</h2>
-        <p>
-          By the end of this lecture, students should be completely proficient in evaluating complex, multi-layered decision structures within programming contexts.
-        </p>
-        <p>We focus directly on the following educational tracking goals:</p>
-        <ul>
-          <li>Mastering the syntax and operational behavior of Python's built-in logical operators.</li>
-          <li>Combining simple comparative blocks using conjunction, disjunction, and negation rules.</li>
-          <li>Interpreting, mapping, and constructing deterministic boolean truth tables.</li>
-          <li>Applying complex compound conditional evaluation pathways to fix logical flaws and debug runtime errors.</li>
-        </ul>
-      </section>
-
-      <section id="operators">
-        <h2 class="section-title"><span class="sec-num">Section 2</span>Introduction to Logical Operators</h2>
-        <p>
-          Python provides built-in logical operators that empower developers to weld isolated relational checks into advanced, cohesive expressions. These operators evaluate individual boolean nodes to produce a unified validation conclusion.
-        </p>
-        
-        <table>
-          <thead>
-            <tr>
-              <th>Operator</th>
-              <th>Description</th>
-              <th>Core Condition Check</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="chip">and</div>
-              </td>
-              <td>Logical Conjunction</td>
-              <td>Resolves to True only if <strong>both</strong> separate parameters evaluate to True.</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">or</div>
-              </td>
-              <td>Logical Disjunction</td>
-              <td>Resolves to True if <strong>at least one</strong> of the expressions is True.</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="chip">not</div>
-              </td>
-              <td>Logical Negation</td>
-              <td>Reverses the incoming boolean state completely (True into False, or False into True).</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="review">
-        <h2 class="section-title"><span class="sec-num">Section 3</span>Review: Simple Conditional Statements</h2>
-        <p>
-          Up to this point, decision evaluation was limited to checking isolated relational bounds. In simple structures, a single condition dictates the runtime branching behavior of code blocks.
-        </p>
-        
-        <div class="code-container">a = 10
-b = 5
-
-<span class="code-keyword">if</span> a > b:
-    <span class="code-builtin">print</span>(<span class="code-string">"A is greater than B"</span>)
-<span class="code-keyword">else</span>:
-    <span class="code-builtin">print</span>(<span class="code-string">"B is greater than or equal to A"</span>)</div>
-        
-        <p>
-          While this handles binary thresholds perfectly, it lacks the expressive power needed to evaluate complex conditions natively on a single line (such as confirming whether a variable falls within a safe range or satisfies multiple operational rules concurrently).
-        </p>
-      </section>
-
-      <section id="compound">
-        <h2 class="section-title"><span class="sec-num">Section 4</span>Compound Conditional Statements</h2>
-        <p>
-          A compound conditional statement combines multiple distinct comparisons into a single checking junction using logical connectors. This allows complex validation steps to be evaluated efficiently within a single control line.
-        </p>
-
-        <div class="type-grid">
-          <div class="type-card scalar">
-            <h3>Conjunction Pattern Implementation</h3>
-            <p>In the framework below, both individual expressions must validate to true for the inner print block to execute. If either comparison fails, the block is completely bypassed:</p>
-            <div class="code-container">a = 10
-b = 5
-c = 3
-
-<span class="code-keyword">if</span> a > b <span class="code-keyword">and</span> a > c:
-    <span class="code-builtin">print</span>(<span class="code-string">"A is the greatest"</span>)</div>
-          </div>
-        </div>
-
-        <p style="margin-top: 20px;">
-          <strong>Indentation Safety:</strong> Make sure that you maintain a consistent 4-space indentation block for all execution steps nestled under your compound statement header, ensuring it reflects Python IDLE standards.
-        </p>
-        
-        <div class="code-container">a = 10
-<span class="code-keyword">if</span> a > 0 <span class="code-keyword">and</span> a &lt; 100:
-    <span class="code-builtin">print</span>(<span class="code-string">"The variable falls cleanly between 0 and 100."</span>)</div>
-      </section>
-
-      <section id="truth-tables">
-        <h2 class="section-title"><span class="sec-num">Section 5</span>Truth Tables &amp; Real-Life Analogies</h2>
-        <p>
-          Truth tables systematically track how logical operators resolve combinations of boolean inputs. Mastering these rules is critical for mapping out complex conditions without logical deadlocks.
-        </p>
-
-        <h3>1. The Conjunction Operator</h3>
-        <p><em>Analogy:</em> "The textbook is available at Shop A and Shop B." This statement is only true if you locate the book inside both physical stores.</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Condition 1</th>
-              <th>Condition 2</th>
-              <th>Result (and)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>True</td>
-              <td>True</td>
-              <td><strong style="color: var(--green);">True</strong></td>
-            </tr>
-            <tr>
-              <td>True</td>
-              <td>False</td>
-              <td><strong style="color: var(--red);">False</strong></td>
-            </tr>
-            <tr>
-              <td>False</td>
-              <td>True</td>
-              <td><strong style="color: var(--red);">False</strong></td>
-            </tr>
-            <tr>
-              <td>False</td>
-              <td>False</td>
-              <td><strong style="color: var(--red);">False</strong></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>2. The Disjunction Operator</h3>
-        <p><em>Analogy:</em> "The textbook is available at Shop A or Shop B." This statement is true if the book is found in at least one store, or both.</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Condition 1</th>
-              <th>Condition 2</th>
-              <th>Result (or)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>True</td>
-              <td>True</td>
-              <td><strong style="color: var(--green);">True</strong></td>
-            </tr>
-            <tr>
-              <td>True</td>
-              <td>False</td>
-              <td><strong style="color: var(--green);">True</strong></td>
-            </tr>
-            <tr>
-              <td>False</td>
-              <td>True</td>
-              <td><strong style="color: var(--green);">True</strong></td>
-            </tr>
-            <tr>
-              <td>False</td>
-              <td>False</td>
-              <td><strong style="color: var(--red);">False</strong></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h3>3. The Negation Operator</h3>
-        <p>Reverses the evaluation of a single condition. It acts as an inversion mechanism.</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Incoming Condition</th>
-              <th>Result (not)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>True</td>
-              <td><strong style="color: var(--red);">False</strong></td>
-            </tr>
-            <tr>
-              <td>False</td>
-              <td><strong style="color: var(--green);">True</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section id="flowcharts">
-        <h2 class="section-title"><span class="sec-num">Section 6</span>Visualizing Control Flow</h2>
-        <p>
-          Compound statements use branching pathways to process multi-variable decisions. The flowchart below maps the execution logic of a logical conjunction check:
-        </p>
-
-        <div class="type-grid">
-          <div class="type-card">
-            <h3>Logical Conjunction Flowchart</h3>
-            
-            <div class="flowchart">
-              <div class="flow-node">Start</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-node flow-decision">Is a > b?<br><small>⚡ Condition 1 Check</small></div>
-              
-              <div class="flow-branches">
-                <div class="flow-branch-path" style="width: 60%;">
-                  <span class="flow-label true">✔ Yes (True)</span>
-                  <div class="flow-arrow">↓</div>
-                  <div class="flow-node flow-decision" style="border-color: var(--teal);">Is a > c?<br><small>⚡ Condition 2 Check</small></div>
-                  
-                  <div class="flow-branches" style="max-width: 260px;">
-                    <div class="flow-branch-path">
-                      <span class="flow-label true">✔ Yes</span>
-                      <div class="flow-arrow">↓</div>
-                      <div class="flow-node" style="border-color: var(--green); min-width: 110px;">Run 'if' Block</div>
-                    </div>
-                    <div class="flow-branch-path">
-                      <span class="flow-label false">✘ No</span>
-                      <div class="flow-arrow">↓</div>
-                      <div class="flow-node" style="border-color: var(--red); min-width: 110px;">Bypass Block</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="flow-branch-path" style="width: 35%;">
-                  <span class="flow-label false">✘ No (False)</span>
-                  <div class="flow-arrow">↘</div>
-                  <div class="flow-node" style="border-color: var(--red); margin-top: 40px;">Bypass Block<br><small>(Short-circuited)</small></div>
-                </div>
-              </div>
-              
-              <div class="flow-arrow" style="margin-top: 20px;">↓</div>
-              <div class="flow-node">Continue Execution</div>
-            </div>
-
-            <p style="font-size: 13.5px; color: var(--muted); text-align: center; margin-top: 10px;">
-              <strong>Key Architectural Note:</strong> If the first condition evaluation fails, modern interpreters short-circuit and bypass the subsequent checks entirely to save compute cycles.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="examples">
-        <h2 class="section-title"><span class="sec-num">Section 7</span>Python Execution Examples</h2>
-        <p>
-          Review the evaluation patterns below to see how these operators function line by line as interactive command statements.
-        </p>
-
-        <div class="code-container">a = 5
-b = 7
-c = 3
-
-<span class="code-comment"># Example 1: Conjunction</span>
-<span class="code-builtin">print</span>(a > b <span class="code-keyword">and</span> a > c)
-<span class="code-output">False</span>
-
-<span class="code-comment"># Example 2: Disjunction</span>
-<span class="code-builtin">print</span>(a > b <span class="code-keyword">or</span> a > c)
-<span class="code-output">True</span>
-
-<span class="code-comment"># Example 3: Range Assertions</span>
-x = 8
-<span class="code-builtin">print</span>(x > 0 <span class="code-keyword">and</span> x &lt; 10)
-<span class="code-output">True</span>
-
-<span class="code-comment"># Example 4: Inversion Negation</span>
-<span class="code-builtin">print</span>(<span class="code-keyword">not</span> x == 8)
-<span class="code-output">False</span></div>
-      </section>
-
-      <section id="exercises">
-        <h2 class="section-title"><span class="sec-num">Section 8</span>Programming Practice Exercises</h2>
-        <p>
-          Test your understanding by writing custom solutions for each of the following challenge blocks directly inside your editor environment.
-        </p>
-
-        <div class="type-grid">
-          <div class="type-card" style="border-top-color: var(--green);">
-            <h3>Exercise 1: Age Range Qualifier <span class="type-meta" style="background: #e6f4ea; color: var(--green);">Easy</span></h3>
-            <p><strong>Problem Description:</strong> Declare an integer variable named age. Write a compound conditional statement that checks if the value of age is greater than or equal to 13 and less than or equal to 19. If this evaluates to true, print "Teenager". Otherwise, print "Not a Teenager".</p>
-            <div class="code-container"><span class="code-comment"># TODO: Write your code here line by line</span>
-age = 13
-
+  <div id="footer">
+    <span>Python Masterclass &amp; Systems Architecture</span>
+    <span>Section 2 · <span>Lecture Notes 06</span></span>
+  </div>
 
 </div>
-          </div>
 
-          <div class="type-card" style="border-top-color: var(--gold);">
-            <h3>Exercise 2: Username Authentication Engine <span class="type-meta" style="background: var(--cream); color: #9c7a1e;">Intermediate</span></h3>
-            <p><strong>Problem Description:</strong> Write an authentication routine that evaluates two string variables: username and provided_token. The program should grant access only if username exactly equals "admin" and provided_token equals "pass123". If either string fails validation, print "Access Denied".</p>
-            <div class="code-container"><span class="code-comment"># TODO: Write your code here line by line</span>
-username = <span class="code-string">""</span>
-provided_token = <span class="code-string">""</span>
-
-
-</div>
-          </div>
-
-          <div class="type
+</body>
+</html>
