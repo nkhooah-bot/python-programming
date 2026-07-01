@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 7: Masterclass on Loops &amp; Iterative Control Structures</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a6b72;
+    --teal-dark: #124f54;
+    --teal-light: #e8f4f5;
+    --gold: #c8a84b;
+    --cream: #fdf6ec;
+    --paper: #fffdf9;
+    --ink: #1e1e1e;
+    --muted: #6b6b6b;
+    --border: #d4c9b0;
+    --code-bg: #f5f2ec;
+    --accent: #e85d2a;
+    --green: #3d9970;
+    --red: #e85d2a;
+    --page-width: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #c8bfaf;
+    background-image: repeating-linear-gradient(45deg, #c4baa9 0px, #c4baa9 2px, transparent 2px, transparent 10px);
+    font-family: 'Lato', sans-serif;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+  #page-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 50px 60px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: relative;
+  }
+  header {
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .meta-header {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--teal-dark);
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  .intro-text {
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 15px;
+    font-style: italic;
+  }
+  #toc {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    padding: 25px;
+    margin-bottom: 40px;
+  }
+  #toc h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--teal-dark);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 5px;
+  }
+  #toc ul {
+    list-style: none;
+  }
+  #toc li {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+  #toc a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--gold);
+    transition: color 0.2s;
+  }
+  #toc a:hover {
+    color: var(--teal);
+    border-bottom-style: solid;
+  }
+  .section-block {
+    margin-bottom: 45px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--teal-dark);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .sec-num {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    background: var(--teal);
+    color: white;
+    padding: 3px 8px;
+    margin-right: 12px;
+    border-radius: 3px;
+    font-weight: 400;
+  }
+  p {
+    margin-bottom: 18px;
+    font-size: 16px;
+    color: #2c2c2c;
+    text-align: justify;
+  }
+  ul, ol {
+    margin-left: 25px;
+    margin-bottom: 18px;
+  }
+  li {
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+  .highlight-box {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal);
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--teal-dark);
+    margin-bottom: 8px;
+  }
+  .chip {
+    font-family: 'Source Code Pro', monospace;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    font-size: 13.5px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--teal-dark);
+  }
+  .code-container {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 20px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 25px 0;
+    overflow-x: auto;
+    border-radius: 4px;
+  }
+  .code-comment { color: #8c8c8c; font-style: italic; }
+  .code-keyword { color: #a11515; font-weight: 600; }
+  .code-type { color: #1a6b72; font-weight: 600; }
+  .code-string { color: #2b7a3e; }
+  .code-number { color: #b57614; }
+  
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  .matrix-table th, .matrix-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+  }
+  .matrix-table th {
+    background-color: var(--teal-light);
+    color: var(--teal-dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+  }
+  .matrix-table td {
+    background-color: var(--paper);
+  }
+
+  .exercise-card {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    margin-bottom: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .exercise-header {
+    padding: 12px 20px;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-easy { background: #e6f4ea; color: #137333; }
+  .ex-intermediate { background: #fef7e0; color: #b06000; }
+  .ex-difficult { background: #fce8e6; color: #c5221f; }
+  
+  .exercise-body {
+    padding: 20px;
+  }
+  .exercise-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--teal-dark);
+    margin-bottom: 8px;
+  }
+
+  #footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div id="page-container">
+
+  <header>
+    <div class="meta-header">Python Programming Fundamentals</div>
+    <h1>Loops &amp; Iterative Control Structures</h1>
+    <div class="intro-text">
+      An institutional masterclass covering iterative paradigms, standard sentinel systems, sequence traversal architectures, and advanced algorithmic engineering challenges.
+    </div>
+  </header>
+
+  <nav id="toc">
+    <h2>Learning Objectives</h2>
+    <ul>
+      <li><a href="#loop-paradigms">1. Introduction to Loops &amp; Core Classifications</a></li>
+      <li><a href="#while-loop-mechanics">2. The while Loop Framework &amp; Control Tracking</a></li>
+      <li><a href="#for-loop-architecture">3. The for Loop &amp; range() Sequence Interface</a></li>
+      <li><a href="#internal-execution">4. Flowchart Visualization &amp; Debugging Breakpoints</a></li>
+      <li><a href="#applied-problems">5. Structured Practice Sandbox (Laboratory Problems)</a></li>
+    </ul>
+  </nav>
+
+  <div id="content-wrapper">
+
+    <section class="section-block" id="loop-paradigms">
+      <h2 class="section-title"><span class="sec-num">Section 1</span>Introduction to Loops</h2>
+      <p>
+        Loops are structural control blocks designed to process automated, repetitive tasks efficiently. Instead of manually maintaining multiple lines of code, an iterative mechanism forces the execution system to execute a selected group of statement expressions repeatedly as long as a controlling target condition evaluates as true.
+      </p>
+      <p>
+        Python groups standard loop paradigms into two core functional variants, matching different design rules:
+      </p>
+
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Loop Variant</th>
+            <th>Algorithmic Mechanism</th>
+            <th>Primary Behavior Pattern</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><code>while</code> loop</strong></td>
+            <td>Sentinel-Controlled Loop</td>
+            <td>Processes actions continuously until a defined sentinel gate evaluation is broken. It is best used when execution counts are not known beforehand.</td>
+          </tr>
+          <tr>
+            <td><strong><code>for</code> loop</strong></td>
+            <td>For-Each Sequence Loop</td>
+            <td>Iterates uniformly over elements in a finite sequence range, text string, or dataset block. It is the most common looping strategy in modern Python.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <h3>Design Framework Distinction</h3>
+        <p>
+          Unlike traditional low-level system implementations (like C-style pointer adjustments), Python’s <span class="chip">for</span> loop runs natively as a <strong>for-each iterator</strong>. This design structure processes items in an active collection safely and sequentially without needing manual array indexing controls.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-block" id="while-loop-mechanics">
+      <h2 class="section-title"><span class="sec-num">Section 2</span>The while Loop Framework &amp; Control Tracking</h2>
+      <p>
+        The <span class="chip">while</span> loop works by monitoring a clear logical boundary gate. Its syntax rules rely entirely on block indentation positioning to define the loop's execution scope:
+      </p>
+
+      <div class="code-container">
+        <span class="code-keyword">while</span> condition:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Block of statements to execute (Indented)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Condition update logic must happen inside</span><br><br>
+        <span class="code-comment"># Program continues cleanly here when condition hits False</span>
+      </div>
+
+      <p>
+        To prevent the program from hanging inside an endless infinite loop, engineers use a <strong>counter variable</strong> to track loop steps. This tracking variable updates on each pass until it triggers the loop's exit condition.
+      </p>
+
+      <div class="code-container">
+        <span class="code-comment"># Example initialization</span><br>
+        n = <span class="code-number">5</span><br><br>
+        <span class="code-keyword">while</span> n &gt; <span class="code-number">0</span>:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;print(n)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;n = n - <span class="code-number">1</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Decrementing mutation step</span>
+      </div>
+
+      <p>
+        To understand exactly how this code behaves step-by-step, we use a manual tracking matrix to follow variable mutations across each iteration:
+      </p>
+
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Iteration Step</th>
+            <th>Condition State (n &gt; 0)</th>
+            <th>Value of n</th>
+            <th>Console Output</th>
+            <th>Mutation (n = n - 1)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Step 1</td>
+            <td><code>5 &gt; 0</code> &rarr; <span style="color: var(--green); font-weight:600;">True</span></td>
+            <td><code>5</code></td>
+            <td><code>5</code></td>
+            <td>n becomes <code>4</code></td>
+          </tr>
+          <tr>
+            <td>Step 2</td>
+            <td><code>4 &gt; 0</code> &rarr; <span style="color: var(--green); font-weight:600;">True</span></td>
+            <td><code>4</code></td>
+            <td><code>4</code></td>
+            <td>n becomes <code>3</code></td>
+          </tr>
+          <tr>
+            <td>Step 3</td>
+            <td><code>3 &gt; 0</code> &rarr; <span style="color: var(--green); font-weight:600;">True</span></td>
+            <td><code>3</code></td>
+            <td><code>3</code></td>
+            <td>n becomes <code>2</code></td>
+          </tr>
+          <tr>
+            <td>Step 4</td>
+            <td><code>2 &gt; 0</code> &rarr; <span style="color: var(--green); font-weight:600;">True</span></td>
+            <td><code>2</code></td>
+            <td><code>2</code></td>
+            <td>n becomes <code>1</code></td>
+          </tr>
+          <tr>
+            <td>Step 5</td>
+            <td><code>1 &gt; 0</code> &rarr; <span style="color: var(--green); font-weight:600;">True</span></td>
+            <td><code>1</code></td>
+            <td><code>1</code></td>
+            <td>n becomes <code>0</code></td>
+          </tr>
+          <tr>
+            <td>Step 6</td>
+            <td><code>0 &gt; 0</code> &rarr; <span style="color: var(--red); font-weight:600;">False</span></td>
+            <td><code>0</code></td>
+            <td><em>None</em></td>
+            <td>Exit structure scope</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section-block" id="for-loop-architecture">
+      <h2 class="section-title"><span class="sec-num">Section 3</span>The for Loop &amp; range() Sequence Interface</h2>
+      <p>
+        The <span class="chip">for</span> loop is built to loop through a clear sequence of values step-by-step. It works perfectly alongside the built-in <span class="chip">range()</span> function, which generates numbers automatically based on explicit configuration parameters:
+      </p>
+
+      <div class="code-container">
+        range(start, stop, step)
+      </div>
+
+      <ul>
+        <li><strong>Start:</strong> The starting index value of the sequence matrix (Defaults to <code>0</code>).</li>
+        <li><strong>Stop:</strong> Required boundary. The sequence builds up to but explicitly <strong>excludes</strong> this endpoint number.</li>
+        <li><strong>Step:</strong> The increment value between sequence steps (Defaults to <code>1</code>).</li>
+      </ul>
+
+      <p>Review these standard examples of <span class="chip">range()</span> parameter variations:</p>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Syntax Code Example</th>
+            <th>Resulting Numeric Sequence Output Matrix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>range(5)</code></td>
+            <td><code>0, 1, 2, 3, 4</code> <span class="code-comment">(Starts at 0, drops last index)</span></td>
+          </tr>
+          <tr>
+            <td><code>range(1, 5)</code></td>
+            <td><code>1, 2, 3, 4</code></td>
+          </tr>
+          <tr>
+            <td><code>range(0, 10, 2)</code></td>
+            <td><code>0, 2, 4, 6, 8</code> <span class="code-comment">(Increments by two steps)</span></td>
+          </tr>
+          <tr>
+            <td><code>range(10, 5, -1)</code></td>
+            <td><code>10, 9, 8, 7, 6</code> <span class="code-comment">(Negative stepping countdown)</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        This sequence traversal works perfectly for extracting individual characters from plain text strings as well:
+      </p>
+      <div class="code-container">
+        topic = <span class="code-string">"Python"</span><br><br>
+        <span class="code-keyword">for</span> char <span class="code-keyword">in</span> topic:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;print(char)<br><br>
+        <span class="code-comment"># Output prints characters sequentially: P, y, t, h, o, n</span>
+      </div>
+    </section>
+
+    <section class="section-block" id="internal-execution">
+      <h2 class="section-title"><span class="sec-num">Section 4</span>Flowchart Visualization &amp; Diagnostics</h2>
+      <p>
+        Comparing flow diagrams highlights the clear difference in execution patterns between linear layouts and iterative blocks:
+      </p>
+
+      <div class="highlight-box" style="background-color: var(--cream);">
+        <pre style="font-family: 'Source Code Pro', monospace; font-size: 13.5px; line-height: 1.4; overflow-x: auto;">
+[ STANDARD LINEAR SYSTEM ]             [ ITERATIVE TRAJECTORY SYSTEM ]
+        START                                     START
+          │                                         │
+    [Statement 1]                                   ▼
+          │                            ┌──&gt; Are values in sequence? ──┐
+    [Statement 2]                      │         ╱              ╲     │
+          │                     (Loop) │     YES╱                ╲NO  │ (Exit)
+         END                           │       ▼                  ▼   │
+                                       │ [Assign to Var]        [END] │
+                                       │ [Execute Block]              │
+                                       └───────┘                      ▼</pre>
+      </div>
+
+      <p>
+        When troubleshooting logic issues or tracing how variable values change across an iteration loop, run your development environment in <strong>Debug Mode</strong>. Setting interactive line breakpoints lets you step through loop passes manually, helping you catch syntax or execution bugs instantly.
+      </p>
+    </section>
+
+    <section class="section-block" id="applied-problems">
+      <h2 class="section-title"><span class="sec-num">Section 5</span>Structured Practice Sandbox</h2>
+      <p>
+        Apply your loop knowledge to analyze and complete the blueprint requirements below. <strong>Note: Complete source solutions are intentionally omitted to encourage engineering analysis.</strong>
+      </p>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-easy">
+          <span>EXERCISE 1 // CORE LEVEL</span>
+          <span>EASY</span>
+        </div>
+        <div class="exercise-body">
+          <h4>The Verification Counter Blueprint</h4>
+          <p>
+            Build a program layout that uses a <span class="chip">while</span> loop setup to display all sequential integers from <strong>1 up to 10</strong> on the screen.
+          </p>
+          <p><strong>Architecture Constraints &amp; Strategy:</strong></p>
+          <ul>
+            <li>Initialize a counter tracking variable outside the gate setup to a baseline of <code>1</code>.</li>
+            <li>Construct a boundary condition that checks if the tracker is less than or equal to <code>10</code>.</li>
+            <li>Ensure the inner block contains execution logic to output the value and step the counter incrementally by <code>1</code> on each pass.</li>
+          </ul>
+          <p><strong>Expected Target Output:</strong> <code>1 2 3 4 5 6 7 8 9 10</code></p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-intermediate">
+          <span>EXERCISE 2 // DEVELOPMENT LEVEL</span>
+          <span>INTERMEDIATE</span>
+        </div>
+        <div class="exercise-body">
+          <h4>Algorithmic Factorial Multiplier Blueprint</h4>
+          <p>
+            Design an architecture that prompts a user for a positive input integer <span class="chip">n</span>, then computes the running mathematical factorial score (written as <code>n!</code>). The factorial is calculated by multiplying all consecutive integers from 1 up to n.
+          </p>
+          <p><strong>Mathematical Sample Logic:</strong> <code>5! = 5 &times; 4 &times; 3 &times; 2 &times; 1 = 120</code></p>
+          <p><strong>Structural Implementation Strategy:</strong></p>
+          <ol style="margin-left: 20px;">
+            <li>Collect the integer value using <span class="chip">int(input())</span>.</li>
+            <li>Initialize a total accumulator storage variable to a starting factor of <code>1</code>.</li>
+            <li>Use a <span class="chip">for</span> loop across a target sequence generated using <span class="chip">range()</span>. <em>Hint: Remember that the stop boundary is exclusive, so configure your range parameter to end at <code>num + 1</code>.</em></li>
+            <li>Inside the iteration code segment, update your accumulator variable by multiplying its current value by the sequence index variable.</li>
+          </ol>
+          <p><strong>Verification Example:</strong> Given input <code>3</code> &rarr; Output must read exactly: <code style="color: var(--gold);">Factorial of 3 is 6</code></p>
+        </div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-header ex-difficult">
+          <span>EXERCISE 3 // ARCHITECT LEVEL</span>
+          <span>DIFFICULT</span>
+        </div>
+        <div class="exercise-body">
+          <h4>The Strict Prime Number Evaluator Blueprint</h4>
+          <p>
+            Build an execution engine that analyzes an input integer from the terminal and determines if it qualifies as a <strong>prime number</strong>. A prime number must have exactly two distinct positive divisors: <code>1</code> and itself.
+          </p>
+          <p><strong>Target Architecture Requirements:</strong></p>
+          <ol style="margin-left: 20px; margin-bottom: 15px;">
+            <li>Collect an input integer from the user.</li>
+            <li>Initialize a separate tracking divisor counter variable to <code>0</code>.</li>
+            <li>Run a sequence traversal loop from <code>1</code> up to and including the input number.</li>
+            <li>Inside the loop block, check if the input splits cleanly by using the modulo operator: <span class="chip">n % i == 0</span>. If it splits with no remainder, increment your divisor tracker.</li>
+            <li>Outside the loop boundary, check the total tracked count. If it equals exactly <code>2</code>, print <span class="chip">"Its a Prime"</span>. For any other result, print <span class="chip">"Its Not a Prime"</span>.</li>
+          </ol>
+          <p><strong>Verification Test Matrices:</strong></p>
+          <ul>
+            <li>Input Value: <code>7</code> &rarr; Output: <code style="color: var(--red);">Its a Prime</code></li>
+            <li>Input Value: <code>12</code> &rarr; Output: <code style="color: var(--red);">Its Not a Prime</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <p>
+        In this lecture, we covered loop structures and step counters to handle repeating blocks safely and cleanly. In our next chapter, we will look into nesting loops inside each other, learn how to break or continue out of loops mid-execution, and build custom data tables inside your script configurations. See you there!
+      </p>
+    </section>
+
+  </div>
+
+  <div id="footer">
+    <span>Python Masterclass &amp; Systems Architecture</span>
+    <span>Section 3 · <span>Lecture Notes 07</span></span>
+  </div>
+
+</div>
+
+</body>
+</html>
