@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 8: Deep Dive into Nested Loops &amp; Multidimensional Data Mapping</title>
+<title>Deep Dive into Nested Loops &amp; Multidimensional Data Mapping</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -264,7 +265,7 @@
     <section class="section-block" id="nested-loop-mechanics">
       <h2 class="section-title"><span class="sec-num">Section 1</span>Core Mechanics of Nested Loops</h2>
       <p>
-        A <strong>nested loop</strong> is simply a structural construct where one loop block is defined entirely inside the body of another loop block. This configuration allows programmers to track operations across multiple dimensions, establishing a multi-tiered execution pathway.
+        A <strong>nested loop</strong> is simply a structural construct where one loop block is defined entirely inside the body of another loop block. This configuration allows programmers to track operations across multiple dimensions, establishing an multi-tiered execution pathway.
       </p>
       <p>
         In this architectural layout, we distinguish between two separate levels of operation:
@@ -295,7 +296,7 @@
       <div class="highlight-box">
         <h3>Syntax and Scope Formatting</h3>
         <p>
-          Python requires strict indentation structure to establish scope boundaries. For each layer of nesting inside a script structure, an additional block offset (typically four spaces or one tab) must be added to keep code lines perfectly structured.
+          Python requires strict indentation structure to establish scope boundaries. For each layer of nesting inside a script structure, an additional block offset (typically four spaces) must be added to keep code lines perfectly structured.
         </p>
       </div>
     </section>
@@ -398,7 +399,7 @@
   (i=1)   │    (1, 1)     │     (1, 2)     │    (1, 3)     │
           ├───────────────┼────────────────┼───────────────┤
   ROW 2   │    (2, 1)     │     (2, 2)     │    (2, 3)     │
-          ├───────────────┼────────────────┼───────────────┤
+  (i=2)   ├───────────────┼────────────────┼───────────────┤
   ROW 3   │    (3, 1)     │     (3, 2)     │    (3, 3)     │
   (i=3)   └───────────────┴────────────────┴───────────────┘</pre>
       </div>
@@ -415,8 +416,8 @@
       </p>
 
       <ul>
-        <li><strong>Multi-tier Data Structures:</strong> Accessing elements inside nested collections or multi-level arrays, such as lists of lists.</li>
-        <li><strong>Visual Pattern Generation:</strong> Outputting characters sequentially to print formatted coordinate charts, patterns, grids, or interface layouts.</li>
+        <li><strong>Multi-tier Data Structures:</strong> Accessing nested collections or arrays, such as extracting specific rows and columns from an Excel sheet layout.</li>
+        <li><strong>Visual Pattern Generation:</strong> Outputting dynamic characters sequentially to print formatted maps or interface layouts.</li>
         <li><strong>Dimensional Scaling:</strong> Nesting multiple layers (such as three deep loops) to navigate spatial points across 3D coordinates.</li>
       </ul>
 
@@ -500,33 +501,11 @@
           </p>
         </div>
       </div>
-
-      <div class="exercise-card">
-        <div class="exercise-header ex-difficult">
-          <span>EXERCISE 4 // LABORATORY CHALLENGE</span>
-          <span>DIFFICULT</span>
-        </div>
-        <div class="exercise-body">
-          <h4>The Prime Number Distribution Filter Engine</h4>
-          <p>
-            Construct a program layout that evaluates a designated numeric space and displays all prime numbers ranging systematically from <strong>1 to 100</strong>. 
-          </p>
-          <p><strong>Target Architecture Requirements:</strong></p>
-          <ol style="margin-left: 20px; margin-bottom: 15px;">
-            <li>Set up an outer <span class="chip">for</span> loop structure to iterate sequentially through evaluation candidate numbers <span class="chip">n</span> from 1 to 100.</li>
-            <li>For every active value of <span class="chip">n</span>, initialize a divisor tracking counter state (<span class="chip">count = 0</span>) at the beginning of the outer cycle.</li>
-            <li>Nest an inner <span class="chip">for</span> loop inside the framework to iterate through possible divisors.</li>
-            <li>Verify exact division using the modulus expression format (<span class="chip">n % i == 0</span>) within a condition to increment the tracking metric.</li>
-            <li>Evaluate final state criteria at the completion of the inner loop cycle; print out the targeted value only if it contains exactly two distinct divisors.</li>
-          </ol>
-          <p><strong>Expected Target Output Segment:</strong><br><code>2, 3, 5, 7, 11, 13, 17, 19, 23, ...</code></p>
-        </div>
-      </div>
     </section>
 
     <section class="section-block">
       <p>
-        In this lecture, we learned how nested loop blocks process multi-dimensional arrays, patterns, and spatial grids step-by-step. In our upcoming chapter, we will shift focus toward fundamental functional components, looking into defining our own parameters, writing clean variable returns, and manufacturing reusable program scopes. See you there!
+        In this lecture, we learned how nested loop blocks process multi-dimensional arrays and spatial grids step-by-step. In our upcoming chapter, we will look into adding conditional statements inside loops, learning how to use exit controls like break and continue, and building automated data checks. See you there!
       </p>
     </section>
 
@@ -534,7 +513,6 @@
 
   <div id="footer">
     <span>Python Masterclass &amp; Systems Architecture</span>
-    <span>Section 3 · <span>Lecture Notes 08</span></span>
   </div>
 
 </div>
