@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architect Level Programming Exercises</title>
+    <style>
+        :root {
+            --bg-color: #FFF5F5;
+            --border-color: #FFE3E3;
+            --text-main: #2D3748;
+            --text-muted: #4A5568;
+            --accent-red: #C53030;
+            --accent-blue: #1A365D;
+            --code-bg: #FFFFFF;
+            --code-border: #FEB2B2;
+            --code-text: #E53E3E;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #FAFAFA;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .dashboard {
+            max-width: 850px;
+            margin: 0 auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-blue);
+        }
+
+        .dashboard h1 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            font-size: 28px;
+        }
+
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .timeline-table th, .timeline-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .timeline-table th {
+            background-color: #F7FAFC;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .exercise-card {
+            background-color: var(--bg-color);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 40px auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            page-break-inside: avoid;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--accent-red);
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .assignment-badge {
+            background-color: var(--accent-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 0;
+        }
+
+        .exercise-title {
+            color: var(--accent-blue);
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .exercise-desc {
+            color: var(--text-main);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .section-heading {
+            color: var(--text-main);
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .matrix-preview {
+            color: var(--code-text);
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.5;
+            background: var(--code-bg);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px dashed var(--code-border);
+            letter-spacing: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+
+        @media print {
+            body { padding: 0; background: white; }
+            .dashboard { box-shadow: none; border: 1px solid #CBD5E0; }
+            .exercise-card { box-shadow: none; margin: 20px auto; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <table class="timeline-table">
+            <thead>
+                <tr>
+                    <th>Time Window</th>
+                    <th>Presenter</th>
+                    <th>Assigned Blueprint Module</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>00:00 – 00:11</strong></td>
+                    <td>P Ralenkoane</td>
+                    <td>Exercise 1: The Right-Angled Matrix Pattern Engine</td>
+                </tr>
+                <tr>
+                    <td><strong>00:11 – 00:22</strong></td>
+                    <td>L Makubakube</td>
+                    <td>Exercise 2: The Inverted Right-Angled Matrix Pattern Engine</td>
+                </tr>
+                <tr>
+                    <td><strong>00:22 – 00:33</strong></td>
+                    <td>K Moeketsi</td>
+                    <td>Exercise 3: The Mirrored Right-Angled Matrix Pattern Engine</td>
+                </tr>
+                <tr>
+                    <td><strong>00:33 – 00:44</strong></td>
+                    <td>L Mahloane</td>
+                    <td>Exercise 4: The Number-Incrementing Matrix Pattern Engine</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="exercise-card">
+        <div class="exercise-header">
+            <span>EXERCISE 1 // ARCHITECT LEVEL // DIFFICULT</span>
+            <span class="assignment-badge">ASSIGNED TO: P RALENKOANE</span>
+        </div>
+        <h2 class="exercise-title">The Right-Angled Matrix Pattern Engine Blueprint</h2>
+        <p class="exercise-desc">Create an advanced layout logic system that takes a height input and generates a clean, left-aligned <strong>right-angled triangle grid pattern</strong>.</p>
+
+        <div class="section-heading">Verification Test Matrices:</div>
+        <p class="exercise-desc" style="font-size: 15px; margin-bottom: 5px;">Input Value: 4 &rarr; Output must print exactly:</p>
+        <pre class="matrix-preview">*
+* *
+* * *
+* * * *</pre>
+    </div>
+
+    <div class="exercise-card">
+        <div class="exercise-header">
+            <span>EXERCISE 2 // ARCHITECT LEVEL // DIFFICULT</span>
+            <span class="assignment-badge">ASSIGNED TO: L MAKUBAKUBE</span>
+        </div>
+        <h2 class="exercise-title">The Inverted Right-Angled Matrix Pattern Engine</h2>
+        <p class="exercise-desc">Create an advanced layout logic system that takes a height input and generates a clean, left-aligned <strong>inverted right-angled triangle grid pattern</strong>.</p>
+
+        <div class="section-heading">Verification Test Matrices:</div>
+        <p class="exercise-desc" style="font-size: 15px; margin-bottom: 5px;">Input Value: 4 &rarr; Output must print exactly:</p>
+        <pre class="matrix-preview">* * * *
+* * *
+* *
+*</pre>
+    </div>
+
+    <div class="exercise-card">
+        <div class="exercise-header">
+            <span>EXERCISE 3 // ARCHITECT LEVEL // DIFFICULT</span>
+            <span class="assignment-badge">ASSIGNED TO: K MOEKETSI</span>
+        </div>
+        <h2 class="exercise-title">The Mirrored Right-Angled Matrix Pattern Engine</h2>
+        <p class="exercise-desc">Create an advanced layout logic system that takes a height input and generates a clean, <strong>right-aligned right-angled triangle grid pattern</strong> using padded spaces.</p>
+
+        <div class="section-heading">Verification Test Matrices:</div>
+        <p class="exercise-desc" style="font-size: 15px; margin-bottom: 5px;">Input Value: 4 &rarr; Output must print exactly:</p>
+        <pre class="matrix-preview">      *
+    * *
+  * * *
+* * * *</pre>
+    </div>
+
+    <div class="exercise-card">
+        <div class="exercise-header">
+            <span>EXERCISE 4 // ARCHITECT LEVEL // DIFFICULT</span>
+            <span class="assignment-badge">ASSIGNED TO: L MAHLOANE</span>
+        </div>
+        <h2 class="exercise-title">The Number-Incrementing Matrix Pattern Engine</h2>
+        <p class="exercise-desc">Create an advanced layout logic system that takes a height input and generates a left-aligned right-angled triangle containing an <strong>accumulating sequential number sequence</strong>.</p>
+
+        <div class="section-heading">Verification Test Matrices:</div>
+        <p class="exercise-desc" style="font-size: 15px; margin-bottom: 5px;">Input Value: 4 &rarr; Output must print exactly:</p>
+        <pre class="matrix-preview">1 
+2 3 
+4 5 6 
+7 8 9 10</pre>
+    </div>
+
+</body>
+</html>
