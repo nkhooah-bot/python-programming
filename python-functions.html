@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprehensive Guide: Python Functions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #1a6b72;
+      --teal-dark: #124f54;
+      --teal-light: #e8f4f5;
+      --gold: #c8a84b;
+      --paper: #fffdf9;
+      --ink: #1e1e1e;
+      --border: #d4c9b0;
+      --code-bg: #f5f2ec;
+      --page-width: 820px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #c8bfaf; font-family: 'Lato', sans-serif; color: var(--ink); padding: 30px 20px; }
+    #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25); border-radius: 2px; }
+    #cover { background: var(--teal); padding: 64px; color: #fff; }
+    #cover h1 { font-family: 'Playfair Display', serif; font-size: 38px; margin-bottom: 12px; }
+    #body { padding: 48px 64px; }
+    h2.section-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal-dark); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin: 32px 0 20px; }
+    p { margin-bottom: 18px; line-height: 1.6; }
+    .code-container { background: var(--code-bg); border-left: 4px solid var(--gold); padding: 20px; font-family: 'Source Code Pro', monospace; font-size: 13.5px; margin: 18px 0; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+    th { background: var(--teal-light); }
+  </style>
+</head>
+<body>
+
+  <div id="document">
+    <header id="cover">
+      <h1>Python Functions</h1>
+      <p>Modular Development, Reusability, and Implementation</p>
+    </header>
+
+    <div id="body">
+      <section>
+        <h2 class="section-title">1. Introduction to Functions</h2>
+        <p>A function is a reusable piece of code designed to perform a specific, smaller task. Whenever you see code written with round brackets—like <code>print()</code> or <code>input()</code>—you are interacting with a built-in function.</p>
+        
+        <ul>
+          <li><strong>Task-Oriented:</strong> Performs a specific, defined operation.</li>
+          <li><strong>Reusable:</strong> Write once, use many times across different programs.</li>
+          <li><strong>Modular:</strong> Helps break large applications into manageable modules and subtasks.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="section-title">2. Writing Your Own Functions</h2>
+        <p>To define a user-defined function, use the <code>def</code> keyword. The structure consists of a header, parameter list, and an indented body.</p>
+        
+        <p><strong>General Skeleton:</strong></p>
+        <div class="code-container">
+          def function_name(parameter_list):<br>
+          &nbsp;&nbsp;# Function Body<br>
+          &nbsp;&nbsp;return result
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">3. Practical Example: Cuboid Volume</h2>
+        <div class="code-container">
+          def volume(length, breadth, height):<br>
+          &nbsp;&nbsp;vol = length * breadth * height<br>
+          &nbsp;&nbsp;return vol<br><br>
+          v = volume(10, 5, 3) # Function Call<br>
+          print(v) # Output: 150
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">4. Key Terminology</h2>
+        <table>
+          <tr><th>Term</th><th>Description</th></tr>
+          <tr><td><strong>Header/Signature</strong></td><td>The definition line (def name(...):)</td></tr>
+          <tr><td><strong>Actual Parameters</strong></td><td>Values passed during the call (e.g., 10, 5, 3)</td></tr>
+          <tr><td><strong>Formal Parameters</strong></td><td>Variables defined in the header (e.g., length, breadth)</td></tr>
+          <tr><td><strong>Return</strong></td><td>The statement that sends the result back to the caller</td></tr>
+        </table>
+        
+      </section>
+
+      <section>
+        <h2 class="section-title">5. Parameter Passing Mechanism</h2>
+        <p>Python uses a unified parameter passing mechanism. When you pass arguments, variables refer to the same object in memory. Note that basic data types (int, float) are <strong>immutable</strong>; changing them inside a function does not affect the original variable, as a new object is created in memory instead.</p>
+      </section>
+
+      <section>
+        <h2 class="section-title">6. Best Practices</h2>
+        <ul>
+          <li><strong>Naming:</strong> Use unique names; avoid Python's built-in function names.</li>
+          <li><strong>Flow Control:</strong> Understand that function calls transfer control to the function body and return control back upon completion.</li>
+          <li><strong>Modular Design:</strong> Use the <code>if __name__ == "__main__":</code> block to allow your code to be imported as a module without executing immediately.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
