@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture Notes: Nested if, elif, and the elif Ladder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #1a6b72;
+      --teal-dark: #124f54;
+      --teal-light: #e8f4f5;
+      --gold: #c8a84b;
+      --paper: #fffdf9;
+      --ink: #1e1e1e;
+      --border: #d4c9b0;
+      --code-bg: #f5f2ec;
+      --page-width: 820px;
+    }
+    * { box-sizing: border-box; }
+    body { background: #c8bfaf; font-family: 'Lato', sans-serif; color: var(--ink); padding: 30px 20px; }
+    #document { max-width: var(--page-width); margin: 0 auto; background: var(--paper); box-shadow: 0 4px 40px rgba(0,0,0,.25); border-radius: 2px; }
+    #cover { background: var(--teal); padding: 64px; color: #fff; }
+    #body { padding: 48px 64px; }
+    h2.section-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--teal-dark); border-bottom: 2px solid var(--border); padding-bottom: 8px; margin: 32px 0 20px; }
+    p { margin-bottom: 18px; line-height: 1.6; }
+    .code-container { background: var(--code-bg); border-left: 4px solid var(--gold); padding: 20px; font-family: 'Source Code Pro', monospace; font-size: 13.5px; margin: 18px 0; }
+    .exercise-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+    .exercise-card { background: var(--teal-light); border: 1px solid var(--border); padding: 15px; border-radius: 4px; }
+    .exercise-card strong { color: var(--teal-dark); display: block; margin-bottom: 5px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid var(--border); padding: 12px; text-align: left; }
+    th { background: var(--teal-light); }
+  </style>
+</head>
+<body>
+
+  <div id="document">
+    <header id="cover">
+      <h1>Nested if, elif, and the elif Ladder</h1>
+      <p>Python Control Structures: Advanced Decision Making</p>
+    </header>
+
+    <div id="body">
+      <section>
+        <h2 class="section-title">1. Introduction</h2>
+        <p>In previous lessons, we learned to use <code>if</code> to check conditions and <code>else</code> to execute code when those conditions are false. Now, we explore more complex control structures to handle multi-layered logic.</p>
+        
+      </section>
+
+      <section>
+        <h2 class="section-title">2. Nested if</h2>
+        <p>A <strong>nested if</strong> involves placing one <code>if</code> or <code>else</code> block inside another. This is fully supported in Python and is essential for handling complex decision-making.</p>
+        
+        <p><strong>Example: Temperature Check</strong></p>
+        <div class="code-container">
+          temperature = float(input("Enter the temperature: "))<br>
+          if temperature == 25: print("Normal")<br>
+          else:<br>
+          &nbsp;&nbsp;if temperature < 25: print("Cold")<br>
+          &nbsp;&nbsp;else: print("Hot")
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">3. The elif Statement</h2>
+        <p>The <code>elif</code> (else if) statement combines <code>else</code> and <code>if</code> into one compact statement. This helps simplify nested structures by providing the same logic with cleaner, more readable code.</p>
+      </section>
+
+      <section>
+        <h2 class="section-title">4. The elif Ladder</h2>
+        <p>When you have many conditions to check, the <strong>if-elif-else ladder</strong> is the preferred structure. It checks multiple levels, and only the first matching condition is executed.</p>
+        
+        <div class="code-container">
+          marks = int(input("Enter your marks: "))<br>
+          if marks >= 90: print("Grade: A")<br>
+          elif marks >= 75: print("Grade: B")<br>
+          elif marks >= 60: print("Grade: C")<br>
+          else: print("Fail")
+        </div>
+      </section>
+
+      <section>
+        <h2 class="section-title">5. Quick Reference</h2>
+        <table>
+          <tr><th>Concept</th><th>Description</th></tr>
+          <tr><td>if</td><td>Checks a condition</td></tr>
+          <tr><td>else</td><td>Executes when if condition is false</td></tr>
+          <tr><td>nested if</td><td>Writing if inside another if or else</td></tr>
+          <tr><td>elif</td><td>Combines else and if to avoid deep nesting</td></tr>
+          <tr><td>elif Ladder</td><td>A clean way to handle multiple conditions</td></tr>
+        </table>
+      </section>
+
+      <section>
+        <h2 class="section-title">6. Practice Challenges</h2>
+        <div class="exercise-grid">
+          <div class="exercise-card">
+            <strong>1. Number Classifier</strong>
+            Classify a number as Positive, Negative, or Zero using an <code>elif</code> ladder.
+          </div>
+          <div class="exercise-card">
+            <strong>2. Age Categorization</strong>
+            Check if a person is a Child (<13), Teenager (13-19), Adult (20-59), or Senior (60+). Implement with nested <code>if</code> first, then refactor using <code>elif</code>.
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
